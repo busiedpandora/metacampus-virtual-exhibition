@@ -11,10 +11,5 @@ import lombok.Setter;
 @MappedSuperclass
 public abstract class Resource {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
     private String name;
-
-
 }

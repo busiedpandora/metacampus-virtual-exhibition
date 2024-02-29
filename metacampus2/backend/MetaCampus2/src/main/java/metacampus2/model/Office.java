@@ -19,7 +19,7 @@ public class Office extends Location {
     private List<Lecturer> teachers;
 
     @ManyToOne
-    @JoinColumn(name = "fk_office")
+    @JoinColumn(name = "fk_metaverse")
     @JsonIgnoreProperties("offices")
     private Metaverse metaverseOffice;
 
