@@ -9,12 +9,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @MappedSuperclass
-public abstract class Person extends Resource {
+public abstract class Resource {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    private String firstName;
-    private String lastName;
+    private String name;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
 
 }

@@ -1,9 +1,7 @@
 package metacampus2.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,13 +12,15 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Office {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Office extends Location {
 
-    private String coordinates;
-    private String number;
-    @OneToMany
-    private List<Person> persons;
+    @OneToMany(mappedBy = "office")
+    @JsonIgnoreProperties("office")
+    private List<Lecturer> teachers;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_office")
+    @JsonIgnoreProperties("offices")
+    private Metaverse metaverseOffice;
+
 }

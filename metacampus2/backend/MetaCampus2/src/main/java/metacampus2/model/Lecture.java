@@ -1,28 +1,35 @@
 package metacampus2.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Lecture {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Lecture extends Resource {
 
-    private String name;
     @ManyToOne
+    @JoinColumn(name = "fk_classroom")
+    @JsonIgnoreProperties("lectureList")
     private Classroom classroom;
+
     private LocalDateTime localDateTime;
+
     @ManyToOne
-    private Person lecturer;
+    @JoinColumn(name = "fk_lecturer")
+    @JsonIgnoreProperties("lectureClassroom")
+    private Lecturer lecturer;
+
+
+    @ManyToOne
+    @JoinColumn(name = "fk_metaverse")
+    @JsonIgnoreProperties("eventMetaverse")
+    private Metaverse metaverseLecture;
 }
