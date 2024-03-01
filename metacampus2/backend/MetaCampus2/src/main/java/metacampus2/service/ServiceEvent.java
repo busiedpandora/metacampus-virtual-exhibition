@@ -1,6 +1,7 @@
 package metacampus2.service;
 
 import metacampus2.model.Event;
+import metacampus2.model.Metaverse;
 import metacampus2.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,18 +17,11 @@ public class ServiceEvent implements IServiceEvent {
     private EventRepository eventRepository;
 
     @Override
-    public Event addEvent(Event event) {
+    public Event addEventByMetaverse(Event event, Metaverse metaverse) {
 
-        List<Event> events = getAllEvents();
+        metaverse.setEventMetaverse(event);
 
-        if (!events.isEmpty()) {
-
-            for (Event event1 : events) {
-
-                if (event.equals(event1))
-                    return null;
-            }
-        }
+        event.setMetaverseEvent(metaverse);
 
         return eventRepository.save(event);
     }

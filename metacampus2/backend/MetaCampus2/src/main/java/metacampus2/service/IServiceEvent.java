@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface IServiceEvent {
 
-    Event addEvent(Event event);
+    Event addEventByMetaverse(Event event, Metaverse metaverse)
 
     Optional<Event> findEvent(String id);
 
