@@ -44,21 +44,16 @@ public class ServiceClassroom implements IServiceClassroom {
 
         if(checkClassroom.isPresent()){
 
-            if(!classroom.getLecturerList().isEmpty()){
-                checkClassroom.get().setLecturerList(classroom.getLecturerList());
+            if(!classroom.getCoordinates().isEmpty()){
+                checkClassroom.get().setCoordinates(classroom.getCoordinates());
             }
-            if(!classroom.getStudentList().isEmpty()){
-                checkClassroom.get().setStudentList(classroom.getStudentList());
+            if(!classroom.getNumber().isEmpty()){
+                checkClassroom.get().setNumber(classroom.getNumber());
             }
             if(classroom.getEvent() != null){
                 checkClassroom.get().setEvent(classroom.getEvent());
             }
-            if(!classroom.getLectureList().isEmpty()){
-                checkClassroom.get().setLectureList(classroom.getLectureList());
-            }
-            if(!classroom.getMetaverseClassroom().isEmpty()){
-                checkClassroom.get().setMetaverseClassroom(classroom.getMetaverseClassroom());
-            }
+
             classroomRepository.save(checkClassroom.get());
 
             return checkClassroom;
