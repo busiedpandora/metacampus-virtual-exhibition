@@ -3,7 +3,6 @@ package metacampus2.service;
 import metacampus2.model.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public interface IServiceClassroom {
