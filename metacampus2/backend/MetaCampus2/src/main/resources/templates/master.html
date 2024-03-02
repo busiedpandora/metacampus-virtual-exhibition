@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout(documentTitle, content)">
+
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <title th:replace="${documentTitle}">Title</title>
+</head>
+
+<body>
+<header th:replace="header :: header">
+    <h1>Header</h1>
+</header>
+
+<nav th:replace="navigation-menu :: nav">
+    <h1>Navigation</h1>
+</nav>
+
+<main th:replace="${content}">
+    <h1>Main content</h1>
+</main>
+
+<!--<footer th:replace="footer :: footer">
+    <h1>Footer</h1>
+</footer>-->
+
+</body>
+
+</html>
