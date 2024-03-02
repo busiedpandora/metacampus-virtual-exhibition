@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Navigation menu</title>
+</head>
+<body>
+    <nav>
+        <div class="container-fluid">
+            <div id="menuBar" class="row justify-content-around text-center bg-body-secondary">
+                <div class="col">
+                    <a class="navigation-item" th:href="@{/home}"
+                    th:classappend="${menuItem == T(metacampus2.model.MenuItem).HOME ?
+                    'selected' : ''}">
+                        Home
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a class="navigation-item" th:href="@{/classrooms}"
+                       th:classappend="${menuItem == T(metacampus2.model.MenuItem).CLASSROOMS ?
+                    'selected' : ''}">
+                        Classrooms
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a class="navigation-item" th:href="@{/events}"
+                       th:classappend="${menuItem == T(metacampus2.model.MenuItem).EVENTS ?
+                    'selected' : ''}">
+                        Events
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a class="navigation-item" th:href="@{/lectures}"
+                       th:classappend="${menuItem == T(metacampus2.model.MenuItem).LECTURES ?
+                    'selected' : ''}">
+                        Lectures
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a class="navigation-item" th:href="@{/offices}"
+                       th:classappend="${menuItem == T(metacampus2.model.MenuItem).OFFICES ?
+                    'selected' : ''}">
+                        Offices
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a class="navigation-item" th:href="@{/people}"
+                       th:classappend="${menuItem == T(metacampus2.model.MenuItem).PEOPLE ?
+                    'selected' : ''}">
+                        People
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a class="navigation-item" th:href="@{/metaverses}"
+                       th:classappend="${menuItem == T(metacampus2.model.MenuItem).METAVERSES ?
+                    'selected' : ''}">
+                        Metaverses
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</body>
+</html>

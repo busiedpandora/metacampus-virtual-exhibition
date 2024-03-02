@@ -1,0 +1,40 @@
+#headerTitle {
+    font-size: 64px;
+}
+
+header {
+    margin-bottom: 30px;
+}
+
+#menuBar {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.navigation-item {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.navigation-item.selected {
+    color: black;
+    user-select: none;
+    text-decoration: none;
+}
+
+.table-container {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+ .entities-table {
+     margin-top: 30px;
+     margin-bottom: 30px;
+     table-layout: fixed;
+ }
+
+ .form-container {
+     margin-top: 50px;
+     margin-bottom: 50px;
+ }

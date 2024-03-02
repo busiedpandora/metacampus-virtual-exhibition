@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{master :: layout(~{::title},~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Classrooms</title>
+</head>
+<body>
+    <main>
+        <div class="container-fluid table-container">
+            <a class="btn btn-outline-primary create-entity-button" role="button" th:href="@{/classrooms/new}">
+                Create classroom
+            </a>
+
+            <table class="table table-striped caption-top entities-table">
+                <caption class="fs-5">Classrooms:</caption>
+                <thead>
+                <tr>
+                    <th scope="col" class="col-1">#</th>
+                    <th scope="col">Number</th>
+                    <th scope="col">Metaverse</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>B3.05</td>
+                    <td>SUPSI - Campus Est</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>B1.12</td>
+                    <td>SUPSI - Campus Est</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>B1.07</td>
+                    <td>SUPSI - Campus Est</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>
