@@ -12,8 +12,17 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Office extends Location {
+public class Office extends Resource {
 
+    @Column(nullable = false)
+    private String number;
+
+    @OneToMany(mappedBy = "office")
+    private List<Person> people;
+
+
+
+    /*
     @OneToMany(mappedBy = "office")
     @JsonIgnoreProperties("office")
     private List<Lecturer> teachers;
@@ -22,5 +31,5 @@ public class Office extends Location {
     @JoinColumn(name = "fk_metaverse")
     @JsonIgnoreProperties("offices")
     private Metaverse metaverseOffice;
-
+*/
 }

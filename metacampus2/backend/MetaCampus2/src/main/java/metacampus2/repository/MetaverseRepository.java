@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MetaverseRepository extends JpaRepository<Metaverse, Long> {
+    Metaverse findByName(String name);
 }

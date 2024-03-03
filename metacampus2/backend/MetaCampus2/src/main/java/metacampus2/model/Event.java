@@ -15,17 +15,9 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class Event extends Resource {
+    @Column(nullable = false)
+    private String name;
 
-    private String coordinates;
-
+    @Column(nullable = false)
     private LocalDateTime dateTime;
-
-    @OneToMany(mappedBy = "event")
-    @JsonIgnoreProperties("event")
-    private List<Classroom> locationEvent;
-
-    @OneToOne
-    @JoinColumn(name = "fk_metaverse")
-    @JsonIgnoreProperties("eventMetaverse")
-    private Metaverse metaverseEvent;
 }

@@ -1,21 +1,37 @@
 package metacampus2.service;
 
 import metacampus2.model.Lecture;
-import metacampus2.model.Lecturer;
-import metacampus2.model.Metaverse;
 import metacampus2.repository.LectureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class ServiceLecture implements IServiceLecture {
+public class LectureService implements ILectureService {
 
     @Autowired
     private LectureRepository lectureRepository;
 
+    @Override
+    public void addNewLecture(Lecture lecture) {
+        lectureRepository.save(lecture);
+    }
+
+    @Override
+    public Lecture getLectureFromMetaverse(String lectureName, LocalDateTime lectureDateTime, String metaverseName) {
+        return lectureRepository.findByNameAndDateTimeAndMetaverseName(lectureName, lectureDateTime, metaverseName);
+    }
+
+    @Override
+    public List<Lecture> getAllLectures() {
+        return lectureRepository.findAll();
+    }
+
+
+
+    /*
     @Override
     public Lecture addLectureByOthers(Lecture lecture, Lecturer lecturer, Metaverse metaverse) {
 
@@ -55,4 +71,8 @@ public class ServiceLecture implements IServiceLecture {
     public List<Lecture> getAllLectures() {
         return lectureRepository.findAll();
     }
+
+     */
 }
+
+

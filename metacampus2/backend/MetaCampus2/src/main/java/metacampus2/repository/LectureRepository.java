@@ -4,6 +4,9 @@ import metacampus2.model.Lecture;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+
 @Repository
-public interface LectureRepository extends JpaRepository<Lecture, String> {
+public interface LectureRepository extends JpaRepository<Lecture, Long> {
+    Lecture findByNameAndDateTimeAndMetaverseName(String lectureName, LocalDateTime lectureDateTime, String metaverseName);
 }

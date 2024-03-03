@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ClassroomRepository extends JpaRepository<Classroom, String> {
-
+public interface ClassroomRepository extends JpaRepository<Classroom, Long> {
+    Classroom findByNumberAndMetaverseName(String classroomNumber, String metaverseName);
 }

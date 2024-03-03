@@ -1,16 +1,17 @@
 package metacampus2.service;
 
-
 import metacampus2.model.Lecture;
-import metacampus2.model.Lecturer;
-import metacampus2.model.Metaverse;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 
-public interface IServiceLecture {
+public interface ILectureService {
+    void addNewLecture(Lecture lecture);
+    Lecture getLectureFromMetaverse(String lectureName, LocalDateTime lectureDateTime, String metaverseName);
+    List<Lecture> getAllLectures();
 
+    /*
     Lecture addLectureByOthers(Lecture lecture, Lecturer lecturer , Metaverse metaverse);
 
     Optional<Lecture> findLecture(String id);
@@ -18,4 +19,8 @@ public interface IServiceLecture {
     Optional<Lecture> updateLecture(Lecture lecture, String id);
 
     List<Lecture> getAllLectures();
+
+     */
 }
+
+

@@ -5,11 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@MappedSuperclass
 @Getter
 @Setter
 @NoArgsConstructor
-@MappedSuperclass
 public abstract class Resource {
     @Id
-    private String name;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "metaverse_id", nullable = false)
+    private Metaverse metaverse;
 }
