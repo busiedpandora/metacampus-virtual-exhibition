@@ -3,9 +3,11 @@ package metacampus2.controller;
 import metacampus2.model.*;
 import metacampus2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,6 +24,7 @@ public class MetaCampusController {
     public static final String CTRL_PEOPLE = "/people";
     public static final String CTRL_METAVERSES = "/metaverses";
 
+    public static final String MODEL_PROJECT_NAME = "projectName";
     public static final String MODEL_MENU_ITEM = "menuItem";
     public static final String MODEL_ERROR = "error";
     public static final String MODEL_CLASSROOMS = "classrooms";
@@ -47,6 +50,13 @@ public class MetaCampusController {
     @Autowired
     private PersonService personService;
 
+    @Value("${project.name}")
+    private String projectName;
+
+    @ModelAttribute
+    public void addDefaultAttributes(Model model) {
+        model.addAttribute(MODEL_PROJECT_NAME, projectName);
+    }
 
     @GetMapping({"/", CTRL_HOME})
     public String homepage(Model model) {
