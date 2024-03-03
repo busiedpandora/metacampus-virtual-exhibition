@@ -38,3 +38,7 @@ header {
      margin-top: 50px;
      margin-bottom: 50px;
  }
+
+ .error-message {
+     color: red;
+ }

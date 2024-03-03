@@ -18,8 +18,23 @@
                         <div class="row mb-3">
                             <label for="number" class="col-form-label col-2">Number</label>
                             <div class="col">
-                                <input id="number" class="form-control" type="text" name="number">
+                                <input id="number" class="form-control" type="text" name="number" required>
                             </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="metaverse" class="col-form-label col-2">Metaverse</label>
+                            <div class="col">
+                                <select id="metaverse" class="form-select" name="metaverse" required>
+                                    <option th:each="metaverse : ${metaverses}"
+                                        th:value="${metaverse.id}" th:text="${metaverse.name}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div th:if="${error != null}" class="mb-3">
+                            <span class="error-message">Error occurred while creating a classroom</span>
                         </div>
 
                         <div class="col-2 mt-5">
@@ -27,14 +42,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
             </form>
         </div>
     </main>

@@ -22,20 +22,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>B3.05</td>
-                    <td>SUPSI - Campus Est</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>B1.12</td>
-                    <td>SUPSI - Campus Est</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>B1.07</td>
-                    <td>SUPSI - Campus Est</td>
+                <tr th:each="classroom, iterStat : ${classrooms}">
+                    <th scope="row" th:text="${iterStat.count}"></th>
+                    <td th:text="${classroom.number}"></td>
+                    <td th:text="${classroom.metaverse.name}"></td>
                 </tr>
                 </tbody>
             </table>

@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{master :: layout(~{::title},~{::main})}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Metaverses</title>
 </head>
 <body>
+<main>
+    <div class="container-fluid table-container">
+        <a class="btn btn-outline-primary create-entity-button" role="button" th:href="@{/metaverses/new}">
+            Create metaverse
+        </a>
 
+        <table class="table table-striped caption-top entities-table">
+            <caption class="fs-5">Metaverses:</caption>
+            <thead>
+            <tr>
+                <th scope="col" class="col-1">#</th>
+                <th scope="col">Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="metaverse, iterStat : ${metaverses}">
+                <th scope="row" th:text="${iterStat.count}"></th>
+                <td th:text="${metaverse.name}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
 </body>
 </html>

@@ -1,10 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{master :: layout(~{::title},~{::main})}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Event form</title>
 </head>
 <body>
+<main>
+    <div class="container-fluid form-container">
+        <form th:href="@{/event/new}" method="post">
+            <div class="row justify-content-center">
+                <div class="col-6 border border-1 border-primary rounded-3 px-5 py-5">
+                    <div class="mb-5">
+                        <span class="fs-4 text-body-secondary ">New event:</span>
+                    </div>
 
+                    <div class="row mb-3">
+                        <label for="name" class="col-form-label col-2">Name</label>
+                        <div class="col">
+                            <input id="name" class="form-control" type="text" name="name" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="dateTime" class="col-form-label col-2">Date time</label>
+                        <div class="col">
+                            <input id="dateTime" class="form-control" type="datetime-local" name="dateTime" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="metaverse" class="col-form-label col-2">Metaverse</label>
+                        <div class="col">
+                            <select id="metaverse" class="form-select" name="metaverse" required>
+                                <option th:each="metaverse : ${metaverses}"
+                                        th:value="${metaverse.id}" th:text="${metaverse.name}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div th:if="${error != null}" class="mb-3">
+                        <span class="error-message">Error occurred while creating an event</span>
+                    </div>
+
+                    <div class="col-2 mt-5">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
 </body>
 </html>
