@@ -1,6 +1,5 @@
 package metacampus2.service;
 
-import metacampus2.model.Classroom;
 import metacampus2.model.Metaverse;
 import metacampus2.repository.MetaverseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
