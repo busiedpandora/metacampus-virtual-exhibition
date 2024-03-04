@@ -7,7 +7,78 @@
 </head>
 <body>
     <main>
+        <div class="container-fluid table-container">
+            <table class="table table-striped caption-top entities-table">
+                <caption class="fs-5">Resources:</caption>
+                <thead>
+                    <tr>
+                        <th scope="col" class="col-1">#</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Resource</th>
+                        <th scope="col">Metaverse</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:with="rowNumber=0"
+                        th:each="classroom, iterStat : ${classrooms}">
+                        <th scope="row" th:text="${rowNumber + iterStat.count}"></th>
+                        <td>Classroom</td>
+                        <td th:text="${classroom.number}"></td>
+                        <td th:text="${classroom.metaverse.name}"></td>
+                    </tr>
 
+                    <tr th:with="rowNumber=${classrooms.size()}"
+                        th:each="event, iterStat : ${events}">
+                        <th scope="row" th:text="${rowNumber + iterStat.count}"></th>
+                        <td>Event</td>
+                        <td th:text="${event.name
+                        + ' (' + #temporals.format(event.dateTime, 'HH:mm dd-MM-yyyy') + ')'}"></td>
+                        <td th:text="${event.metaverse.name}"></td>
+                    </tr>
+
+                    <tr th:with="rowNumber=${classrooms.size() + events.size()}"
+                        th:each="lecture, iterStat : ${lectures}">
+                        <th scope="row" th:text="${rowNumber + iterStat.count}"></th>
+                        <td>Lecture</td>
+                        <td th:text="${lecture.name
+                        + ' (' + #temporals.format(lecture.dateTime, 'HH:mm dd-MM-yyyy') + ')'}"></td>
+                        <td th:text="${lecture.metaverse.name}"></td>
+                    </tr>
+
+                    <tr th:with="rowNumber=${classrooms.size() + events.size() + lectures.size()}"
+                        th:each="office, iterStat : ${offices}">
+                        <th scope="row" th:text="${rowNumber + iterStat.count}"></th>
+                        <td>Office</td>
+                        <td th:text="${office.number}"></td>
+                        <td th:text="${office.metaverse.name}"></td>
+                    </tr>
+
+                    <tr th:with="rowNumber=${classrooms.size() + events.size() + lectures.size() + offices.size()}"
+                        th:each="person, iterStat : ${people}">
+                        <th scope="row" th:text="${rowNumber + iterStat.count}"></th>
+                        <td>Person</td>
+                        <td th:text="${person.firstName + ' ' + person.lastName + ' - ' + person.role}"></td>
+                        <td th:text="${person.metaverse.name}"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-striped caption-top entities-table">
+                <caption class="fs-5">Metaverses:</caption>
+                <thead>
+                <tr>
+                    <th scope="col" class="col-1">#</th>
+                    <th scope="col">Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="metaverse, iterStat : ${metaverses}">
+                    <th scope="row" th:text="${iterStat.count}"></th>
+                    <td th:text="${metaverse.name}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </main>
 </body>
 </html>

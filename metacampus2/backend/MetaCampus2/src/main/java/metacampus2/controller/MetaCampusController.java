@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -27,6 +28,7 @@ public class MetaCampusController {
     public static final String MODEL_PROJECT_NAME = "projectName";
     public static final String MODEL_MENU_ITEM = "menuItem";
     public static final String MODEL_ERROR = "error";
+    public static final String MODEL_RESOURCES = "resources";
     public static final String MODEL_CLASSROOMS = "classrooms";
     public static final String MODEL_EVENTS = "events";
     public static final String MODEL_OFFICES = "offices";
@@ -36,19 +38,20 @@ public class MetaCampusController {
     public static final String MODEL_METAVERSES = "metaverses";
     public static final String MODEL_ROLES = "roles";
 
-
     @Autowired
-    private ClassroomService classroomService;
+    private IResourceService resourceService;
     @Autowired
-    private MetaverseService metaverseService;
+    private IClassroomService classroomService;
     @Autowired
-    private OfficeService officeService;
+    private IMetaverseService metaverseService;
     @Autowired
-    private EventService eventService;
+    private IOfficeService officeService;
     @Autowired
-    private LectureService lectureService;
+    private IEventService eventService;
     @Autowired
-    private PersonService personService;
+    private ILectureService lectureService;
+    @Autowired
+    private IPersonService personService;
 
     @Value("${project.name}")
     private String projectName;
@@ -62,12 +65,20 @@ public class MetaCampusController {
     public String homepage(Model model) {
         model.addAttribute(MODEL_MENU_ITEM, MenuItem.HOME);
 
+        model.addAttribute(MODEL_CLASSROOMS, classroomService.getAllClassrooms());
+        model.addAttribute(MODEL_EVENTS, eventService.getAllEvents());
+        model.addAttribute(MODEL_LECTURES, lectureService.getAllLectures());
+        model.addAttribute(MODEL_OFFICES, officeService.getAllOffices());
+        model.addAttribute(MODEL_PEOPLE, personService.getAllPeople());
+        model.addAttribute(MODEL_METAVERSES, metaverseService.getAllMetaverses());
+
         return "homepage";
     }
 
     @GetMapping(CTRL_CLASSROOMS)
     public String classrooms(Model model) {
         model.addAttribute(MODEL_MENU_ITEM, MenuItem.CLASSROOMS);
+
         model.addAttribute(MODEL_CLASSROOMS, classroomService.getAllClassrooms());
 
         return "classrooms";
@@ -77,6 +88,7 @@ public class MetaCampusController {
     public String classroomForm(Model model,
                                 @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_ITEM, MenuItem.CLASSROOMS);
+
         model.addAttribute(MODEL_METAVERSES, metaverseService.getAllMetaverses());
 
         model.addAttribute(MODEL_ERROR, error);
@@ -99,6 +111,7 @@ public class MetaCampusController {
     @GetMapping(CTRL_EVENTS)
     public String events(Model model) {
         model.addAttribute(MODEL_MENU_ITEM, MenuItem.EVENTS);
+
         model.addAttribute(MODEL_EVENTS, eventService.getAllEvents());
 
         return "events";
@@ -108,6 +121,7 @@ public class MetaCampusController {
     public String eventForm(Model model,
                             @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_ITEM, MenuItem.EVENTS);
+
         model.addAttribute(MODEL_METAVERSES, metaverseService.getAllMetaverses());
 
         model.addAttribute(MODEL_ERROR, error);
@@ -140,8 +154,8 @@ public class MetaCampusController {
     public String lectureForm(Model model,
                               @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_ITEM, MenuItem.LECTURES);
-        model.addAttribute(MODEL_METAVERSES, metaverseService.getAllMetaverses());
 
+        model.addAttribute(MODEL_METAVERSES, metaverseService.getAllMetaverses());
         model.addAttribute(MODEL_CLASSROOMS, classroomService.getAllClassrooms());
         model.addAttribute(MODEL_LECTURERS, personService.getAllLecturers());
 
@@ -172,6 +186,7 @@ public class MetaCampusController {
     @GetMapping(CTRL_METAVERSES)
     public String metaverses(Model model) {
         model.addAttribute(MODEL_MENU_ITEM, MenuItem.METAVERSES);
+
         model.addAttribute(MODEL_METAVERSES, metaverseService.getAllMetaverses());
 
         return "metaverses";
@@ -201,6 +216,7 @@ public class MetaCampusController {
     @GetMapping(CTRL_OFFICES)
     public String offices(Model model) {
         model.addAttribute(MODEL_MENU_ITEM, MenuItem.OFFICES);
+
         model.addAttribute(MODEL_OFFICES, officeService.getAllOffices());
 
         return "offices";
@@ -210,6 +226,7 @@ public class MetaCampusController {
     public String officeForm(Model model,
                              @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_ITEM, MenuItem.OFFICES);
+
         model.addAttribute(MODEL_METAVERSES, metaverseService.getAllMetaverses());
 
         model.addAttribute(MODEL_ERROR, error);
@@ -242,8 +259,8 @@ public class MetaCampusController {
     public String personForm(Model model,
                              @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_ITEM, MenuItem.PEOPLE);
-        model.addAttribute(MODEL_METAVERSES, metaverseService.getAllMetaverses());
 
+        model.addAttribute(MODEL_METAVERSES, metaverseService.getAllMetaverses());
         model.addAttribute(MODEL_ROLES, Role.values());
         model.addAttribute(MODEL_OFFICES, officeService.getAllOffices());
 
