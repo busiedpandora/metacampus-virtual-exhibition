@@ -1,5 +1,6 @@
 package metacampus2.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -21,43 +22,22 @@ public class Metaverse {
     private String name;
 
     @OneToMany(mappedBy = "metaverse")
+    @JsonBackReference
     private List<Classroom> classrooms;
 
     @OneToMany(mappedBy = "metaverse")
+    @JsonIgnoreProperties("metaverse")
     private List<Event> events;
 
     @OneToMany(mappedBy = "metaverse")
+    @JsonIgnoreProperties("metaverse")
     private List<Lecture> lectures;
 
     @OneToMany(mappedBy = "metaverse")
+    @JsonIgnoreProperties("metaverse")
     private List<Person> people;
 
     @OneToMany(mappedBy = "metaverse")
+    @JsonIgnoreProperties("metaverse")
     private List<Office> offices;
-
-
-    /*@ManyToMany(mappedBy = "metaverseClassroom")
-    @JsonIgnoreProperties("metaverseClassroom")
-    private List<Classroom> classrooms;
-
-    @OneToOne(mappedBy = "metaverseEvent")
-    @JsonIgnoreProperties("metaverseEvent")
-    private Event eventMetaverse;
-
-    @OneToMany(mappedBy = "metaverseLecture")
-    @JsonIgnoreProperties("metaverseLecture")
-    private List<Lecture> lectures;
-
-    @ManyToMany(mappedBy = "metaverseLecturer")
-    @JsonIgnoreProperties("metaverseLecturer")
-    private List<Lecturer> lecturers;
-
-    @OneToMany(mappedBy = "metaverseOffice")
-    @JsonIgnoreProperties("metaverseOffice")
-    private List<Office> offices;
-
-    @ManyToMany(mappedBy = "metaverseStudent")
-    @JsonIgnoreProperties("metaverseStudent")
-    private List<Student> students;
-     */
 }

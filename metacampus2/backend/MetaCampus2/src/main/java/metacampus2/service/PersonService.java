@@ -37,4 +37,9 @@ public class PersonService implements IPersonService {
                 .filter(p -> p.getRole() == Role.LECTURER)
                 .toList();
     }
+
+    @Override
+    public List<Person> getAllLecturesFromMetaverse(String metaverseName) {
+        return personRepository.findAllByMetaverseName(metaverseName);
+    }
 }

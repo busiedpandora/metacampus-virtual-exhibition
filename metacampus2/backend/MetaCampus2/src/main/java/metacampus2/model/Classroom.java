@@ -1,5 +1,6 @@
 package metacampus2.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,6 @@ public class Classroom extends Resource {
     private String number;
 
     @OneToMany(mappedBy = "classroom")
+    @JsonManagedReference
     private List<Lecture> lectures;
 }

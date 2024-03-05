@@ -9,4 +9,5 @@ public interface IOfficeService {
     void addNewOffice(Office office);
     Office getOfficeFromMetaverse(String officeNumber, String metaverseName);
     List<Office> getAllOffices();
+    List<Office> getAllOfficesFromMetaverse(String metaverseName);
 }

@@ -28,4 +28,9 @@ public class ClassroomService implements IClassroomService {
     public List<Classroom> getAllClassrooms() {
         return classroomRepository.findAll();
     }
+
+    @Override
+    public List<Classroom> getAllClassroomsFromMetaverse(String metaverseName) {
+        return classroomRepository.findAllByMetaverseName(metaverseName);
+    }
 }

@@ -29,5 +29,10 @@ public class OfficeService implements IOfficeService {
     public List<Office> getAllOffices() {
         return officeRepository.findAll();
     }
+
+    @Override
+    public List<Office> getAllOfficesFromMetaverse(String metaverseName) {
+        return officeRepository.findAllByMetaverseName(metaverseName);
+    }
 }
 

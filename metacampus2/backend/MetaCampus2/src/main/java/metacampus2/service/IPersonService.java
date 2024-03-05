@@ -10,4 +10,5 @@ public interface IPersonService {
                                   String personCellphone, String metaverseName);
     List<Person> getAllPeople();
     List<Person> getAllLecturers();
+    List<Person> getAllLecturesFromMetaverse(String metaverseName);
 }

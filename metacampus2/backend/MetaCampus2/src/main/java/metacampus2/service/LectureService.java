@@ -29,50 +29,10 @@ public class LectureService implements ILectureService {
         return lectureRepository.findAll();
     }
 
-
-
-    /*
     @Override
-    public Lecture addLectureByOthers(Lecture lecture, Lecturer lecturer, Metaverse metaverse) {
-
-        lecturer.getLectureClassroom().add(lecture);
-        metaverse.getLectures().add(lecture);
-
-        lecture.setLecturer(lecturer);
-        lecture.setMetaverseLecture(metaverse);
-
-        return lectureRepository.save(lecture);
+    public List<Lecture> getAllLecturesFromMetaverse(String metaverseName) {
+        return lectureRepository.findAllByMetaverseName(metaverseName);
     }
-
-    @Override
-    public Optional<Lecture> findLecture(String id) {
-        return lectureRepository.findById(id);
-    }
-
-    @Override
-    public Optional<Lecture> updateLecture(Lecture lecture, String id) {
-
-        Optional<Lecture> checkLecture = lectureRepository.findById(id);
-
-        if(checkLecture.isPresent()){
-            if(lecture.getLocalDateTime() != null){
-                checkLecture.get().setLocalDateTime(lecture.getLocalDateTime());
-            }
-
-            lectureRepository.save(checkLecture.get());
-
-            return checkLecture;
-        }
-
-        return Optional.empty();
-    }
-
-    @Override
-    public List<Lecture> getAllLectures() {
-        return lectureRepository.findAll();
-    }
-
-     */
 }
 
 

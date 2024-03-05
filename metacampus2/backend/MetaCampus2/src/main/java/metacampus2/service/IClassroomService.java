@@ -9,4 +9,5 @@ public interface IClassroomService {
     void addNewClassroom(Classroom classroom);
     Classroom getClassroomFromMetaverse(String classroomNumber, String metaverseName);
     List<Classroom> getAllClassrooms();
+    List<Classroom> getAllClassroomsFromMetaverse(String metaverseName);
 }

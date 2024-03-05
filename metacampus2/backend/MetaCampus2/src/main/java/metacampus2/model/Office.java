@@ -1,6 +1,7 @@
 package metacampus2.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,18 +19,6 @@ public class Office extends Resource {
     private String number;
 
     @OneToMany(mappedBy = "office")
+    @JsonManagedReference
     private List<Person> people;
-
-
-
-    /*
-    @OneToMany(mappedBy = "office")
-    @JsonIgnoreProperties("office")
-    private List<Lecturer> teachers;
-
-    @ManyToOne
-    @JoinColumn(name = "fk_metaverse")
-    @JsonIgnoreProperties("offices")
-    private Metaverse metaverseOffice;
-*/
 }
