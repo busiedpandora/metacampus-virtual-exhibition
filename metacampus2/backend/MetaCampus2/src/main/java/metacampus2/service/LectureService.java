@@ -10,9 +10,13 @@ import java.util.List;
 
 @Service
 public class LectureService implements ILectureService {
+    private LectureRepository lectureRepository;
+
 
     @Autowired
-    private LectureRepository lectureRepository;
+    public LectureService(LectureRepository lectureRepository) {
+        this.lectureRepository = lectureRepository;
+    }
 
     @Override
     public void addNewLecture(Lecture lecture) {

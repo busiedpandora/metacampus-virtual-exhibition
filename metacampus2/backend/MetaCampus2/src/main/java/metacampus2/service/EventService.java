@@ -10,10 +10,13 @@ import java.util.List;
 
 @Service
 public class EventService implements IEventService {
-
-    @Autowired
     private EventRepository eventRepository;
 
+
+    @Autowired
+    public EventService(EventRepository eventRepository) {
+        this.eventRepository = eventRepository;
+    }
 
     @Override
     public void addNewEvent(Event event) {

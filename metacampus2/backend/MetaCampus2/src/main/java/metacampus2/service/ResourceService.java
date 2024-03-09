@@ -9,9 +9,13 @@ import java.util.List;
 
 @Service
 public class ResourceService implements IResourceService {
-    @Autowired
     private ResourceRepository resourceRepository;
 
+
+    @Autowired
+    public ResourceService(ResourceRepository resourceRepository) {
+        this.resourceRepository = resourceRepository;
+    }
 
     @Override
     public List<Resource> getAllResources() {

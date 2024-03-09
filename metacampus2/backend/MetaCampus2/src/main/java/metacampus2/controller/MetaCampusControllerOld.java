@@ -1,23 +1,23 @@
+/*
 package metacampus2.controller;
 
 import metacampus2.model.*;
 import metacampus2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
 
 @Controller
-public class MetaCampusController {
+public class MetaCampusControllerOld {
     public static final String CTRL_NEW = "/new";
-    private static final String CTRL_HOME = "/home";
+    public static final String CTRL_HOME = "/home";
     public static final String CTRL_CLASSROOMS = "/classrooms";
     public static final String CTRL_EVENTS = "/events";
     public static final String CTRL_LECTURES = "/lectures";
@@ -37,6 +37,20 @@ public class MetaCampusController {
     public static final String MODEL_LECTURERS = "lecturers";
     public static final String MODEL_METAVERSES = "metaverses";
     public static final String MODEL_ROLES = "roles";
+
+    public static final String VIEW_HOME = "homepage";
+    public static final String VIEW_CLASSROOMS = "classrooms";
+    public static final String VIEW_CLASSROOM_FORM = "classroom-form";
+    public static final String VIEW_EVENTS = "events";
+    public static final String VIEW_EVENT_FORM = "event-form";
+    public static final String VIEW_LECTURES = "lectures";
+    public static final String VIEW_LECTURE_FORM = "lecture-form";
+    public static final String VIEW_METAVERSES = "metaverses";
+    public static final String VIEW_METAVERSE_FORM = "metaverse-form";
+    public static final String VIEW_OFFICES = "offices";
+    public static final String VIEW_OFFICE_FORM = "office-form";
+    public static final String VIEW_PEOPLE = "people";
+    public static final String VIEW_PERSON_FORM = "person-form";
 
     @Autowired
     private IResourceService resourceService;
@@ -72,7 +86,7 @@ public class MetaCampusController {
         model.addAttribute(MODEL_PEOPLE, personService.getAllPeople());
         model.addAttribute(MODEL_METAVERSES, metaverseService.getAllMetaverses());
 
-        return "homepage";
+        return VIEW_HOME;
     }
 
     @GetMapping(CTRL_CLASSROOMS)
@@ -81,7 +95,12 @@ public class MetaCampusController {
 
         model.addAttribute(MODEL_CLASSROOMS, classroomService.getAllClassrooms());
 
-        return "classrooms";
+        return VIEW_CLASSROOMS;
+    }
+
+    @GetMapping(CTRL_CLASSROOMS + "/get/{metaverseName}")
+    public ResponseEntity<List<Classroom>> classrooms(@PathVariable("metaverseName") String metaverseName) {
+        return new ResponseEntity<>(classroomService.getAllClassroomsFromMetaverse(metaverseName), HttpStatus.OK);
     }
 
     @GetMapping(CTRL_CLASSROOMS + CTRL_NEW)
@@ -93,7 +112,7 @@ public class MetaCampusController {
 
         model.addAttribute(MODEL_ERROR, error);
 
-        return "classroom-form";
+        return VIEW_CLASSROOM_FORM;
     }
 
     @PostMapping(CTRL_CLASSROOMS + CTRL_NEW)
@@ -114,7 +133,7 @@ public class MetaCampusController {
 
         model.addAttribute(MODEL_EVENTS, eventService.getAllEvents());
 
-        return "events";
+        return VIEW_EVENTS;
     }
 
     @GetMapping(CTRL_EVENTS + CTRL_NEW)
@@ -126,7 +145,7 @@ public class MetaCampusController {
 
         model.addAttribute(MODEL_ERROR, error);
 
-        return "event-form";
+        return VIEW_EVENT_FORM;
     }
 
     @PostMapping(CTRL_EVENTS + CTRL_NEW)
@@ -147,7 +166,7 @@ public class MetaCampusController {
 
         model.addAttribute(MODEL_LECTURES, lectureService.getAllLectures());
 
-        return "lectures";
+        return VIEW_LECTURES;
     }
 
     @GetMapping(CTRL_LECTURES + CTRL_NEW)
@@ -161,7 +180,7 @@ public class MetaCampusController {
 
         model.addAttribute(MODEL_ERROR, error);
 
-        return "lecture-form";
+        return VIEW_LECTURE_FORM;
     }
 
     @PostMapping(CTRL_LECTURES + CTRL_NEW)
@@ -189,7 +208,7 @@ public class MetaCampusController {
 
         model.addAttribute(MODEL_METAVERSES, metaverseService.getAllMetaverses());
 
-        return "metaverses";
+        return VIEW_METAVERSES;
     }
 
     @GetMapping(CTRL_METAVERSES + CTRL_NEW)
@@ -199,7 +218,7 @@ public class MetaCampusController {
 
         model.addAttribute(MODEL_ERROR, error);
 
-        return "metaverse-form";
+        return VIEW_METAVERSE_FORM;
     }
 
     @PostMapping(CTRL_METAVERSES + CTRL_NEW)
@@ -219,7 +238,7 @@ public class MetaCampusController {
 
         model.addAttribute(MODEL_OFFICES, officeService.getAllOffices());
 
-        return "offices";
+        return VIEW_OFFICES;
     }
 
     @GetMapping(CTRL_OFFICES + CTRL_NEW)
@@ -231,7 +250,7 @@ public class MetaCampusController {
 
         model.addAttribute(MODEL_ERROR, error);
 
-        return "office-form";
+        return VIEW_OFFICE_FORM;
     }
 
     @PostMapping(CTRL_OFFICES + CTRL_NEW)
@@ -252,7 +271,7 @@ public class MetaCampusController {
 
         model.addAttribute(MODEL_PEOPLE, personService.getAllPeople());
 
-        return "people";
+        return VIEW_PEOPLE;
     }
 
     @GetMapping(CTRL_PEOPLE + CTRL_NEW)
@@ -266,7 +285,7 @@ public class MetaCampusController {
 
         model.addAttribute(MODEL_ERROR, error);
 
-        return "person-form";
+        return VIEW_PERSON_FORM;
     }
 
     @PostMapping(CTRL_PEOPLE + CTRL_NEW)
@@ -286,4 +305,10 @@ public class MetaCampusController {
 
         return "redirect:" + CTRL_PEOPLE + CTRL_NEW + "?error";
     }
+
+    @GetMapping("/resources/get/{metaverseName}")
+    public ResponseEntity<List<Resource>> resourcesFromMetaverse(@PathVariable("metaverseName") String metaverseName) {
+        return new ResponseEntity<>(resourceService.getAllResourcesFromMetaverse(metaverseName), HttpStatus.OK);
+    }
 }
+*/

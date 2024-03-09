@@ -3,9 +3,7 @@ package metacampus2.initializer;
 import metacampus2.model.Classroom;
 import metacampus2.model.Metaverse;
 import metacampus2.model.Office;
-import metacampus2.service.ClassroomService;
-import metacampus2.service.MetaverseService;
-import metacampus2.service.OfficeService;
+import metacampus2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -17,13 +15,17 @@ import java.util.Map;
 
 @Component
 public class EntitiesInitializer implements CommandLineRunner {
-    @Autowired
-    private MetaverseService metaverseService;
-    @Autowired
-    private ClassroomService classroomService;
-    @Autowired
-    private OfficeService officeService;
+    private IMetaverseService metaverseService;
+    private IClassroomService classroomService;
+    private IOfficeService officeService;
 
+    @Autowired
+    public EntitiesInitializer(IMetaverseService metaverseService, IClassroomService classroomService,
+                               IOfficeService officeService) {
+        this.metaverseService = metaverseService;
+        this.classroomService = classroomService;
+        this.officeService = officeService;
+    }
 
     @Override
     public void run(String... args) throws Exception {

@@ -10,9 +10,12 @@ import java.util.Optional;
 
 @Service
 public class ClassroomService implements IClassroomService {
+    private ClassroomRepository classroomRepository;
 
     @Autowired
-    private ClassroomRepository classroomRepository;
+    public ClassroomService(ClassroomRepository classroomRepository) {
+        this.classroomRepository = classroomRepository;
+    }
 
     @Override
     public void addNewClassroom(Classroom classroom) {

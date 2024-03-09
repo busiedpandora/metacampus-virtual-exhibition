@@ -10,10 +10,13 @@ import java.util.List;
 
 @Service
 public class MetaverseService implements IMetaverseService {
-
-    @Autowired
     private MetaverseRepository metaverseRepository;
 
+
+    @Autowired
+    public MetaverseService(MetaverseRepository metaverseRepository) {
+        this.metaverseRepository = metaverseRepository;
+    }
 
     @Override
     public void addNewMetaverse(Metaverse metaverse) {

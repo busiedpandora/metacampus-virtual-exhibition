@@ -10,9 +10,13 @@ import java.util.List;
 
 @Service
 public class PersonService implements IPersonService {
-    @Autowired
     private PersonRepository personRepository;
 
+
+    @Autowired
+    public PersonService(PersonRepository personRepository) {
+        this.personRepository = personRepository;
+    }
 
     @Override
     public void addNewPerson(Person person) {

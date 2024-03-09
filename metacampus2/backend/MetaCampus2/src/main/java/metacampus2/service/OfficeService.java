@@ -10,10 +10,13 @@ import java.util.List;
 
 @Service
 public class OfficeService implements IOfficeService {
-
-    @Autowired
     private OfficeRepository officeRepository;
 
+
+    @Autowired
+    public OfficeService(OfficeRepository officeRepository) {
+        this.officeRepository = officeRepository;
+    }
 
     @Override
     public void addNewOffice(Office office) {
