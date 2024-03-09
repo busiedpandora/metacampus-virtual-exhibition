@@ -1,0 +1,15 @@
+project:
+  name: "MetaCampus"
+
+startupEntities:
+  - type: "metaverse"
+    name: "USI"
+  - type: "classroom"
+    number: "B3.05"
+    metaverse: "Campus Est SUPSI"
+  - type: "classroom"
+    number: "B1.12"
+    metaverse: "Campus Est SUPSI"
+  - type: "office"
+    number: "B5.01"
+    metaverse: "Campus Est SUPSI"

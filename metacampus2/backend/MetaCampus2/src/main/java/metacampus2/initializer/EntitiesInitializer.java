@@ -35,28 +35,32 @@ public class EntitiesInitializer implements CommandLineRunner {
                 .getClassLoader()
                 .getResourceAsStream("static/project-data.yml");
 
-        Map<String, Object> data = yaml.load(inputStream);
+        if(inputStream != null) {
+            Map<String, Object> data = yaml.load(inputStream);
 
-        List<Map<String, Object>> entities = (List<Map<String, Object>>) data.get("startupEntities");
+            List<Map<String, Object>> entities = (List<Map<String, Object>>) data.get("startupEntities");
 
-        for(Map<String, Object> entity : entities) {
-            String type = (String) entity.get("type");
+            if(entities != null) {
+                for (Map<String, Object> entity : entities) {
+                    String type = (String) entity.get("type");
 
-            switch (type) {
-                case "metaverse":
-                    createMetaverse(entity);
-                    break;
-                case "classroom":
-                    createClassroom(entity);
-                    break;
-                case "office":
-                    createOffice(entity);
-                    break;
+                    switch (type) {
+                        case "metaverse":
+                            createMetaverse(entity);
+                            break;
+                        case "classroom":
+                            createClassroom(entity);
+                            break;
+                        case "office":
+                            createOffice(entity);
+                            break;
+                    }
+                }
             }
         }
     }
 
-    private void createMetaverse(Map<String, Object> m) {
+    protected void createMetaverse(Map<String, Object> m) {
         String name = (String) m.get("name");
 
         if(metaverseService.getMetaverse(name) == null) {
@@ -67,7 +71,7 @@ public class EntitiesInitializer implements CommandLineRunner {
         }
     }
 
-    private void createClassroom(Map<String, Object> c) {
+    protected void createClassroom(Map<String, Object> c) {
         String number = (String) c.get("number");
         String metaverseName = (String) c.get("metaverse");
         Metaverse metaverse = metaverseService.getMetaverse(metaverseName);
@@ -82,7 +86,7 @@ public class EntitiesInitializer implements CommandLineRunner {
         }
     }
 
-    private void createOffice(Map<String, Object> o) {
+    protected void createOffice(Map<String, Object> o) {
         String number = (String) o.get("number");
         String metaverseName = (String) o.get("metaverse");
         Metaverse metaverse = metaverseService.getMetaverse(metaverseName);
