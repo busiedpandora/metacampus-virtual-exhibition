@@ -20,6 +20,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Date time</th>
                 <th scope="col">Metaverse</th>
+                <th scope="col">Location</th>
             </tr>
             </thead>
             <tbody>
@@ -28,6 +29,9 @@
                 <td th:text="${event.name}"></td>
                 <td th:text="${#temporals.format(event.dateTime, 'HH:mm dd-MM-yyyy')}"></td>
                 <td th:text="${event.metaverse.name}"></td>
+                <td th:text="'floor: ' + ${event.location.floorNumber}
+                    + ', x position: ' + ${event.location.xPosition}
+                    + ', z position: ' + ${event.location.zPosition}"></td>
             </tr>
             </tbody>
         </table>

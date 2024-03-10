@@ -43,7 +43,7 @@ public class PersonService implements IPersonService {
     }
 
     @Override
-    public List<Person> getAllLecturesFromMetaverse(String metaverseName) {
+    public List<Person> getAllPeopleFromMetaverse(String metaverseName) {
         return personRepository.findAllByMetaverseName(metaverseName);
     }
 }

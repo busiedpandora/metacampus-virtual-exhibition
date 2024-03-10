@@ -1,6 +1,7 @@
 package metacampus2.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,9 @@ public abstract class Resource {
     @JoinColumn(name = "metaverse_id", nullable = false)
     @JsonBackReference
     private Metaverse metaverse;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "location_id")
+    @JsonManagedReference
+    private Location location;
 }

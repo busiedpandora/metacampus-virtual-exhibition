@@ -1,7 +1,6 @@
 package metacampus2.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,11 +22,11 @@ public class Lecture extends Resource {
 
     @ManyToOne
     @JoinColumn(name = "classroom_id", nullable = false)
-    @JsonBackReference
+    @JsonManagedReference
     private Classroom classroom;
 
     @ManyToOne
     @JoinColumn(name = "lecturer_id", nullable = false)
-    @JsonBackReference
+    @JsonManagedReference
     private Person lecturer;
 }

@@ -5,11 +5,16 @@ import metacampus2.model.Office;
 import metacampus2.service.IMetaverseService;
 import metacampus2.service.IOfficeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class OfficeController extends MainController {
@@ -34,6 +39,11 @@ public class OfficeController extends MainController {
         model.addAttribute(MODEL_OFFICES, officeService.getAllOffices());
 
         return VIEW_OFFICES;
+    }
+
+    @GetMapping("/{metaverseName}" + CTRL_OFFICES)
+    public ResponseEntity<List<Office>> offices(@PathVariable("metaverseName") String metaverseName) {
+        return new ResponseEntity<>(officeService.getAllOfficesFromMetaverse(metaverseName), HttpStatus.OK);
     }
 
     @GetMapping(CTRL_OFFICES + CTRL_NEW)

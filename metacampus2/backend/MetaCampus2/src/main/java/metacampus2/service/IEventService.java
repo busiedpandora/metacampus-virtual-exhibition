@@ -9,5 +9,5 @@ public interface IEventService {
     void addNewEvent(Event event);
     Event getEventFromMetaverse(String eventName, LocalDateTime eventDateTime, String metaverseName);
     List<Event> getAllEvents();
-    List<Event> getAllEventsFromMetaverse(String metaverseName);
+    List<Event> getAllEventsFromMetaverseStartingFromCurrentTime(String metaverseName);
 }

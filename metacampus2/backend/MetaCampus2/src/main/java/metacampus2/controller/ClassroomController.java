@@ -2,6 +2,7 @@ package metacampus2.controller;
 
 import metacampus2.model.Classroom;
 import metacampus2.model.MenuItem;
+import metacampus2.model.Metaverse;
 import metacampus2.service.IClassroomService;
 import metacampus2.service.IMetaverseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,9 @@ import java.util.List;
 
 @Controller
 public class ClassroomController extends MainController {
-    private static final String CTRL_CLASSROOMS = "/classrooms";
-    private static final String VIEW_CLASSROOMS = "classrooms";
-    private static final String VIEW_CLASSROOM_FORM = "classroom-form";
+    protected static final String CTRL_CLASSROOMS = "/classrooms";
+    protected static final String VIEW_CLASSROOMS = "classrooms";
+    protected static final String VIEW_CLASSROOM_FORM = "classroom-form";
 
     private IClassroomService classroomService;
     private IMetaverseService metaverseService;
@@ -41,7 +42,7 @@ public class ClassroomController extends MainController {
         return VIEW_CLASSROOMS;
     }
 
-    @GetMapping(CTRL_CLASSROOMS + "/get/{metaverseName}")
+    @GetMapping("/{metaverseName}" + CTRL_CLASSROOMS)
     public ResponseEntity<List<Classroom>> classrooms(@PathVariable("metaverseName") String metaverseName) {
         return new ResponseEntity<>(classroomService.getAllClassroomsFromMetaverse(metaverseName), HttpStatus.OK);
     }
