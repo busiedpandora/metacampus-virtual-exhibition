@@ -1,7 +1,6 @@
 package metacampus2.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +18,6 @@ public class Office extends Resource {
     private String number;
 
     @OneToMany(mappedBy = "office")
-    @JsonManagedReference
+    @JsonBackReference
     private List<Person> people;
 }

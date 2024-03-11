@@ -5,11 +5,16 @@ import metacampus2.model.MenuItem;
 import metacampus2.service.IEventService;
 import metacampus2.service.IMetaverseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class EventController extends MainController {
@@ -34,6 +39,11 @@ public class EventController extends MainController {
         model.addAttribute(MODEL_EVENTS, eventService.getAllEvents());
 
         return VIEW_EVENTS;
+    }
+
+    @GetMapping("/{metaverseName}" + CTRL_EVENTS)
+    public ResponseEntity<List<Event>> events(@PathVariable("metaverseName") String metaverseName) {
+        return new ResponseEntity<>(eventService.getAllEventsFromMetaverseStartingFromCurrentTime(metaverseName), HttpStatus.OK);
     }
 
     @GetMapping(CTRL_EVENTS + CTRL_NEW)

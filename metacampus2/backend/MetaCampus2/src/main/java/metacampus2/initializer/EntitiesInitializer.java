@@ -1,6 +1,7 @@
 package metacampus2.initializer;
 
 import metacampus2.model.Classroom;
+import metacampus2.model.Location;
 import metacampus2.model.Metaverse;
 import metacampus2.model.Office;
 import metacampus2.service.*;
@@ -73,6 +74,10 @@ public class EntitiesInitializer implements CommandLineRunner {
 
     protected void createClassroom(Map<String, Object> c) {
         String number = (String) c.get("number");
+        Map<String, Object> location = (Map<String, Object>) c.get("location");
+        int floorNumber = (int) location.get("floorNumber");
+        int xPosition = (int) location.get("xPosition");
+        int zPosition = (int) location.get("zPosition");
         String metaverseName = (String) c.get("metaverse");
         Metaverse metaverse = metaverseService.getMetaverse(metaverseName);
 
@@ -82,12 +87,22 @@ public class EntitiesInitializer implements CommandLineRunner {
             classroom.setNumber(number);
             classroom.setMetaverse(metaverse);
 
+            Location l = new Location();
+            l.setFloorNumber(floorNumber);
+            l.setXPosition(xPosition);
+            l.setZPosition(zPosition);
+            classroom.setLocation(l);
+
             classroomService.addNewClassroom(classroom);
         }
     }
 
     protected void createOffice(Map<String, Object> o) {
         String number = (String) o.get("number");
+        Map<String, Object> location = (Map<String, Object>) o.get("location");
+        int floorNumber = (int) location.get("floorNumber");
+        int xPosition = (int) location.get("xPosition");
+        int zPosition = (int) location.get("zPosition");
         String metaverseName = (String) o.get("metaverse");
         Metaverse metaverse = metaverseService.getMetaverse(metaverseName);
 
@@ -96,6 +111,12 @@ public class EntitiesInitializer implements CommandLineRunner {
             Office office = new Office();
             office.setNumber(number);
             office.setMetaverse(metaverse);
+
+            Location l = new Location();
+            l.setFloorNumber(floorNumber);
+            l.setXPosition(xPosition);
+            l.setZPosition(zPosition);
+            office.setLocation(l);
 
             officeService.addNewOffice(office);
         }

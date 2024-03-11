@@ -13,6 +13,10 @@ public interface IPersonService {
     List<Person> getAllPeople();
 
     List<Person> getAllLecturers();
+<<<<<<< HEAD
 
     List<Person> getAllLecturesFromMetaverse(String metaverseName);
+=======
+    List<Person> getAllPeopleFromMetaverse(String metaverseName);
+>>>>>>> 950f17aedde35b96d6d853c1e7187eac93f4e347
 }

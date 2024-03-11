@@ -34,8 +34,13 @@ public class LectureService implements ILectureService {
     }
 
     @Override
+<<<<<<< HEAD
     public List<Lecture> getAllLecturesFromMetaverse(String metaverseName) {
         return ILectureRepository.findAllByMetaverseName(metaverseName);
+=======
+    public List<Lecture> getAllLecturesFromMetaverseStartingFromCurrentTime(String metaverseName) {
+        return lectureRepository.findAllByMetaverseStartingFromCurrentTime(metaverseName);
+>>>>>>> 950f17aedde35b96d6d853c1e7187eac93f4e347
     }
 }
 

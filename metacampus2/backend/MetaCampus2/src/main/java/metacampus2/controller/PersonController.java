@@ -8,12 +8,16 @@ import metacampus2.service.IMetaverseService;
 import metacampus2.service.IOfficeService;
 import metacampus2.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -42,6 +46,11 @@ public class PersonController extends MainController {
         model.addAttribute(MODEL_PEOPLE, personService.getAllPeople());
 
         return VIEW_PEOPLE;
+    }
+
+    @GetMapping("/{metaverseName}" + CTRL_PEOPLE)
+    public ResponseEntity<List<Person>> people(@PathVariable("metaverseName") String metaverseName) {
+        return new ResponseEntity<>(personService.getAllPeopleFromMetaverse(metaverseName), HttpStatus.OK);
     }
 
     @GetMapping(CTRL_PEOPLE + CTRL_NEW)

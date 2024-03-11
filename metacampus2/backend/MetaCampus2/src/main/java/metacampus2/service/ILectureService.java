@@ -12,8 +12,12 @@ public interface ILectureService {
     Lecture getLectureFromMetaverse(String lectureName, LocalDateTime lectureDateTime, String metaverseName);
 
     List<Lecture> getAllLectures();
+<<<<<<< HEAD
 
     List<Lecture> getAllLecturesFromMetaverse(String metaverseName);
+=======
+    List<Lecture> getAllLecturesFromMetaverseStartingFromCurrentTime(String metaverseName);
+>>>>>>> 950f17aedde35b96d6d853c1e7187eac93f4e347
 }
 
 

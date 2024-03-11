@@ -1,6 +1,6 @@
 package metacampus2.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +29,6 @@ public class Person extends Resource {
 
     @ManyToOne
     @JoinColumn(name = "office_id", nullable = true)
-    @JsonBackReference
+    @JsonManagedReference
     private Office office;
 }

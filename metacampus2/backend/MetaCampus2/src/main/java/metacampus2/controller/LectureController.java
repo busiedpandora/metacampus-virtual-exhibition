@@ -8,12 +8,16 @@ import metacampus2.service.ILectureService;
 import metacampus2.service.IMetaverseService;
 import metacampus2.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -47,6 +51,12 @@ public class LectureController extends MainController {
         return VIEW_LECTURES;
     }
 
+    @GetMapping("/{metaverseName}" + CTRL_LECTURES)
+    public ResponseEntity<List<Lecture>> lectures(@PathVariable("metaverseName") String metaverseName) {
+        return new ResponseEntity<>(lectureService.getAllLecturesFromMetaverseStartingFromCurrentTime(metaverseName),
+                HttpStatus.OK);
+    }
+
     @GetMapping(CTRL_LECTURES + CTRL_NEW)
     public String lectureForm(Model model,
                               @RequestParam(value = "error", required = false) String error) {
@@ -72,6 +82,8 @@ public class LectureController extends MainController {
         lecture.setMetaverse(metaverse);
         if (lectureService.getLectureFromMetaverse(lecture.getName(), lecture.getDateTime(),
                 lecture.getMetaverse().getName()) == null) {
+            lecture.setLocation(lecture.getClassroom().getLocation());
+
             lectureService.addNewLecture(lecture);
 
             return "redirect:" + CTRL_LECTURES;
