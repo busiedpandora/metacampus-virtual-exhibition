@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface LectureRepository extends JpaRepository<Lecture, Long> {
+public interface ILectureRepository extends JpaRepository<Lecture, Long> {
     Lecture findByNameAndDateTimeAndMetaverseName(String lectureName, LocalDateTime lectureDateTime, String metaverseName);
     List<Lecture> findAllByMetaverseName(String metaverseName);
 }

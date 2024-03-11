@@ -2,7 +2,7 @@ package metacampus2.service;
 
 import metacampus2.model.Person;
 import metacampus2.model.Role;
-import metacampus2.repository.PersonRepository;
+import metacampus2.repository.IPersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,33 +10,33 @@ import java.util.List;
 
 @Service
 public class PersonService implements IPersonService {
-    private PersonRepository personRepository;
+    private IPersonRepository IPersonRepository;
 
 
     @Autowired
-    public PersonService(PersonRepository personRepository) {
-        this.personRepository = personRepository;
+    public PersonService(IPersonRepository IPersonRepository) {
+        this.IPersonRepository = IPersonRepository;
     }
 
     @Override
     public void addNewPerson(Person person) {
-        personRepository.save(person);
+        IPersonRepository.save(person);
     }
 
     @Override
     public Person getPersonFromMetaverse(String personFirstName, String personLastName, String personCellphone, String metaverseName) {
-        return personRepository.findByFirstNameAndLastNameAndCellphoneAndMetaverseName(personFirstName,
+        return IPersonRepository.findByFirstNameAndLastNameAndCellphoneAndMetaverseName(personFirstName,
                 personLastName, personCellphone, metaverseName);
     }
 
     @Override
     public List<Person> getAllPeople() {
-        return personRepository.findAll();
+        return IPersonRepository.findAll();
     }
 
     @Override
     public List<Person> getAllLecturers() {
-        return personRepository.findAll()
+        return IPersonRepository.findAll()
                 .stream()
                 .filter(p -> p.getRole() == Role.LECTURER)
                 .toList();
@@ -44,6 +44,6 @@ public class PersonService implements IPersonService {
 
     @Override
     public List<Person> getAllLecturesFromMetaverse(String metaverseName) {
-        return personRepository.findAllByMetaverseName(metaverseName);
+        return IPersonRepository.findAllByMetaverseName(metaverseName);
     }
 }

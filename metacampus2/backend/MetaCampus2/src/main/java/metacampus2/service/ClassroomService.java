@@ -1,39 +1,38 @@
 package metacampus2.service;
 
 import metacampus2.model.*;
-import metacampus2.repository.ClassroomRepository;
+import metacampus2.repository.IClassroomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ClassroomService implements IClassroomService {
-    private ClassroomRepository classroomRepository;
+    private IClassroomRepository IClassroomRepository;
 
     @Autowired
-    public ClassroomService(ClassroomRepository classroomRepository) {
-        this.classroomRepository = classroomRepository;
+    public ClassroomService(IClassroomRepository IClassroomRepository) {
+        this.IClassroomRepository = IClassroomRepository;
     }
 
     @Override
     public void addNewClassroom(Classroom classroom) {
-        classroomRepository.save(classroom);
+        IClassroomRepository.save(classroom);
     }
 
     @Override
     public Classroom getClassroomFromMetaverse(String classroomNumber, String metaverseName) {
-        return classroomRepository.findByNumberAndMetaverseName(classroomNumber, metaverseName);
+        return IClassroomRepository.findByNumberAndMetaverseName(classroomNumber, metaverseName);
     }
 
     @Override
     public List<Classroom> getAllClassrooms() {
-        return classroomRepository.findAll();
+        return IClassroomRepository.findAll();
     }
 
     @Override
     public List<Classroom> getAllClassroomsFromMetaverse(String metaverseName) {
-        return classroomRepository.findAllByMetaverseName(metaverseName);
+        return IClassroomRepository.findAllByMetaverseName(metaverseName);
     }
 }

@@ -45,7 +45,7 @@ public class MetaverseController extends MainController {
 
     @PostMapping(CTRL_METAVERSES + CTRL_NEW)
     public String metaverse(Metaverse metaverse) {
-        if(metaverseService.getMetaverse(metaverse.getName()) == null) {
+        if (metaverseService.getMetaverse(metaverse.getName()) == null) {
             metaverseService.addNewMetaverse(metaverse);
 
             return "redirect:" + CTRL_METAVERSES;

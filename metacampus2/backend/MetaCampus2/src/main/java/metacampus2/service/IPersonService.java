@@ -6,9 +6,13 @@ import java.util.List;
 
 public interface IPersonService {
     void addNewPerson(Person person);
+
     Person getPersonFromMetaverse(String personFirstName, String personLastName,
                                   String personCellphone, String metaverseName);
+
     List<Person> getAllPeople();
+
     List<Person> getAllLecturers();
+
     List<Person> getAllLecturesFromMetaverse(String metaverseName);
 }

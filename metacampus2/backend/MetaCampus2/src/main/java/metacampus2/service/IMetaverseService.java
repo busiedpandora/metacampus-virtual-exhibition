@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface IMetaverseService {
     void addNewMetaverse(Metaverse metaverse);
+
     Metaverse getMetaverse(String name);
+
     List<Metaverse> getAllMetaverses();
 }
 

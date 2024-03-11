@@ -1,7 +1,7 @@
 package metacampus2.service;
 
 import metacampus2.model.Event;
-import metacampus2.repository.EventRepository;
+import metacampus2.repository.IEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,32 +10,32 @@ import java.util.List;
 
 @Service
 public class EventService implements IEventService {
-    private EventRepository eventRepository;
+    private IEventRepository IEventRepository;
 
 
     @Autowired
-    public EventService(EventRepository eventRepository) {
-        this.eventRepository = eventRepository;
+    public EventService(IEventRepository IEventRepository) {
+        this.IEventRepository = IEventRepository;
     }
 
     @Override
     public void addNewEvent(Event event) {
-        eventRepository.save(event);
+        IEventRepository.save(event);
     }
 
     @Override
     public Event getEventFromMetaverse(String eventName, LocalDateTime eventDateTime, String metaverseName) {
-        return eventRepository.findByNameAndDateTimeAndMetaverseName(eventName, eventDateTime, metaverseName);
+        return IEventRepository.findByNameAndDateTimeAndMetaverseName(eventName, eventDateTime, metaverseName);
     }
 
     @Override
     public List<Event> getAllEvents() {
-        return eventRepository.findAll();
+        return IEventRepository.findAll();
     }
 
     @Override
     public List<Event> getAllEventsFromMetaverse(String metaverseName) {
-        return eventRepository.findAllByMetaverseName(metaverseName);
+        return IEventRepository.findAllByMetaverseName(metaverseName);
     }
 }
 

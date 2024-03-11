@@ -35,12 +35,12 @@ public class EntitiesInitializer implements CommandLineRunner {
                 .getClassLoader()
                 .getResourceAsStream("static/project-data.yml");
 
-        if(inputStream != null) {
+        if (inputStream != null) {
             Map<String, Object> data = yaml.load(inputStream);
 
             List<Map<String, Object>> entities = (List<Map<String, Object>>) data.get("startupEntities");
 
-            if(entities != null) {
+            if (entities != null) {
                 for (Map<String, Object> entity : entities) {
                     String type = (String) entity.get("type");
 
@@ -63,7 +63,7 @@ public class EntitiesInitializer implements CommandLineRunner {
     protected void createMetaverse(Map<String, Object> m) {
         String name = (String) m.get("name");
 
-        if(metaverseService.getMetaverse(name) == null) {
+        if (metaverseService.getMetaverse(name) == null) {
             Metaverse metaverse = new Metaverse();
             metaverse.setName((String) m.get("name"));
 
@@ -76,7 +76,7 @@ public class EntitiesInitializer implements CommandLineRunner {
         String metaverseName = (String) c.get("metaverse");
         Metaverse metaverse = metaverseService.getMetaverse(metaverseName);
 
-        if(metaverse != null &&
+        if (metaverse != null &&
                 classroomService.getClassroomFromMetaverse(number, metaverseName) == null) {
             Classroom classroom = new Classroom();
             classroom.setNumber(number);
@@ -91,7 +91,7 @@ public class EntitiesInitializer implements CommandLineRunner {
         String metaverseName = (String) o.get("metaverse");
         Metaverse metaverse = metaverseService.getMetaverse(metaverseName);
 
-        if(metaverse != null &&
+        if (metaverse != null &&
                 officeService.getOfficeFromMetaverse(number, metaverseName) == null) {
             Office office = new Office();
             office.setNumber(number);

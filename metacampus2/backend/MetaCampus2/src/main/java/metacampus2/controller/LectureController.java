@@ -64,13 +64,13 @@ public class LectureController extends MainController {
     @PostMapping(CTRL_LECTURES + CTRL_NEW)
     public String lecture(Lecture lecture) {
         Metaverse metaverse = lecture.getClassroom().getMetaverse();
-        if(!Objects.equals(metaverse.getId(),
+        if (!Objects.equals(metaverse.getId(),
                 lecture.getLecturer().getMetaverse().getId())) {
             return "redirect:" + CTRL_LECTURES + CTRL_NEW + "?error";
         }
 
         lecture.setMetaverse(metaverse);
-        if(lectureService.getLectureFromMetaverse(lecture.getName(), lecture.getDateTime(),
+        if (lectureService.getLectureFromMetaverse(lecture.getName(), lecture.getDateTime(),
                 lecture.getMetaverse().getName()) == null) {
             lectureService.addNewLecture(lecture);
 

@@ -1,7 +1,7 @@
 package metacampus2.service;
 
 import metacampus2.model.Resource;
-import metacampus2.repository.ResourceRepository;
+import metacampus2.repository.IResourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,21 +9,21 @@ import java.util.List;
 
 @Service
 public class ResourceService implements IResourceService {
-    private ResourceRepository resourceRepository;
+    private IResourceRepository IResourceRepository;
 
 
     @Autowired
-    public ResourceService(ResourceRepository resourceRepository) {
-        this.resourceRepository = resourceRepository;
+    public ResourceService(IResourceRepository IResourceRepository) {
+        this.IResourceRepository = IResourceRepository;
     }
 
     @Override
     public List<Resource> getAllResources() {
-        return resourceRepository.findAll();
+        return IResourceRepository.findAll();
     }
 
     @Override
     public List<Resource> getAllResourcesFromMetaverse(String metaverseName) {
-        return resourceRepository.findAllByMetaverseName(metaverseName);
+        return IResourceRepository.findAllByMetaverseName(metaverseName);
     }
 }

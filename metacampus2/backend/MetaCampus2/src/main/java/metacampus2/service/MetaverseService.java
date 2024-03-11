@@ -1,7 +1,7 @@
 package metacampus2.service;
 
 import metacampus2.model.Metaverse;
-import metacampus2.repository.MetaverseRepository;
+import metacampus2.repository.IMetaverseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,27 +10,27 @@ import java.util.List;
 
 @Service
 public class MetaverseService implements IMetaverseService {
-    private MetaverseRepository metaverseRepository;
+    private IMetaverseRepository IMetaverseRepository;
 
 
     @Autowired
-    public MetaverseService(MetaverseRepository metaverseRepository) {
-        this.metaverseRepository = metaverseRepository;
+    public MetaverseService(IMetaverseRepository IMetaverseRepository) {
+        this.IMetaverseRepository = IMetaverseRepository;
     }
 
     @Override
     public void addNewMetaverse(Metaverse metaverse) {
-        metaverseRepository.save(metaverse);
+        IMetaverseRepository.save(metaverse);
     }
 
     @Override
     public Metaverse getMetaverse(String name) {
-        return metaverseRepository.findByName(name);
+        return IMetaverseRepository.findByName(name);
     }
 
     @Override
     public List<Metaverse> getAllMetaverses() {
-        return metaverseRepository.findAll();
+        return IMetaverseRepository.findAll();
     }
 }
 
