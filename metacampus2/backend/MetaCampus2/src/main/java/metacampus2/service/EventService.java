@@ -33,14 +33,9 @@ public class EventService implements IEventService {
         return IEventRepository.findAll();
     }
 
-    @Override
-<<<<<<< HEAD
-    public List<Event> getAllEventsFromMetaverse(String metaverseName) {
-        return IEventRepository.findAllByMetaverseName(metaverseName);
-=======
     public List<Event> getAllEventsFromMetaverseStartingFromCurrentTime(String metaverseName) {
-        return eventRepository.findAllByMetaverseNameStartingFromCurrentTime(metaverseName);
->>>>>>> 950f17aedde35b96d6d853c1e7187eac93f4e347
+        return IEventRepository.findAllByMetaverseNameStartingFromCurrentTime(metaverseName);
+
     }
 }
 

@@ -11,10 +11,7 @@ public interface IEventService {
     Event getEventFromMetaverse(String eventName, LocalDateTime eventDateTime, String metaverseName);
 
     List<Event> getAllEvents();
-<<<<<<< HEAD
 
-    List<Event> getAllEventsFromMetaverse(String metaverseName);
-=======
     List<Event> getAllEventsFromMetaverseStartingFromCurrentTime(String metaverseName);
->>>>>>> 950f17aedde35b96d6d853c1e7187eac93f4e347
+
 }
