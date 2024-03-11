@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class CoordinatesManager : MonoBehaviour
 {
-    [SerializeField] private GameObject floor0Coordinate;
-    [SerializeField] private GameObject floor1Coordinate;
-    [SerializeField] private GameObject floor2Coordinate;
+    [SerializeField] private GameObject floor0CoordinateObject;
+    [SerializeField] private GameObject floor1CoordinateObject;
+    [SerializeField] private GameObject floor2CoordinateObject;
+    [SerializeField] private GameObject floor3CoordinateObject;
+    [SerializeField] private GameObject floor4CoordinateObject;
+    [SerializeField] private GameObject floor5CoordinateObject;
 
-    private const float floor0YCoordinate = 1.5f;
-    private const float floor1YCoordinate = 4.5f;
-    private const float floor2YCoordinate = 7.5f;
-    private const float floor3YCoordinate = 10.5f;
+    private const float floor0YCoordinate = 2.5f;
+    private const float floor1YCoordinate = 6.5f;
+    private const float floor2YCoordinate = 9.5f;
+    private const float floor3YCoordinate = 12.5f;
+    private const float floor4YCoordinate = 15.5f;
+    private const float floor5YCoordinate = 18.5f;
 
     private const int minFloorNumber = 0;
-    private const int maxFloorNumber = 2;
+    private const int maxFloorNumber = 5;
 
     private const int minXCoordinate = -10;
     private const int maxXCoordinate = 10;
@@ -54,35 +59,36 @@ public class CoordinatesManager : MonoBehaviour
 
         coordinates = new GameObject[floorCount][][];
 
-        for(int floorNumber = 0;  floorNumber < floorCount; floorNumber++)
+        for(int floorIndex = 0;  floorIndex < floorCount; floorIndex++)
         {
-            coordinates[floorNumber] = new GameObject[xSize][];
+            coordinates[floorIndex] = new GameObject[xSize][];
 
-            float floorYCoordinate = GetFloorYCoordinate(floorNumber);
+            float floorYCoordinate = GetFloorYCoordinate(floorIndex);
 
-            GameObject floorObject = GameObject.Find($"/Campus/{minFloorNumber + floorNumber}");
+            GameObject floorObject = GameObject.Find($"/Campus/{minFloorNumber + floorIndex}");
 
             for (int x = 0; x < xSize; x++)
             {
-                coordinates[floorNumber][x] = new GameObject[zSize];
+                coordinates[floorIndex][x] = new GameObject[zSize];
 
                 for(int z = 0;  z < zSize; z++)
                 {
                     Vector3 position = new Vector3(minXCoordinate + x, floorYCoordinate, minZCoordinate + z);
-                    GameObject coordinate = Instantiate(floor0Coordinate, position, Quaternion.identity);
+                   
+                    GameObject coordinate = Instantiate(GetFloorObject(floorIndex), position, Quaternion.identity);
 
                     //Set floorObject as parent
                     coordinate.transform.parent = floorObject.transform;
 
-                    coordinates[floorNumber][x][z] = coordinate;
+                    coordinates[floorIndex][x][z] = coordinate;
                 }
             }
         }
     }
 
-    private float GetFloorYCoordinate(int floorNumber)
+    private float GetFloorYCoordinate(int floorIndex)
     {
-        switch (floorNumber)
+        switch (floorIndex)
         {
             case 0:
                 return floor0YCoordinate;
@@ -92,8 +98,33 @@ public class CoordinatesManager : MonoBehaviour
                 return floor2YCoordinate;
             case 3:
                 return floor3YCoordinate;
+            case 4:
+                return floor4YCoordinate;
+            case 5:
+                return floor5YCoordinate;
             default: 
                 return 0f;
+        }
+    }
+
+    private GameObject GetFloorObject(int floorIndex)
+    {
+        switch (floorIndex)
+        {
+            case 0:
+                return floor0CoordinateObject;
+            case 1:
+                return floor1CoordinateObject;
+            case 2:
+                return floor2CoordinateObject;
+            case 3:
+                return floor3CoordinateObject;
+            case 4:
+                return floor4CoordinateObject;
+            case 5:
+                return floor5CoordinateObject;    
+            default:
+                return floor0CoordinateObject;
         }
     }
 
