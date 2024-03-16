@@ -1,3 +1,4 @@
+/*
 package metacampus2.repository;
 
 import metacampus2.model.Resource;
@@ -10,3 +11,4 @@ import java.util.List;
 public interface ResourceRepository extends JpaRepository<Resource, Long> {
     List<Resource> findAllByMetaverseName(String metaverseName);
 }
+*/

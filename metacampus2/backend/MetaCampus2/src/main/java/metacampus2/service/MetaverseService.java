@@ -1,7 +1,7 @@
 package metacampus2.service;
 
 import metacampus2.model.Metaverse;
-import metacampus2.repository.MetaverseRepository;
+import metacampus2.repository.IMetaverseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +10,11 @@ import java.util.List;
 
 @Service
 public class MetaverseService implements IMetaverseService {
-    private MetaverseRepository metaverseRepository;
+    private IMetaverseRepository metaverseRepository;
 
 
     @Autowired
-    public MetaverseService(MetaverseRepository metaverseRepository) {
+    public MetaverseService(IMetaverseRepository metaverseRepository) {
         this.metaverseRepository = metaverseRepository;
     }
 

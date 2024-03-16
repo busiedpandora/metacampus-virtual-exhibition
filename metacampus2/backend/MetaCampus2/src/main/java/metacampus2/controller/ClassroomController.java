@@ -1,3 +1,4 @@
+/*
 package metacampus2.controller;
 
 import metacampus2.model.Classroom;
@@ -71,3 +72,4 @@ public class ClassroomController extends MainController {
         return "redirect:" + CTRL_CLASSROOMS + CTRL_NEW + "?error";
     }
 }
+*/

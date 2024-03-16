@@ -1,3 +1,4 @@
+/*
 package metacampus2.repository;
 
 import metacampus2.model.Event;
@@ -14,3 +15,4 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Query("SELECT e FROM Event e WHERE e.dateTime >= CURRENT_TIMESTAMP")
     List<Event> findAllByMetaverseNameStartingFromCurrentTime(String metaverseName);
 }
+*/

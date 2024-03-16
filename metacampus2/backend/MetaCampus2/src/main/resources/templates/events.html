@@ -29,9 +29,9 @@
                 <td th:text="${event.name}"></td>
                 <td th:text="${#temporals.format(event.dateTime, 'HH:mm dd-MM-yyyy')}"></td>
                 <td th:text="${event.metaverse.name}"></td>
-                <td th:text="'floor: ' + ${event.location.floorNumber}
-                    + ', x position: ' + ${event.location.xPosition}
-                    + ', z position: ' + ${event.location.zPosition}"></td>
+                <td th:text="'floor: ' + ${event.getCoordinate.getY}
+                    + ', x position: ' + ${event.getCoordinate.xPosition}
+                    + ', z position: ' + ${event.getCoordinate.zPosition}"></td>
             </tr>
             </tbody>
         </table>

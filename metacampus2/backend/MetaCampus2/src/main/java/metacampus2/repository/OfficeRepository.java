@@ -1,3 +1,4 @@
+/*
 package metacampus2.repository;
 
 import metacampus2.model.Office;
@@ -11,3 +12,4 @@ public interface OfficeRepository extends JpaRepository<Office, Long> {
     Office findByNumberAndMetaverseName(String officeNumber, String metaverseName);
     List<Office> findAllByMetaverseName(String metaverseName);
 }
+*/

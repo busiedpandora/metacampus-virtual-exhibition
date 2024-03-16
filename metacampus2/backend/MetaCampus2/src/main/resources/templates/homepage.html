@@ -26,9 +26,9 @@
                         <td>Classroom</td>
                         <td th:text="${classroom.number}"></td>
                         <td th:text="${classroom.metaverse.name}"></td>
-                        <td th:text="'floor: ' + ${classroom.location.floorNumber}
-                        + ', x position: ' + ${classroom.location.xPosition}
-                        + ', z position: ' + ${classroom.location.zPosition}"></td>
+                        <td th:text="'floor: ' + ${classroom.getCoordinate.getY}
+                        + ', x position: ' + ${classroom.getCoordinate.xPosition}
+                        + ', z position: ' + ${classroom.getCoordinate.zPosition}"></td>
                     </tr>
 
                     <tr th:with="rowNumber=${classrooms.size()}"
@@ -38,9 +38,9 @@
                         <td th:text="${event.name
                         + ' (' + #temporals.format(event.dateTime, 'HH:mm dd-MM-yyyy') + ')'}"></td>
                         <td th:text="${event.metaverse.name}"></td>
-                        <td th:text="'floor: ' + ${event.location.floorNumber}
-                        + ', x position: ' + ${event.location.xPosition}
-                        + ', z position: ' + ${event.location.zPosition}"></td>
+                        <td th:text="'floor: ' + ${event.getCoordinate.getY}
+                        + ', x position: ' + ${event.getCoordinate.xPosition}
+                        + ', z position: ' + ${event.getCoordinate.zPosition}"></td>
                     </tr>
 
                     <tr th:with="rowNumber=${classrooms.size() + events.size()}"
@@ -50,9 +50,9 @@
                         <td th:text="${lecture.name
                         + ' (' + #temporals.format(lecture.dateTime, 'HH:mm dd-MM-yyyy') + ')'}"></td>
                         <td th:text="${lecture.metaverse.name}"></td>
-                        <td th:text="'floor: ' + ${lecture.location.floorNumber}
-                        + ', x position: ' + ${lecture.location.xPosition}
-                        + ', z position: ' + ${lecture.location.zPosition}"></td>
+                        <td th:text="'floor: ' + ${lecture.getCoordinate.getY}
+                        + ', x position: ' + ${lecture.getCoordinate.xPosition}
+                        + ', z position: ' + ${lecture.getCoordinate.zPosition}"></td>
                     </tr>
 
                     <tr th:with="rowNumber=${classrooms.size() + events.size() + lectures.size()}"
@@ -61,9 +61,9 @@
                         <td>Office</td>
                         <td th:text="${office.number}"></td>
                         <td th:text="${office.metaverse.name}"></td>
-                        <td th:text="'floor: ' + ${office.location.floorNumber}
-                        + ', x position: ' + ${office.location.xPosition}
-                        + ', z position: ' + ${office.location.zPosition}"></td>
+                        <td th:text="'floor: ' + ${office.getCoordinate.getY}
+                        + ', x position: ' + ${office.getCoordinate.xPosition}
+                        + ', z position: ' + ${office.getCoordinate.zPosition}"></td>
                     </tr>
 
                     <tr th:with="rowNumber=${classrooms.size() + events.size() + lectures.size() + offices.size()}"
@@ -72,9 +72,9 @@
                         <td>Person</td>
                         <td th:text="${person.firstName + ' ' + person.lastName + ' - ' + person.role}"></td>
                         <td th:text="${person.metaverse.name}"></td>
-                        <td th:text="'floor: ' + ${person.location.floorNumber}
-                        + ', x position: ' + ${person.location.xPosition}
-                        + ', z position: ' + ${person.location.zPosition}"></td>
+                        <td th:text="'floor: ' + ${person.getCoordinate.getY}
+                        + ', x position: ' + ${person.getCoordinate.xPosition}
+                        + ', z position: ' + ${person.getCoordinate.zPosition}"></td>
                     </tr>
                 </tbody>
             </table>

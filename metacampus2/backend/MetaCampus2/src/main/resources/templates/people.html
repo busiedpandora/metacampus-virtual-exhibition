@@ -37,9 +37,9 @@
                 <td th:text="${!person.officePhone.isEmpty() ? person.officePhone : '-'}"></td>
                 <td th:text="${person.office != null ? person.office.number : '-'}"></td>
                 <td th:text="${person.metaverse.name}"></td>
-                <td th:text="'floor: ' + ${person.location.floorNumber}
-                    + ', x position: ' + ${person.location.xPosition}
-                    + ', z position: ' + ${person.location.zPosition}"></td>
+                <td th:text="'floor: ' + ${person.getCoordinate.getY}
+                    + ', x position: ' + ${person.getCoordinate.xPosition}
+                    + ', z position: ' + ${person.getCoordinate.zPosition}"></td>
             </tr>
             </tbody>
         </table>

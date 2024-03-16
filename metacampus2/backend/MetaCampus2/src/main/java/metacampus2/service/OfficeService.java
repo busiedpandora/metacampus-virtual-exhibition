@@ -1,3 +1,4 @@
+/*
 package metacampus2.service;
 
 import metacampus2.model.Office;
@@ -39,3 +40,4 @@ public class OfficeService implements IOfficeService {
     }
 }
 
+*/

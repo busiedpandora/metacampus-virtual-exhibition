@@ -27,9 +27,9 @@
                     <th scope="row" th:text="${iterStat.count}"></th>
                     <td th:text="${classroom.number}"></td>
                     <td th:text="${classroom.metaverse.name}"></td>
-                    <td th:text="'floor: ' + ${classroom.location.floorNumber}
-                    + ', x position: ' + ${classroom.location.xPosition}
-                    + ', z position: ' + ${classroom.location.zPosition}"></td>
+                    <td th:text="'floor: ' + ${classroom.getCoordinate.getY}
+                    + ', x position: ' + ${classroom.getCoordinate.xPosition}
+                    + ', z position: ' + ${classroom.getCoordinate.zPosition}"></td>
                 </tr>
                 </tbody>
             </table>

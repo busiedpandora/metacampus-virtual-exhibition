@@ -27,9 +27,9 @@
                 <th scope="row" th:text="${iterStat.count}"></th>
                 <td th:text="${office.number}"></td>
                 <td th:text="${office.metaverse.name}"></td>
-                <td th:text="'floor: ' + ${office.location.floorNumber}
-                    + ', x position: ' + ${office.location.xPosition}
-                    + ', z position: ' + ${office.location.zPosition}"></td>
+                <td th:text="'floor: ' + ${office.getCoordinate.getY}
+                    + ', x position: ' + ${office.getCoordinate.xPosition}
+                    + ', z position: ' + ${office.getCoordinate.zPosition}"></td>
             </tr>
             </tbody>
         </table>

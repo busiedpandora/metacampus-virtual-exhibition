@@ -1,3 +1,4 @@
+/*
 package metacampus2.service;
 
 import metacampus2.model.*;
@@ -11,3 +12,4 @@ public interface IEventService {
     List<Event> getAllEvents();
     List<Event> getAllEventsFromMetaverseStartingFromCurrentTime(String metaverseName);
 }
+*/

@@ -1,6 +1,5 @@
 package metacampus2.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,16 +11,15 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Location {
+public class Coordinate {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private int floorNumber;
-    private int xPosition;
-    private int zPosition;
+    private int x;
+    private int y;
+    private int z;
 
-    @OneToMany(mappedBy = "location")
-    @JsonBackReference
-    private List<Resource> resources;
+    @OneToOne(mappedBy = "coordinates")
+    private Space space;
 }
