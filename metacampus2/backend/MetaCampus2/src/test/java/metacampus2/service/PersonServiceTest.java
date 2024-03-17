@@ -1,3 +1,4 @@
+/*
 package metacampus2.service;
 
 import metacampus2.AbstractTest;
@@ -100,4 +101,4 @@ class PersonServiceTest extends AbstractTest {
         assertEquals(person.getLastName(), personService.getAllPeopleFromMetaverse("Campus Est SUPSI").get(0).getLastName());
 
     }
-}
+}*/

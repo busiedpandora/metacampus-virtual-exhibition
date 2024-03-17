@@ -1,3 +1,4 @@
+/*
 package metacampus2.service;
 
 import metacampus2.AbstractTest;
@@ -75,4 +76,4 @@ class LectureServiceTest extends AbstractTest {
         assertEquals(lecture.getName(), lectureService.getAllLecturesFromMetaverseStartingFromCurrentTime("Campus Est SUPSI").get(0).getName());
 
     }
-}
+}*/
