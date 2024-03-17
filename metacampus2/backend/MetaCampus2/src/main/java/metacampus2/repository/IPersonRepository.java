@@ -1,3 +1,4 @@
+/*
 package metacampus2.repository;
 
 import metacampus2.model.Person;
@@ -12,3 +13,4 @@ public interface IPersonRepository extends JpaRepository<Person, Long> {
                                                                   String personCellphone, String metaverseName);
     List<Person> findAllByMetaverseName(String metaverseName);
 }
+*/

@@ -1,25 +1,20 @@
+/*
 package metacampus2.initializer;
 
+import metacampus2.AbstractTest;
 import metacampus2.model.Metaverse;
 import metacampus2.service.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class EntitiesInitializerTest {
+class EntitiesInitializerTest extends AbstractTest {
     private EntitiesInitializer entitiesInitializer;
-
     @Mock
     private IMetaverseService metaverseService;
     @Mock
@@ -62,4 +57,4 @@ class EntitiesInitializerTest {
 
         verify(officeService, times(1)).addNewOffice(any());
     }
-}
+}*/

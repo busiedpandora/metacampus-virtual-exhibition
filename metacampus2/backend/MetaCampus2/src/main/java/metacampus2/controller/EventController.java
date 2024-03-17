@@ -1,3 +1,4 @@
+/*
 package metacampus2.controller;
 
 import metacampus2.model.Event;
@@ -70,3 +71,4 @@ public class EventController extends MainController {
         return "redirect:" + CTRL_EVENTS + CTRL_NEW + "?error";
     }
 }
+*/

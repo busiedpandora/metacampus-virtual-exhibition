@@ -1,3 +1,4 @@
+/*
 package metacampus2.service;
 
 import metacampus2.model.*;
@@ -14,3 +15,4 @@ public interface IClassroomService {
 
     List<Classroom> getAllClassroomsFromMetaverse(String metaverseName);
 }
+*/

@@ -1,7 +1,8 @@
+/*
 package metacampus2.initializer;
 
 import metacampus2.model.Classroom;
-import metacampus2.model.Location;
+import metacampus2.model.Coordinate;
 import metacampus2.model.Metaverse;
 import metacampus2.model.Office;
 import metacampus2.service.*;
@@ -87,11 +88,11 @@ public class EntitiesInitializer implements CommandLineRunner {
             classroom.setNumber(number);
             classroom.setMetaverse(metaverse);
 
-            Location l = new Location();
-            l.setFloorNumber(floorNumber);
-            l.setXPosition(xPosition);
-            l.setZPosition(zPosition);
-            classroom.setLocation(l);
+            Coordinate l = new Coordinate();
+            l.setY(floorNumber);
+            l.setX(xPosition);
+            l.setZ(zPosition);
+            classroom.setCoordinate(l);
 
             classroomService.addNewClassroom(classroom);
         }
@@ -112,13 +113,14 @@ public class EntitiesInitializer implements CommandLineRunner {
             office.setNumber(number);
             office.setMetaverse(metaverse);
 
-            Location l = new Location();
-            l.setFloorNumber(floorNumber);
-            l.setXPosition(xPosition);
-            l.setZPosition(zPosition);
-            office.setLocation(l);
+            Coordinate l = new Coordinate();
+            l.setY(floorNumber);
+            l.setX(xPosition);
+            l.setZ(zPosition);
+            office.setCoordinate(l);
 
             officeService.addNewOffice(office);
         }
     }
 }
+*/

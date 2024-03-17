@@ -10,7 +10,7 @@
             <div id="menuBar" class="row justify-content-around text-center bg-body-secondary">
                 <div class="col">
                     <a class="navigation-item" th:href="@{/home}"
-                    th:classappend="${menuItem == T(metacampus2.model.MenuItem).HOME ?
+                    th:classappend="${menuItem == T(metacampus2.model.MenuEntity).HOME ?
                     'selected' : ''}">
                         Home
                     </a>
@@ -18,7 +18,7 @@
 
                 <div class="col">
                     <a class="navigation-item" th:href="@{/classrooms}"
-                       th:classappend="${menuItem == T(metacampus2.model.MenuItem).CLASSROOMS ?
+                       th:classappend="${menuItem == T(metacampus2.model.MenuEntity).CLASSROOMS ?
                     'selected' : ''}">
                         Classrooms
                     </a>
@@ -26,7 +26,7 @@
 
                 <div class="col">
                     <a class="navigation-item" th:href="@{/events}"
-                       th:classappend="${menuItem == T(metacampus2.model.MenuItem).EVENTS ?
+                       th:classappend="${menuItem == T(metacampus2.model.MenuEntity).EVENTS ?
                     'selected' : ''}">
                         Events
                     </a>
@@ -34,7 +34,7 @@
 
                 <div class="col">
                     <a class="navigation-item" th:href="@{/lectures}"
-                       th:classappend="${menuItem == T(metacampus2.model.MenuItem).LECTURES ?
+                       th:classappend="${menuItem == T(metacampus2.model.MenuEntity).LECTURES ?
                     'selected' : ''}">
                         Lectures
                     </a>
@@ -42,7 +42,7 @@
 
                 <div class="col">
                     <a class="navigation-item" th:href="@{/offices}"
-                       th:classappend="${menuItem == T(metacampus2.model.MenuItem).OFFICES ?
+                       th:classappend="${menuItem == T(metacampus2.model.MenuEntity).OFFICES ?
                     'selected' : ''}">
                         Offices
                     </a>
@@ -50,7 +50,7 @@
 
                 <div class="col">
                     <a class="navigation-item" th:href="@{/people}"
-                       th:classappend="${menuItem == T(metacampus2.model.MenuItem).PEOPLE ?
+                       th:classappend="${menuItem == T(metacampus2.model.MenuEntity).PEOPLE ?
                     'selected' : ''}">
                         People
                     </a>
@@ -58,7 +58,7 @@
 
                 <div class="col">
                     <a class="navigation-item" th:href="@{/metaverses}"
-                       th:classappend="${menuItem == T(metacampus2.model.MenuItem).METAVERSES ?
+                       th:classappend="${menuItem == T(metacampus2.model.MenuEntity).METAVERSES ?
                     'selected' : ''}">
                         Metaverses
                     </a>

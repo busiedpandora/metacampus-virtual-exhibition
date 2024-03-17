@@ -5,13 +5,17 @@ using Newtonsoft.Json;
 using Unity.XR.CoreUtils;
 using System;
 using UnityEngine.Windows;
+using TMPro;
 
 public class ResourcesManager : MonoBehaviour
 {
+    [SerializeField] private GameObject textPanelObject;
+
     private const string hostName = "www.localhost";
     private const string port = "8080";
 
-    private const string metaverseName = "Campus Est SUPSI";
+    private const string basePath = "spaces";
+    private const string metaverseName = "campus est supsi";
     
     private string serverUrl = "";
 
@@ -40,9 +44,54 @@ public class ResourcesManager : MonoBehaviour
 
     public void StartInitResources()
     {
-        StartCoroutine(InitClassrooms());
+        StartCoroutine(InitTexts());
     }
 
+    private IEnumerator InitTexts()
+    {
+        string pathResource = "text-panels";
+        serverUrl = $"http://{hostName}:{port}/{basePath}/{metaverseName}/{pathResource}";
+
+        string responseData = null;
+
+        yield return StartCoroutine(httpRequest.GetDataFromServer(serverUrl, ""));
+
+        responseData = httpRequest.ResponseData;
+
+        if (responseData != null)
+        {
+            Debug.Log($"Text panels: {responseData}");
+
+            var textPanels = JsonConvert.DeserializeObject<List<TextPanelSerializable>>(responseData);
+
+            foreach (var textPanel in textPanels)
+            {
+                var coord = textPanel.coordinates;
+                var coordObject = coordinatesManager.GetGameObject(coord.x, coord.y, coord.z);
+
+                if(coordObject != null)
+                {
+                    var position = new Vector3(coord.x, coord.y, coord.z);
+
+                    var textPanelObjectInstance = Instantiate(textPanelObject, position, Quaternion.identity);
+                    textPanelObjectInstance.transform.parent = coordObject.transform;
+
+                    var frontTextNameObject = textPanelObjectInstance.transform.Find("FrontTextName").gameObject;
+                    var frontTextObject = textPanelObjectInstance.transform.Find("FrontText").gameObject;
+                    var backTextNameObject = textPanelObjectInstance.transform.Find("BackTextName").gameObject;
+                    var backTextObject = textPanelObjectInstance.transform.Find("BackText").gameObject;
+
+                    var text = textPanel.text;
+                    frontTextNameObject.GetComponent<TextMeshPro>().text = text.name;
+                    frontTextObject.GetComponent<TextMeshPro>().text = text.value;
+                    backTextNameObject.GetComponent<TextMeshPro>().text = text.name;
+                    backTextObject.GetComponent<TextMeshPro>().text = text.value;
+                }
+            }
+        }
+    }
+
+    /*
     private IEnumerator InitClassrooms()
     {
         string pathResource = "classrooms";
@@ -229,4 +278,5 @@ public class ResourcesManager : MonoBehaviour
             }
         }
     }
+    */
 }

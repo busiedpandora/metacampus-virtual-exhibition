@@ -1,3 +1,4 @@
+/*
 package metacampus2.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -21,3 +22,4 @@ public class Office extends Resource {
     @JsonBackReference
     private List<Person> people;
 }
+*/

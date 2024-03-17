@@ -1,3 +1,4 @@
+/*
 package metacampus2.service;
 
 import metacampus2.model.Person;
@@ -47,3 +48,4 @@ public class PersonService implements IPersonService {
 
     }
 }
+*/

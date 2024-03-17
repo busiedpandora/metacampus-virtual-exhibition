@@ -1,0 +1,17 @@
+<div id="resourcesNavigationMenu" class="row justify-content-around text-center bg-body-secondary">
+    <div class="col">
+        <a class="entity-item" th:href="@{/resources/texts}"
+           th:classappend="${menuEntity == T(metacampus2.model.MenuEntity).TEXT ?
+                    'selected' : ''}">
+            Text
+        </a>
+    </div>
+
+    <div class="col">
+        <a class="entity-item" th:href="@{/resources/texts}"
+           th:classappend="${menuEntity == T(metacampus2.model.MenuEntity).IMAGE ?
+                    'selected' : ''}">
+            Image
+        </a>
+    </div>
+</div>

@@ -1,3 +1,4 @@
+/*
 package metacampus2.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -22,3 +23,4 @@ public class Classroom extends Resource {
     @JsonBackReference
     private List<Lecture> lectures;
 }
+*/

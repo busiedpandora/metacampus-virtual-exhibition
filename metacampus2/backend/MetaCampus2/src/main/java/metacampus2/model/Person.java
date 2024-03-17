@@ -1,3 +1,4 @@
+/*
 package metacampus2.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -32,3 +33,4 @@ public class Person extends Resource {
     @JsonManagedReference
     private Office office;
 }
+*/

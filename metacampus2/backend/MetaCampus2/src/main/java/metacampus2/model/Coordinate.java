@@ -12,16 +12,16 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Location {
+public class Coordinate {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private int floorNumber;
-    private int xPosition;
-    private int zPosition;
+    private int x;
+    private int y;
+    private int z;
 
-    @OneToMany(mappedBy = "location")
+    @OneToOne(mappedBy = "coordinates")
     @JsonBackReference
-    private List<Resource> resources;
+    private Space space;
 }

@@ -1,3 +1,4 @@
+/*
 package metacampus2.service;
 
 import metacampus2.model.*;
@@ -36,3 +37,4 @@ public class ClassroomService implements IClassroomService {
         return IClassroomRepository.findAllByMetaverseName(metaverseName);
     }
 }
+*/

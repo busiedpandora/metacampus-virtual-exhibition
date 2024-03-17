@@ -1,3 +1,4 @@
+/*
 package metacampus2.service;
 
 import metacampus2.model.Lecture;
@@ -18,3 +19,4 @@ public interface ILectureService {
 }
 
 
+*/

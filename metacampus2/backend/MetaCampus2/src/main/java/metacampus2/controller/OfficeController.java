@@ -1,3 +1,4 @@
+/*
 package metacampus2.controller;
 
 import metacampus2.model.MenuItem;
@@ -70,3 +71,4 @@ public class OfficeController extends MainController {
         return "redirect:" + CTRL_OFFICES + CTRL_NEW + "?error";
     }
 }
+*/

@@ -10,5 +10,5 @@ public class LectureSerializable
     public string dateTime;
     public ClassroomSerializable classroom;
     public PersonSerializable lecturer;
-    public LocationSerializable location;
+    public CoordinateSerializable location;
 }

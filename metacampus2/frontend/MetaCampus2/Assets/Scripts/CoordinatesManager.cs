@@ -4,25 +4,20 @@ using UnityEngine;
 
 public class CoordinatesManager : MonoBehaviour
 {
-    [SerializeField] private GameObject floor0Coordinate;
-    [SerializeField] private GameObject floor1Coordinate;
-    [SerializeField] private GameObject floor2Coordinate;
+    [SerializeField] private GameObject coordinateObject;
 
-    private const float floor0YCoordinate = 1.5f;
-    private const float floor1YCoordinate = 4.5f;
-    private const float floor2YCoordinate = 7.5f;
-    private const float floor3YCoordinate = 10.5f;
-
-    private const int minFloorNumber = 0;
-    private const int maxFloorNumber = 2;
+    private const string coordinatesPath = "/Campus/Coordinates";
 
     private const int minXCoordinate = -10;
     private const int maxXCoordinate = 10;
 
+    private const int minYCoordinate = 0;
+    private const int maxYCoordinate = 5;
+
     private const int minZCoordinate = 5;
     private const int maxZCoordinate = 10;
 
-    //1° index: floor number, 2° index: x position, 3° index: z position
+    //1° index: x position, 2° index: y position, 3° index: z position
     private GameObject[][][] coordinates;
 
     private GameObject resourcesInitializer;
@@ -48,66 +43,51 @@ public class CoordinatesManager : MonoBehaviour
     private void InitCoordinates()
     {
         //array dimensions
-        int floorCount = maxFloorNumber - minFloorNumber + 1;
         int xSize = maxXCoordinate - minXCoordinate + 1;
+        int ySize = maxYCoordinate - minYCoordinate + 1;
         int zSize = maxZCoordinate - minZCoordinate + 1;
 
-        coordinates = new GameObject[floorCount][][];
+        coordinates = new GameObject[xSize][][];
 
-        for(int floorNumber = 0;  floorNumber < floorCount; floorNumber++)
+        GameObject parentObject = GameObject.Find(coordinatesPath);
+
+        for(int x = 0;  x < xSize; x++)
         {
-            coordinates[floorNumber] = new GameObject[xSize][];
+            coordinates[x] = new GameObject[ySize][];
 
-            float floorYCoordinate = GetFloorYCoordinate(floorNumber);
-
-            GameObject floorObject = GameObject.Find($"/Campus/{minFloorNumber + floorNumber}");
-
-            for (int x = 0; x < xSize; x++)
+            for (int y = 0; y < ySize; y++)
             {
-                coordinates[floorNumber][x] = new GameObject[zSize];
+                coordinates[x][y] = new GameObject[zSize];
 
                 for(int z = 0;  z < zSize; z++)
                 {
-                    Vector3 position = new Vector3(minXCoordinate + x, floorYCoordinate, minZCoordinate + z);
-                    GameObject coordinate = Instantiate(floor0Coordinate, position, Quaternion.identity);
+                    Vector3 position = new Vector3(minXCoordinate + x, minYCoordinate + y, minZCoordinate + z);
+                   
+                    GameObject coordinate = Instantiate(coordinateObject, position, Quaternion.identity);
 
                     //Set floorObject as parent
-                    coordinate.transform.parent = floorObject.transform;
+                    coordinate.transform.parent = parentObject.transform;
 
-                    coordinates[floorNumber][x][z] = coordinate;
+                    coordinate.GetComponent<MeshRenderer>().enabled = false;
+
+                    coordinates[x][y][z] = coordinate;
                 }
             }
         }
     }
 
-    private float GetFloorYCoordinate(int floorNumber)
-    {
-        switch (floorNumber)
-        {
-            case 0:
-                return floor0YCoordinate;
-            case 1:
-                return floor1YCoordinate;
-            case 2:
-                return floor2YCoordinate;
-            case 3:
-                return floor3YCoordinate;
-            default: 
-                return 0f;
-        }
-    }
 
-    public GameObject GetGameObject(int floorNumber, int xPosition, int zPosition)
+    public GameObject GetGameObject(int xPosition, int yPosition, int zPosition)
     {
-        int floorIndex = floorNumber - minFloorNumber;
         int xIndex = xPosition - minXCoordinate;
+        int yIndex = yPosition - minYCoordinate;
         int zIndex = zPosition - minZCoordinate;
 
-        if (floorIndex >= 0 && floorIndex < coordinates.Length && 
-            xIndex >= 0 && xIndex < coordinates[0].Length &&
+        if (xIndex >= 0 && xIndex < coordinates.Length && 
+            yIndex >= 0 && yIndex < coordinates[0].Length &&
             zIndex >= 0 && zIndex < coordinates[0][0].Length)
         {
-            return coordinates[floorIndex][xIndex][zIndex];
+            return coordinates[xIndex][yIndex][zIndex];
         }
         else
         {

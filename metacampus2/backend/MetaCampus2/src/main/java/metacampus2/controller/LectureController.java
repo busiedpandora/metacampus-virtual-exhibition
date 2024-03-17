@@ -1,3 +1,4 @@
+/*
 package metacampus2.controller;
 
 import metacampus2.model.Lecture;
@@ -82,9 +83,11 @@ public class LectureController extends MainController {
         lecture.setMetaverse(metaverse);
         if (lectureService.getLectureFromMetaverse(lecture.getName(), lecture.getDateTime(),
                 lecture.getMetaverse().getName()) == null) {
-            lecture.setLocation(lecture.getClassroom().getLocation());
+            lecture.setCoordinate(lecture.getClassroom().getCoordinate());
 
-            lectureService.addNewLecture(lecture);
+            lectureService.addNewLecture(lecture);*/
+/**//*
+
 
             return "redirect:" + CTRL_LECTURES;
         }
@@ -92,3 +95,4 @@ public class LectureController extends MainController {
         return "redirect:" + CTRL_LECTURES + CTRL_NEW + "?error";
     }
 }
+*/

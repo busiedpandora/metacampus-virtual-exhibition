@@ -1,13 +1,25 @@
 package metacampus2.controller;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 public class MainController {
-    protected static final String MODEL_PROJECT_NAME = "projectName";
+    protected static final String CTRL_RESOURCES = "/resources";
+    protected static final String CTRL_SPACES = "/spaces";
+    protected static final String CTRL_METAVERSES = "/metaverses";
+    protected static final String CTRL_TEXT_PANELS = "/text-panels";
+    protected static final String CTRL_IMAGE_PANELS = "/image-panels";
+    protected static final String CTRL_TEXTS = "/texts";
+
+
     protected static final String CTRL_NEW = "/new";
-    protected static final String MODEL_MENU_ITEM = "menuItem";
+    //protected static final String MODEL_MENU_ITEM = "menuItem";
+    protected static final String MODEL_MENU_CATEGORY = "menuCategory";
+    protected static final String MODEL_MENU_ENTITY = "menuEntity";
+    protected static final String MODEL_PROJECT_NAME = "projectName";
     protected static final String MODEL_ERROR = "error";
     protected static final String MODEL_METAVERSES = "metaverses";
     protected static final String MODEL_CLASSROOMS = "classrooms";
