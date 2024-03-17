@@ -11,5 +11,5 @@ public class PersonSerializable
     public string cellphone;
     public string officePhone;
     public OfficeSerializable office;
-    public LocationSerializable location;
+    public CoordinateSerializable location;
 }

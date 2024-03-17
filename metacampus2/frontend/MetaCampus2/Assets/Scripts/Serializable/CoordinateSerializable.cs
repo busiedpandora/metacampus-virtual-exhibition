@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class OfficeSerializable
+public class CoordinateSerializable
 {
-    public string number;
-    public CoordinateSerializable location;
+    public int x;
+    public int y;
+    public int z;
 }

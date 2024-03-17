@@ -9,6 +9,6 @@ public class HomeController extends MainController {
 
     @GetMapping
     public String home() {
-        return "redirect:" + CTRL_SPACES + TextPanelController.CTRL_TEXT_PANELS;
+        return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS;
     }
 }

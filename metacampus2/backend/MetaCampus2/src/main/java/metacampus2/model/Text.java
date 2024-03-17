@@ -1,5 +1,6 @@
 package metacampus2.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
@@ -17,6 +18,7 @@ public class Text extends Resource {
     private String value;
 
     @OneToMany(mappedBy = "text")
+    @JsonBackReference
     List<TextPanel> textPanels;
 
     @PrePersist

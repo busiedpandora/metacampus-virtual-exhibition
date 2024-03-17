@@ -1,5 +1,6 @@
 package metacampus2.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,9 +22,11 @@ public abstract class Space {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "coordinates_id", referencedColumnName = "id", nullable = false)
+    @JsonManagedReference
     private Coordinate coordinates;
 
     @ManyToOne
     @JoinColumn(name = "metaverse_id", nullable = false)
+    @JsonManagedReference
     private Metaverse metaverse;
 }

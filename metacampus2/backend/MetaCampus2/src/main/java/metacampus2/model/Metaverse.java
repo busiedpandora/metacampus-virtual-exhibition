@@ -42,5 +42,6 @@ public class Metaverse {
     private List<Office> offices;*/
 
     @OneToMany(mappedBy = "metaverse")
+    @JsonBackReference
     private List<Space> spaces;
 }

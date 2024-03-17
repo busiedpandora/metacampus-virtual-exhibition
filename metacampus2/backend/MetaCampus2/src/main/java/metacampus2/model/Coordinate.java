@@ -1,5 +1,6 @@
 package metacampus2.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,6 @@ public class Coordinate {
     private int z;
 
     @OneToOne(mappedBy = "coordinates")
+    @JsonBackReference
     private Space space;
 }

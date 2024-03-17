@@ -9,12 +9,13 @@ import metacampus2.service.ISpaceService;
 import metacampus2.service.ITextPanelService;
 import metacampus2.service.TextPanelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping(MainController.CTRL_SPACES)
@@ -58,6 +59,11 @@ public class TextPanelController extends MainController {
         model.addAttribute(MODEL_ERROR, error);
 
         return VIEW_TEXT_PANEL_FORM;
+    }
+
+    @GetMapping("/{metaverseName}" + CTRL_TEXT_PANELS)
+    public ResponseEntity<List<TextPanel>> textPanelsFromMetaverse(@PathVariable("metaverseName") String metaverseName) {
+        return new ResponseEntity<>(textPanelService.getAllTextPanelsFromMetaverse(metaverseName), HttpStatus.OK);
     }
 
     @PostMapping(CTRL_TEXT_PANELS + CTRL_NEW)
