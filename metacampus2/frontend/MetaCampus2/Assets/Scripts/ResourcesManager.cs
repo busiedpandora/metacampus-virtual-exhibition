@@ -76,10 +76,10 @@ public class ResourcesManager : MonoBehaviour
                     var textPanelObjectInstance = Instantiate(textPanelObject, position, Quaternion.identity);
                     textPanelObjectInstance.transform.parent = coordObject.transform;
 
-                    var frontTextNameObject = textPanelObjectInstance.transform.Find("FrontTextName").gameObject;
-                    var frontTextObject = textPanelObjectInstance.transform.Find("FrontText").gameObject;
-                    var backTextNameObject = textPanelObjectInstance.transform.Find("BackTextName").gameObject;
-                    var backTextObject = textPanelObjectInstance.transform.Find("BackText").gameObject;
+                    var frontTextNameObject = textPanelObjectInstance.transform.Find("Board/FrontTextName").gameObject;
+                    var frontTextObject = textPanelObjectInstance.transform.Find("Board/FrontText").gameObject;
+                    var backTextNameObject = textPanelObjectInstance.transform.Find("Board/BackTextName").gameObject;
+                    var backTextObject = textPanelObjectInstance.transform.Find("Board/BackText").gameObject;
 
                     var text = textPanel.text;
                     frontTextNameObject.GetComponent<TextMeshPro>().text = text.name;

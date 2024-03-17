@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f7c82d5d99911a4d8145b59f463c124, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textPanelObject: {fileID: 1896317805887632078, guid: 23d101417e4c4f642ba6d0a8c0cbfd84, type: 3}
+  textPanelObject: {fileID: 4454352505267271757, guid: 23d101417e4c4f642ba6d0a8c0cbfd84, type: 3}
 --- !u!4 &667983698
 Transform:
   m_ObjectHideFlags: 0
