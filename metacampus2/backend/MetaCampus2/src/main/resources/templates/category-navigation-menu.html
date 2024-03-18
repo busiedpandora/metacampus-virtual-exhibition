@@ -14,6 +14,13 @@
         </a>
     </li>
     <li>
+        <a class="category-item" th:href="@{/spaces/audio-panels}"
+           th:classappend="${menuCategory == T(metacampus2.model.MenuCategory).SPACES ?
+                    'selected' : ''}">
+            Spaces
+        </a>
+    </li>
+    <li>
         <a class="category-item" th:href="@{/metaverses}"
            th:classappend="${menuCategory == T(metacampus2.model.MenuCategory).METAVERSES ?
                     'selected' : ''}">

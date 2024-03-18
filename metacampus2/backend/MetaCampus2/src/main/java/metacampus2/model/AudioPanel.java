@@ -14,7 +14,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class AudioPanel extends Space {
-    private String audioPath;
 
     @ManyToOne
     @JoinColumn(name = "audio_id")
