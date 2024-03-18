@@ -8,10 +8,18 @@
     </div>
 
     <div class="col">
-        <a class="entity-item" th:href="@{/resources/texts}"
+        <a class="entity-item" th:href="@{/resources/images}"
            th:classappend="${menuEntity == T(metacampus2.model.MenuEntity).IMAGE ?
                     'selected' : ''}">
             Image
+        </a>
+    </div>
+
+    <div class="col">
+        <a class="entity-item" th:href="@{/resources/audios}"
+           th:classappend="${menuEntity == T(metacampus2.model.MenuEntity).AUDIO ?
+                    'selected' : ''}">
+            Audio
         </a>
     </div>
 </div>

@@ -11,8 +11,9 @@ public class MainController {
     protected static final String CTRL_SPACES = "/spaces";
     protected static final String CTRL_METAVERSES = "/metaverses";
     protected static final String CTRL_TEXT_PANELS = "/text-panels";
-    protected static final String CTRL_IMAGE_PANELS = "/image-panels";
+    protected static final String CTRL_DISPLAY_PANELS = "/display-panels";
     protected static final String CTRL_TEXTS = "/texts";
+    protected static final String CTRL_IMAGES = "/images";
 
 
     protected static final String CTRL_NEW = "/new";

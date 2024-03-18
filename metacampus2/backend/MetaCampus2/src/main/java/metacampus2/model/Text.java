@@ -19,7 +19,7 @@ public class Text extends Resource {
 
     @OneToMany(mappedBy = "text")
     @JsonBackReference
-    List<TextPanel> textPanels;
+    private List<TextPanel> textPanels;
 
     @PrePersist
     public void prePersist() {
