@@ -61,7 +61,7 @@ public class OfficeController extends MainController {
 
     @PostMapping(CTRL_OFFICES + CTRL_NEW)
     public String office(Office office) {
-        if(officeService.getOfficeFromMetaverse(office.getNumber(),
+        if (officeService.getOfficeFromMetaverse(office.getNumber(),
                 office.getMetaverse().getName()) == null) {
             officeService.addNewOffice(office);
 

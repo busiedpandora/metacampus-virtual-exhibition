@@ -62,7 +62,7 @@ public class ClassroomController extends MainController {
 
     @PostMapping(CTRL_CLASSROOMS + CTRL_NEW)
     public String classroom(Classroom classroom) {
-        if(classroomService.getClassroomFromMetaverse(classroom.getNumber(),
+        if (classroomService.getClassroomFromMetaverse(classroom.getNumber(),
                 classroom.getMetaverse().getName()) == null) {
             classroomService.addNewClassroom(classroom);
 

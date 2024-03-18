@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PersonRepository extends JpaRepository<Person, Long> {
+public interface IPersonRepository extends JpaRepository<Person, Long> {
     Person findByFirstNameAndLastNameAndCellphoneAndMetaverseName(String personFirstName, String personLastName,
                                                                   String personCellphone, String metaverseName);
     List<Person> findAllByMetaverseName(String metaverseName);

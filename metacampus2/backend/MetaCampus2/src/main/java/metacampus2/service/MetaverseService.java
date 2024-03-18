@@ -10,27 +10,27 @@ import java.util.List;
 
 @Service
 public class MetaverseService implements IMetaverseService {
-    private IMetaverseRepository metaverseRepository;
+    private IMetaverseRepository IMetaverseRepository;
 
 
     @Autowired
-    public MetaverseService(IMetaverseRepository metaverseRepository) {
-        this.metaverseRepository = metaverseRepository;
+    public MetaverseService(IMetaverseRepository IMetaverseRepository) {
+        this.IMetaverseRepository = IMetaverseRepository;
     }
 
     @Override
     public void addNewMetaverse(Metaverse metaverse) {
-        metaverseRepository.save(metaverse);
+        IMetaverseRepository.save(metaverse);
     }
 
     @Override
     public Metaverse getMetaverse(String name) {
-        return metaverseRepository.findByName(name);
+        return IMetaverseRepository.findByName(name);
     }
 
     @Override
     public List<Metaverse> getAllMetaverses() {
-        return metaverseRepository.findAll();
+        return IMetaverseRepository.findAll();
     }
 }
 

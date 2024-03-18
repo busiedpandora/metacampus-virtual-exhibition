@@ -45,6 +45,7 @@ public class MetaverseController extends MainController {
         return VIEW_METAVERSE_FORM;
     }
 
+
     @PostMapping(CTRL_NEW)
     public String newMetaverse(Metaverse metaverse) {
         if(metaverseService.getMetaverse(metaverse.getName()) == null) {
