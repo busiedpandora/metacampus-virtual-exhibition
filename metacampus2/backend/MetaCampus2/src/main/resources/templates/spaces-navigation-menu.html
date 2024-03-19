@@ -8,10 +8,18 @@
     </div>
 
     <div class="col">
-        <a class="entity-item" th:href="@{/}"
-           th:classappend="${menuEntity == T(metacampus2.model.MenuEntity).IMAGE_PANEL ?
+        <a class="entity-item" th:href="@{/spaces/display-panels}"
+           th:classappend="${menuEntity == T(metacampus2.model.MenuEntity).DISPLAY_PANEL ?
                     'selected' : ''}">
-            Image panel
+            Display panel
+        </a>
+    </div>
+
+    <div class="col">
+        <a class="entity-item" th:href="@{/spaces/audios-panels}"
+           th:classappend="${menuEntity == T(metacampus2.model.MenuEntity).AUDIO_PANEL ?
+                    'selected' : ''}">
+            Audio panel
         </a>
     </div>
 </div>

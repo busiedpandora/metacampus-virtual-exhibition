@@ -1,5 +1,6 @@
 package metacampus2.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -14,5 +15,6 @@ import lombok.Setter;
 public class DisplayPanel extends Space {
     @ManyToOne
     @JoinColumn(name = "image_id")
+    @JsonManagedReference
     private Image image;
 }
