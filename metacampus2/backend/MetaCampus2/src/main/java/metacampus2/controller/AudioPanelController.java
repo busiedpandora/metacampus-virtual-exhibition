@@ -1,11 +1,18 @@
 package metacampus2.controller;
 
+import com.sun.tools.javac.Main;
 import metacampus2.model.*;
 import metacampus2.service.IAudioPanelService;
 import metacampus2.service.IMetaverseService;
 import metacampus2.service.ISpaceService;
+import org.aspectj.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,11 +23,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.util.StringUtils;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.io.IOException;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
@@ -39,9 +49,6 @@ public class AudioPanelController extends MainController {
     private IAudioPanelService audioPanelService;
     private IMetaverseService metaverseService;
     private ISpaceService spaceService;
-
-    @Value("${upload.dir}")
-    private String uploadDir;
 
     @Autowired
     public AudioPanelController(IAudioPanelService audioPanelService, IMetaverseService metaverseService, ISpaceService spaceService) {
@@ -78,19 +85,18 @@ public class AudioPanelController extends MainController {
     }
 
     @PostMapping(CTRL_AUDIO_PANELS + CTRL_NEW)
-    public String newAudioPanel(@RequestParam("audio") MultipartFile audioFile, AudioPanel audioPanel) throws IOException {
+    public String newAudioPanel(@RequestParam("fileAudio") MultipartFile audioFile,@ModelAttribute AudioPanel audioPanel) throws IOException {
         Coordinate coordinates = audioPanel.getCoordinates();
 
         if(spaceService.getSpaceByCoordinatesAndMetaverse(coordinates.getX(), coordinates.getY(), coordinates.getZ(), audioPanel.getMetaverse().getName()) == null){
 
             if (!audioFile.isEmpty()) {
 
-                // Normalize file name
-                String fileName = StringUtils.cleanPath(Objects.requireNonNull(audioFile.getOriginalFilename()));
+                String fileName = audioFile.getOriginalFilename();
 
-                // Copy file to the target location (upload directory)
-                Path targetLocation = Paths.get(uploadDir).resolve(fileName);
-                Files.copy(audioFile.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+                Path targetLocation = Paths.get("src","main","resources","upload_files",fileName);
+
+                Files.copy(audioFile.getInputStream(),targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
                 // Set the audio file path in the AudioPanel object
                 List<AudioPanel> audioPanels = new ArrayList<>();
@@ -98,8 +104,9 @@ public class AudioPanelController extends MainController {
                 Audio audio = new Audio();
                 audio.setAudioPath(targetLocation.toString());
                 audio.setAudioPanels(new ArrayList<>());
-                audio.getAudioPanels().add(audioPanel);
                 audioPanel.setAudio(audio);
+                audioPanel.setName("panel1");
+                audio.getAudioPanels().add(audioPanel);
 
                 audioPanelService.addNewAudioPane(audioPanel);
 
