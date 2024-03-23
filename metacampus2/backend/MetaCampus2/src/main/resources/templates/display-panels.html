@@ -26,20 +26,27 @@
                         <tr>
                             <th scope="col" class="col-1">#</th>
                             <th scope="col">Name</th>
+                            <th scope="col">Type</th>
                             <th scope="col">Metaverse</th>
                             <th scope="col">Coordinates</th>
-                            <th scope="col">Image</th>
+                            <th scope="col">Images</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="displayPanel, iterStat : ${displayPanels}">
                             <th scope="row" th:text="${iterStat.count}"></th>
                             <th th:text="${displayPanel.name}"></th>
+                            <th th:text="${displayPanel.type}"></th>
                             <th th:text="${displayPanel.metaverse.name}"></th>
-                            <td th:text="'x: ' + ${displayPanel.coordinates.x}
+                            <th th:text="'x: ' + ${displayPanel.coordinates.x}
                                     + ', y: ' + ${displayPanel.coordinates.y}
-                                    + ', z: ' + ${displayPanel.coordinates.z}"></td>
-                            <th th:text="${displayPanel.image != null ? displayPanel.image.name : '-'}"></th>
+                                    + ', z: ' + ${displayPanel.coordinates.z}"></th>
+                            <th>
+                                <span th:each="image, imageIter : ${displayPanel.images}">
+                                    <span th:text="${image.name}"></span>
+                                    <span th:if="${!imageIter.last}">,</span>
+                                </span>
+                            </th>
                         </tr>
                         </tbody>
                     </table>

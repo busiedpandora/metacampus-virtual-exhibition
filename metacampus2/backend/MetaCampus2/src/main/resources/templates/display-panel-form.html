@@ -29,6 +29,18 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label for="type" class="col-form-label col-2">Type</label>
+                            <div class="col-4">
+                                <select id="type" class="form-select" name="type" required>
+                                    <option th:each="type : ${displayPanelTypes}"
+                                            th:value="${type}"
+                                            th:text="${type + ' - ' + type.description}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label for="metaverse" class="col-form-label col-2">Metaverse</label>
                             <div class="col-4">
                                 <select id="metaverse" class="form-select" name="metaverse" required>
