@@ -16,15 +16,15 @@
                 <div th:insert="spaces-navigation-menu"></div>
 
                 <div class="form-container">
-                    <form th:href="@{/spaces/audio-panels/new}" method="post" enctype="multipart/form-data">
+                    <form th:href="@{/spaces/audio-panels/new}" method="post">
                         <div class="mb-5">
                             <span class="fs-4 text-body-secondary ">New audio panel:</span>
                         </div>
 
                         <div class="row mb-3">
-                            <label for="fileAudio" class="col-form-label col-2">Name</label>
-                            <div class="col-4">
-                                <input id="fileAudio" type="file" accept="audio/*" name="fileAudio" required>
+                            <label for="name" class="col-form-label col-2">Name</label>
+                            <div class="col-6">
+                                <input id="name" class="form-control" type="text" name="name" required>
                             </div>
                         </div>
 

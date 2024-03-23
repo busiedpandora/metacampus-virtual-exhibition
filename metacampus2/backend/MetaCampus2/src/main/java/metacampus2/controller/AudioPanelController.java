@@ -14,15 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.io.IOException;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
+
 import java.util.List;
 
 
@@ -47,7 +41,7 @@ public class AudioPanelController extends MainController {
     }
 
     @GetMapping(CTRL_AUDIO_PANELS)
-    public String audioPanels(Model model){
+    public String audioPanels(Model model) {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.SPACES);
         model.addAttribute(MODEL_MENU_ENTITY, MenuEntity.AUDIO_PANEL);
 
@@ -57,7 +51,7 @@ public class AudioPanelController extends MainController {
     }
 
     @GetMapping(CTRL_AUDIO_PANELS + CTRL_NEW)
-    public String audioPanelForm(Model model, @RequestParam(value = "error", required = false) String error){
+    public String audioPanelForm(Model model, @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.SPACES);
         model.addAttribute(MODEL_MENU_ENTITY, MenuEntity.AUDIO_PANEL);
 
@@ -69,52 +63,20 @@ public class AudioPanelController extends MainController {
     }
 
     @GetMapping("/{metaverseName}" + CTRL_AUDIO_PANELS)
-    public ResponseEntity<List<AudioPanel>> audioPanelsFromMetaverse(@PathVariable("metaverseName") String metaverseName){
+    public ResponseEntity<List<AudioPanel>> audioPanelsFromMetaverse(@PathVariable("metaverseName") String metaverseName) {
         return new ResponseEntity<>(audioPanelService.getAllAudioPanelsFromMetaverse(metaverseName), HttpStatus.OK);
     }
 
     @PostMapping(CTRL_AUDIO_PANELS + CTRL_NEW)
-    public String newAudioPanel(@RequestParam("fileAudio") MultipartFile audioFile,@ModelAttribute AudioPanel audioPanel) throws IOException {
+    public String newAudioPanel(@ModelAttribute AudioPanel audioPanel) throws IOException {
         Coordinate coordinates = audioPanel.getCoordinates();
 
-        if(spaceService.getSpaceByCoordinatesAndMetaverse(coordinates.getX(), coordinates.getY(), coordinates.getZ(), audioPanel.getMetaverse().getName()) == null){
+        if (spaceService.getSpaceByCoordinatesAndMetaverse(coordinates.getX(), coordinates.getY(), coordinates.getZ(), audioPanel.getMetaverse().getName()) == null) {
 
-            if (!audioFile.isEmpty()) {
 
-                String pathWork = System.getProperty("user.home");
+            audioPanelService.addNewAudioPane(audioPanel);
 
-                File folder = new File("audio_files");
-
-                if(!folder.exists()){
-                    if(folder.mkdirs()){
-                        System.out.println("OKKKKKKKKKKKKKKK");
-                    }else{
-                        System.out.println("NON CI SIAMOOOOOOOOOO");
-                    }
-                }
-
-                String targetLocationPath = pathWork + File.separator + "audio_files" + File.separator + audioFile.getOriginalFilename();
-
-                Path targetLocation = Paths.get(targetLocationPath);
-
-                System.out.println("PATH: " + targetLocation);
-
-                Files.copy(audioFile.getInputStream(),targetLocation, StandardCopyOption.REPLACE_EXISTING);
-
-                // Set the audio file path in the AudioPanel object
-                List<AudioPanel> audioPanels = new ArrayList<>();
-                audioPanels.add(audioPanel);
-                //Audio audio = new Audio();
-                //audio.setAudioPath(targetLocation.toString());
-                //audio.setAudioPanels(new ArrayList<>());
-                //audioPanel.setAudio(audio);
-                audioPanel.setName("panel1");
-                //audio.getAudioPanels().add(audioPanel);
-
-                audioPanelService.addNewAudioPane(audioPanel);
-
-                return "redirect:" + CTRL_SPACES + CTRL_AUDIO_PANELS;
-            }
+            return "redirect:" + CTRL_SPACES + CTRL_AUDIO_PANELS;
         }
 
         return "redirect:" + CTRL_SPACES + CTRL_AUDIO_PANELS + CTRL_NEW + "?error";

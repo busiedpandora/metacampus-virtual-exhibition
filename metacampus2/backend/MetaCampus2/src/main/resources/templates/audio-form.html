@@ -16,7 +16,7 @@
                 <div th:insert="resources-navigation-menu"></div>
 
                 <div class="form-container">
-                    <form th:href="@{/resources/audios/new}" method="post">
+                    <form th:href="@{/resources/audios/new}" method="post"  enctype="multipart/form-data">
                         <div class="mb-5">
                             <span class="fs-4 text-body-secondary ">New audio:</span>
                         </div>
@@ -29,9 +29,16 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label for="fileAudio" class="col-form-label col-2">File</label>
+                            <div class="col-4">
+                                <input id="fileAudio" type="file" accept="audio/*" name="fileAudio" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label for="audioPanels" class="col-form-label col-2">Audio panels</label>
                             <div class="col-6">
-                                <select id="audioPanels" class="form-select" name="textPanels" multiple size="3" required>
+                                <select id="audioPanels" class="form-select" name="selectedAudioPanelId" multiple size="3" required>
                                     <option th:each="audioPanel : ${audioPanels}"
                                             th:value="${audioPanel.id}"
                                             th:text="${audioPanel.name + ' - ' + audioPanel.metaverse.name}">
