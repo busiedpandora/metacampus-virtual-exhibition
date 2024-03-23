@@ -16,12 +16,12 @@
                 <div th:insert="resources-navigation-menu"></div>
 
                 <div class="form-container">
-                    <form th:href="@{/resources/images/new}" method="post">
+                    <form th:href="@{/resources/images/new}" method="post" enctype="multipart/form-data">
                         <div class="mb-5">
                             <span class="fs-4 text-body-secondary ">New image:</span>
                         </div>
 
-                        <div class="row mb-3">
+                        <!--<div class="row mb-3">
                             <label for="name" class="col-form-label col-2">Name</label>
                             <div class="col-6">
                                 <input id="name" class="form-control" type="text" name="name" required>
@@ -33,12 +33,21 @@
                             <div class="col-6">
                                 <input id="path" class="form-control" type="text" name="path" required>
                             </div>
+                        </div>-->
+
+                        <div class="row mb-3">
+                            <label for="imageFile" class="col-form-label col-2">Image file</label>
+                            <div class="col-6">
+                                <input id="imageFile" class="form-control" type="file" name="imageFile"
+                                       accept="image/*" required>
+                            </div>
                         </div>
 
                         <div class="row mb-3">
                             <label for="displayPanels" class="col-form-label col-2">Display panels</label>
                             <div class="col-6">
-                                <select id="displayPanels" class="form-select" name="displayPanels" multiple size="3" required>
+                                <select id="displayPanels" class="form-select" name="displayPanels"
+                                        multiple size="3" required>
                                     <option th:each="displayPanel : ${displayPanels}"
                                             th:value="${displayPanel.id}"
                                             th:text="${displayPanel.name + ' - ' + displayPanel.metaverse.name}">

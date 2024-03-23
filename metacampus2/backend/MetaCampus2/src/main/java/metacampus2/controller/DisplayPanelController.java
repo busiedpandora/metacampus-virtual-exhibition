@@ -17,6 +17,7 @@ import java.util.List;
 @RequestMapping(MainController.CTRL_SPACES)
 public class DisplayPanelController extends MainController {
     protected static final String MODEL_DISPLAY_PANELS = "displayPanels";
+    protected static final String MODEL_DISPLAY_PANEL_TYPES = "displayPanelTypes";
     protected static final String VIEW_DISPLAY_PANELS = "display-panels";
     protected static final String VIEW_DISPLAY_PANEL_FORM = "display-panel-form";
 
@@ -49,6 +50,7 @@ public class DisplayPanelController extends MainController {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.SPACES);
         model.addAttribute(MODEL_MENU_ENTITY, MenuEntity.DISPLAY_PANEL);
 
+        model.addAttribute(MODEL_DISPLAY_PANEL_TYPES, DisplayPanelType.getAllDisplayPanelTypes());
         model.addAttribute(MODEL_METAVERSES, metaverseService.getAllMetaverses());
 
         model.addAttribute(MODEL_ERROR, error);

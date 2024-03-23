@@ -12,6 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 @Controller
 @RequestMapping(MainController.CTRL_RESOURCES)
@@ -54,9 +61,31 @@ public class ImageController extends MainController {
     }
 
     @PostMapping(CTRL_IMAGES + CTRL_NEW)
-    public String newImage(Image image) {
-        imageService.addNewImage(image);
+    public String newImage(Image image, @RequestParam(value = "imageFile") MultipartFile imageFile) {
+        if(imageFile != null && !imageFile.isEmpty()) {
+            File imagesDirectory = new File(IMAGES_DIRECTORY_PATH);
+            if(!imagesDirectory.isDirectory()) {
+                if(!imagesDirectory.mkdirs()) {
+                    return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW + "?error";
+                }
+            }
 
-        return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES;
+            String imageName = imageFile.getOriginalFilename();
+            Path imagePath = Path.of(imagesDirectory.getPath() + SEPARATOR + imageName);
+
+            try {
+                Files.copy(imageFile.getInputStream(), imagePath, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW + "?error";
+            }
+
+            image.setName(imageName);
+            image.setPath(imagePath.toString());
+            imageService.addNewImage(image);
+
+            return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES;
+        }
+
+        return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW + "?error";
     }
 }
