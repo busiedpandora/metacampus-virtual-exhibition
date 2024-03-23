@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{master :: layout(~{::title},~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Audio form</title>
+</head>
+<body>
+<main>
+    <div id="mainContainer" class="container-fluid">
+        <div class="row">
+            <div id="categoryMenuContainer" class="col-2 bg-body-secondary">
+                <div th:insert="category-navigation-menu"></div>
+            </div>
+            <div class="col">
+                <div th:insert="resources-navigation-menu"></div>
+
+                <div class="form-container">
+                    <form th:href="@{/resources/audios/new}" method="post">
+                        <div class="mb-5">
+                            <span class="fs-4 text-body-secondary ">New audio:</span>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="name" class="col-form-label col-2">Name</label>
+                            <div class="col-6">
+                                <input id="name" class="form-control" type="text" name="name" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="audioPanels" class="col-form-label col-2">Audio panels</label>
+                            <div class="col-6">
+                                <select id="audioPanels" class="form-select" name="textPanels" multiple size="3" required>
+                                    <option th:each="audioPanel : ${audioPanels}"
+                                            th:value="${audioPanel.id}"
+                                            th:text="${audioPanel.name + ' - ' + audioPanel.metaverse.name}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div th:if="${error != null}" class="mb-3">
+                            <span class="error-message">Error occurred while creating a text</span>
+                        </div>
+
+                        <div class="col-2 mt-5">
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

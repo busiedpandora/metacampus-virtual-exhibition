@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -56,7 +57,7 @@ public class AudioPanelController extends MainController {
     }
 
     @GetMapping(CTRL_AUDIO_PANELS + CTRL_NEW)
-    public String imagePanelForm(Model model, @RequestParam(value = "error", required = false) String error){
+    public String audioPanelForm(Model model, @RequestParam(value = "error", required = false) String error){
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.SPACES);
         model.addAttribute(MODEL_MENU_ENTITY, MenuEntity.AUDIO_PANEL);
 
@@ -80,21 +81,35 @@ public class AudioPanelController extends MainController {
 
             if (!audioFile.isEmpty()) {
 
-                String fileName = audioFile.getOriginalFilename();
+                String pathWork = System.getProperty("user.home");
 
-                Path targetLocation = Paths.get("src","main","resources","upload_files",fileName);
+                File folder = new File("audio_files");
+
+                if(!folder.exists()){
+                    if(folder.mkdirs()){
+                        System.out.println("OKKKKKKKKKKKKKKK");
+                    }else{
+                        System.out.println("NON CI SIAMOOOOOOOOOO");
+                    }
+                }
+
+                String targetLocationPath = pathWork + File.separator + "audio_files" + File.separator + audioFile.getOriginalFilename();
+
+                Path targetLocation = Paths.get(targetLocationPath);
+
+                System.out.println("PATH: " + targetLocation);
 
                 Files.copy(audioFile.getInputStream(),targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
                 // Set the audio file path in the AudioPanel object
                 List<AudioPanel> audioPanels = new ArrayList<>();
                 audioPanels.add(audioPanel);
-                Audio audio = new Audio();
-                audio.setAudioPath(targetLocation.toString());
-                audio.setAudioPanels(new ArrayList<>());
-                audioPanel.setAudio(audio);
+                //Audio audio = new Audio();
+                //audio.setAudioPath(targetLocation.toString());
+                //audio.setAudioPanels(new ArrayList<>());
+                //audioPanel.setAudio(audio);
                 audioPanel.setName("panel1");
-                audio.getAudioPanels().add(audioPanel);
+                //audio.getAudioPanels().add(audioPanel);
 
                 audioPanelService.addNewAudioPane(audioPanel);
 
