@@ -51,7 +51,7 @@ public class ImageController extends MainController {
     public String imageForm(Model model,
                            @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.RESOURCES);
-        model.addAttribute(MODEL_MENU_ENTITY, MenuEntity.TEXT);
+        model.addAttribute(MODEL_MENU_ENTITY, MenuEntity.IMAGE);
 
         model.addAttribute(DisplayPanelController.MODEL_DISPLAY_PANELS, displayPanelService.getAllDisplayPanels());
 

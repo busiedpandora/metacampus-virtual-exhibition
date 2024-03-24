@@ -8,14 +8,14 @@ public class CoordinatesManager : MonoBehaviour
 
     private const string coordinatesPath = "/Campus/Coordinates";
 
-    private const int minXCoordinate = -10;
-    private const int maxXCoordinate = 10;
+    private const int minXCoordinate = -30;
+    private const int maxXCoordinate = 30;
 
     private const int minYCoordinate = 0;
     private const int maxYCoordinate = 5;
 
-    private const int minZCoordinate = 5;
-    private const int maxZCoordinate = 10;
+    private const int minZCoordinate = -30;
+    private const int maxZCoordinate = 30;
 
     //1° index: x position, 2° index: y position, 3° index: z position
     private GameObject[][][] coordinates;
