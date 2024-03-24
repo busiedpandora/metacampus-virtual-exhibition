@@ -1,10 +1,6 @@
-/*
 package metacampus2.initializer;
 
-import metacampus2.model.Classroom;
-import metacampus2.model.Coordinate;
-import metacampus2.model.Metaverse;
-import metacampus2.model.Office;
+import metacampus2.model.*;
 import metacampus2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,15 +14,20 @@ import java.util.Map;
 @Component
 public class EntitiesInitializer implements CommandLineRunner {
     private IMetaverseService metaverseService;
-    private IClassroomService classroomService;
-    private IOfficeService officeService;
+    private ITextPanelService textPanelService;
+    private IDisplayPanelService displayPanelService;
+    private ISpaceService spaceService;
+
 
     @Autowired
-    public EntitiesInitializer(IMetaverseService metaverseService, IClassroomService classroomService,
-                               IOfficeService officeService) {
+    public EntitiesInitializer(IMetaverseService metaverseService,
+                               ITextPanelService textPanelService,
+                               IDisplayPanelService displayPanelService,
+                               ISpaceService spaceService) {
         this.metaverseService = metaverseService;
-        this.classroomService = classroomService;
-        this.officeService = officeService;
+        this.textPanelService = textPanelService;
+        this.displayPanelService = displayPanelService;
+        this.spaceService = spaceService;
     }
 
     @Override
@@ -50,11 +51,11 @@ public class EntitiesInitializer implements CommandLineRunner {
                         case "metaverse":
                             createMetaverse(entity);
                             break;
-                        case "classroom":
-                            createClassroom(entity);
+                        case "textPanel":
+                            createTextPanel(entity);
                             break;
-                        case "office":
-                            createOffice(entity);
+                        case "displayPanel":
+                            createDisplayPanel(entity);
                             break;
                     }
                 }
@@ -73,7 +74,61 @@ public class EntitiesInitializer implements CommandLineRunner {
         }
     }
 
-    protected void createClassroom(Map<String, Object> c) {
+    protected void createTextPanel(Map<String, Object> tp) {
+        String name = (String) tp.get("name");
+        Map<String, Object> coords = (Map<String, Object>) tp.get("coordinates");
+        int x = (int) coords.get("x");
+        int y = (int) coords.get("y");
+        int z = (int) coords.get("z");
+        String metaverseName = (String) tp.get("metaverse");
+        Metaverse metaverse = metaverseService.getMetaverse(metaverseName);
+
+        if(metaverse != null &&
+                spaceService.getSpaceByCoordinatesAndMetaverse(x, y, z, metaverseName) == null) {
+            TextPanel textPanel = new TextPanel();
+            textPanel.setName(name);
+
+            textPanel.setMetaverse(metaverse);
+
+            Coordinate coordinates = new Coordinate();
+            coordinates.setX(x);
+            coordinates.setY(y);
+            coordinates.setZ(z);
+            textPanel.setCoordinates(coordinates);
+
+            textPanelService.addNewTextPanel(textPanel);
+        }
+    }
+
+    protected void createDisplayPanel(Map<String, Object> tp) {
+        String name = (String) tp.get("name");
+        String typeName = (String) tp.get("displayPanelType");
+        DisplayPanelType type = DisplayPanelType.getDisplayPanelTypeByName(typeName);
+        Map<String, Object> coords = (Map<String, Object>) tp.get("coordinates");
+        int x = (int) coords.get("x");
+        int y = (int) coords.get("y");
+        int z = (int) coords.get("z");
+        String metaverseName = (String) tp.get("metaverse");
+        Metaverse metaverse = metaverseService.getMetaverse(metaverseName);
+
+        if(metaverse != null &&
+                spaceService.getSpaceByCoordinatesAndMetaverse(x, y, z, metaverseName) == null) {
+            DisplayPanel displayPanel = new DisplayPanel();
+            displayPanel.setName(name);
+            displayPanel.setType(type);
+            displayPanel.setMetaverse(metaverse);
+
+            Coordinate coordinates = new Coordinate();
+            coordinates.setX(x);
+            coordinates.setY(y);
+            coordinates.setZ(z);
+            displayPanel.setCoordinates(coordinates);
+
+            displayPanelService.addNewDisplayPanel(displayPanel);
+        }
+    }
+
+    /*protected void createClassroom(Map<String, Object> c) {
         String number = (String) c.get("number");
         Map<String, Object> location = (Map<String, Object>) c.get("location");
         int floorNumber = (int) location.get("floorNumber");
@@ -96,9 +151,9 @@ public class EntitiesInitializer implements CommandLineRunner {
 
             classroomService.addNewClassroom(classroom);
         }
-    }
+    }*/
 
-    protected void createOffice(Map<String, Object> o) {
+    /*protected void createOffice(Map<String, Object> o) {
         String number = (String) o.get("number");
         Map<String, Object> location = (Map<String, Object>) o.get("location");
         int floorNumber = (int) location.get("floorNumber");
@@ -121,6 +176,6 @@ public class EntitiesInitializer implements CommandLineRunner {
 
             officeService.addNewOffice(office);
         }
-    }
+    }*/
 }
-*/
+

@@ -21,4 +21,14 @@ public enum DisplayPanelType {
     public static DisplayPanelType[] getAllDisplayPanelTypes() {
         return DisplayPanelType.values();
     }
+
+    public static DisplayPanelType getDisplayPanelTypeByName(String name) {
+        for (DisplayPanelType panelType : DisplayPanelType.values()) {
+            if (panelType.name.equalsIgnoreCase(name)) {
+                return panelType;
+            }
+        }
+
+        return null;
+    }
 }

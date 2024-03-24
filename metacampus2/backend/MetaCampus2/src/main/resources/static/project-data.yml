@@ -4,24 +4,18 @@ project:
 startupEntities:
   - type: "metaverse"
     name: "Campus Est SUPSI"
-  - type: "classroom"
-    number: "B3.05"
+  - type: "textPanel"
+    name: "Text Panel 1"
+    coordinates:
+      x: -5
+      y: 0
+      z: 5
     metaverse: "Campus Est SUPSI"
-    location:
-      floorNumber: 0
-      xPosition: 0
-      zPosition: 0
-  - type: "classroom"
-    number: "B1.12"
+  - type: "displayPanel"
+    name: "Display Panel 1"
+    displayPanelType: "single"
+    coordinates:
+      x: 5
+      y: 0
+      z: 5
     metaverse: "Campus Est SUPSI"
-    location:
-      floorNumber: 0
-      xPosition: 0
-      zPosition: 0
-  - type: "office"
-    number: "B5.01"
-    metaverse: "Campus Est SUPSI"
-    location:
-      floorNumber: 0
-      xPosition: 0
-      zPosition: 0
