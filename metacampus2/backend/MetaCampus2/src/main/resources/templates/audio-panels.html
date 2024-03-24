@@ -39,7 +39,7 @@
                             <td th:text="'x: ' + ${audioPanel.coordinates.x}
                                     + ', y: ' + ${audioPanel.coordinates.y}
                                     + ', z: ' + ${audioPanel.coordinates.z}"></td>
-                            <th th:text="${audioPanel.audio != null ? audioPanel.audio.audioPath : '-'}"></th>
+                            <th th:text="${audioPanel.audio != null ? audioPanel.audio.name : '-'}"></th>
                         </tr>
                         </tbody>
                     </table>

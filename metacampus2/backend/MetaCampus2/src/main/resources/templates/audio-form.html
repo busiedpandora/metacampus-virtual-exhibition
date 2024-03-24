@@ -3,7 +3,7 @@
       th:replace="~{master :: layout(~{::title},~{::main})}">
 <head>
     <meta charset="UTF-8">
-    <title>Audio panel form</title>
+    <title>Audio form</title>
 </head>
 <body>
 <main>
@@ -13,12 +13,12 @@
                 <div th:insert="category-navigation-menu"></div>
             </div>
             <div class="col">
-                <div th:insert="spaces-navigation-menu"></div>
+                <div th:insert="resources-navigation-menu"></div>
 
                 <div class="form-container">
-                    <form th:href="@{/spaces/audio-panels/new}" method="post">
+                    <form th:href="@{/resources/audios/new}" method="post"  enctype="multipart/form-data">
                         <div class="mb-5">
-                            <span class="fs-4 text-body-secondary ">New audio panel:</span>
+                            <span class="fs-4 text-body-secondary ">New audio:</span>
                         </div>
 
                         <div class="row mb-3">
@@ -29,20 +29,26 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="metaverse" class="col-form-label col-2">Metaverse</label>
+                            <label for="fileAudio" class="col-form-label col-2">File</label>
                             <div class="col-4">
-                                <select id="metaverse" class="form-select" name="metaverse" required>
-                                    <option th:each="metaverse : ${metaverses}"
-                                            th:value="${metaverse.id}" th:text="${metaverse.name}">
+                                <input id="fileAudio" type="file" accept="audio/*" name="fileAudio" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="audioPanels" class="col-form-label col-2">Audio panels</label>
+                            <div class="col-6">
+                                <select id="audioPanels" class="form-select" name="selectedAudioPanelId" multiple size="3" required>
+                                    <option th:each="audioPanel : ${audioPanels}"
+                                            th:value="${audioPanel.id}"
+                                            th:text="${audioPanel.name + ' - ' + audioPanel.metaverse.name}">
                                     </option>
                                 </select>
                             </div>
                         </div>
 
-                        <div th:insert="coordinates-form"></div>
-
                         <div th:if="${error != null}" class="mb-3">
-                            <span class="error-message">Error occurred while creating an audio panel</span>
+                            <span class="error-message">Error occurred while creating a text</span>
                         </div>
 
                         <div class="col-2 mt-5">

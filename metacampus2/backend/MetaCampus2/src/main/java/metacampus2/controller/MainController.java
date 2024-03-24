@@ -15,6 +15,7 @@ public class MainController {
     protected static final String CTRL_AUDIO_PANELS = "/audio-panels";
     protected static final String CTRL_TEXTS = "/texts";
     protected static final String CTRL_IMAGES = "/images";
+    protected static final String CTRL_AUDIOS = "/audios";
 
 
     protected static final String CTRL_NEW = "/new";
