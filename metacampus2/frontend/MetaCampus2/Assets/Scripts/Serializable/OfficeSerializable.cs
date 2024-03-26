@@ -6,5 +6,5 @@ using UnityEngine;
 public class OfficeSerializable
 {
     public string number;
-    public LocationSerializable location;
+    public CoordinateSerializable location;
 }

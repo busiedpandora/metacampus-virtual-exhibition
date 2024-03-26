@@ -7,5 +7,5 @@ public class ClassroomSerializable
 {
     public string number;
     //public LectureSerializable[] lectures;
-    public LocationSerializable location;
+    public CoordinateSerializable location;
 }

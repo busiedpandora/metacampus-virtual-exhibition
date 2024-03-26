@@ -1,0 +1,6 @@
+package metacampus2.model;
+
+public enum MenuEntity {
+    //HOME, CLASSROOMS, EVENTS, LECTURES, OFFICES, PEOPLE, METAVERSES;
+    TEXT, IMAGE, AUDIO, TEXT_PANEL, DISPLAY_PANEL, AUDIO_PANEL;
+}

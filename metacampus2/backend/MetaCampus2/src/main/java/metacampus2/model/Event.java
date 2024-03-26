@@ -1,3 +1,4 @@
+/*
 package metacampus2.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -21,3 +22,4 @@ public class Event extends Resource {
     @Column(nullable = false)
     private LocalDateTime dateTime;
 }
+*/

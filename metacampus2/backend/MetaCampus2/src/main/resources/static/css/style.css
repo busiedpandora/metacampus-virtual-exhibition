@@ -1,3 +1,21 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+main {
+    height: 100%;
+}
+
+#mainContainer {
+    height: 100%;
+}
+
+#mainContainer .row {
+    min-height: 100%;
+}
+
 #headerTitle {
     font-size: 64px;
 }
@@ -6,17 +24,48 @@ header {
     margin-bottom: 30px;
 }
 
-#menuBar {
+#categoryMenuContainer {
+
+}
+
+#categoryNavigationMenu {
+    list-style: none;
+}
+
+#categoryNavigationMenu li {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.category-item {
     padding-top: 3px;
     padding-bottom: 3px;
 }
 
-.navigation-item {
+.category-item.selected {
+    color: black;
+    user-select: none;
+    text-decoration: none;
+}
+
+#resourcesNavigationMenu {
     padding-top: 3px;
     padding-bottom: 3px;
 }
 
-.navigation-item.selected {
+#spacesNavigationMenu {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.entity-item {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.entity-item.selected {
     color: black;
     user-select: none;
     text-decoration: none;
@@ -35,10 +84,17 @@ header {
  }
 
  .form-container {
-     margin-top: 50px;
-     margin-bottom: 50px;
+     margin-top: 30px;
+     margin-bottom: 30px;
+     padding-left: 20px;
+     padding-right: 20px;
  }
 
  .error-message {
      color: red;
  }
+
+th {
+    word-wrap: break-word;
+    white-space: normal;
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{master :: layout(~{::title},~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Image form</title>
+</head>
+<body>
+<main>
+    <div id="mainContainer" class="container-fluid">
+        <div class="row">
+            <div id="categoryMenuContainer" class="col-2 bg-body-secondary">
+                <div th:insert="category-navigation-menu"></div>
+            </div>
+            <div class="col">
+                <div th:insert="resources-navigation-menu"></div>
+
+                <div class="form-container">
+                    <form th:href="@{/resources/images/new}" method="post" enctype="multipart/form-data">
+                        <div class="mb-5">
+                            <span class="fs-4 text-body-secondary ">New image:</span>
+                        </div>
+
+                        <!--<div class="row mb-3">
+                            <label for="name" class="col-form-label col-2">Name</label>
+                            <div class="col-6">
+                                <input id="name" class="form-control" type="text" name="name" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="path" class="col-form-label col-2">Path</label>
+                            <div class="col-6">
+                                <input id="path" class="form-control" type="text" name="path" required>
+                            </div>
+                        </div>-->
+
+                        <div class="row mb-3">
+                            <label for="imageFile" class="col-form-label col-2">Image file</label>
+                            <div class="col-6">
+                                <input id="imageFile" class="form-control" type="file" name="imageFile"
+                                       accept="image/*" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="displayPanels" class="col-form-label col-2">Display panels</label>
+                            <div class="col-6">
+                                <select id="displayPanels" class="form-select" name="displayPanels"
+                                        multiple size="3" required>
+                                    <option th:each="displayPanel : ${displayPanels}"
+                                            th:value="${displayPanel.id}"
+                                            th:text="${displayPanel.name + ' - ' + displayPanel.metaverse.name}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div th:if="${error != null}" class="mb-3">
+                            <span class="error-message">Error occurred while creating an image</span>
+                        </div>
+
+                        <div class="col-2 mt-5">
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<div id="spacesNavigationMenu" class="row justify-content-around text-center bg-body-secondary">
+    <div class="col">
+        <a class="entity-item" th:href="@{/spaces/text-panels}"
+           th:classappend="${menuEntity == T(metacampus2.model.MenuEntity).TEXT_PANEL ?
+                    'selected' : ''}">
+            Text panel
+        </a>
+    </div>
+
+    <div class="col">
+        <a class="entity-item" th:href="@{/spaces/display-panels}"
+           th:classappend="${menuEntity == T(metacampus2.model.MenuEntity).DISPLAY_PANEL ?
+                    'selected' : ''}">
+            Display panel
+        </a>
+    </div>
+
+    <div class="col">
+        <a class="entity-item" th:href="@{/spaces/audio-panels}"
+           th:classappend="${menuEntity == T(metacampus2.model.MenuEntity).AUDIO_PANEL ?
+                    'selected' : ''}">
+            Audio panel
+        </a>
+    </div>
+</div>

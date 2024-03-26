@@ -7,26 +7,35 @@
 </head>
 <body>
 <main>
-    <div class="container-fluid table-container">
-        <a class="btn btn-outline-primary create-entity-button" role="button" th:href="@{/metaverses/new}">
-            Create metaverse
-        </a>
+    <div id="mainContainer" class="container-fluid">
+        <div class="row">
+            <div id="categoryMenuContainer" class="col-2 bg-body-secondary">
+                <div th:insert="category-navigation-menu"></div>
+            </div>
+            <div class="col">
+                <div class="table-container">
+                    <a class="btn btn-outline-primary" role="button" th:href="@{/metaverses/new}">
+                        Create metaverse
+                    </a>
 
-        <table class="table table-striped caption-top entities-table">
-            <caption class="fs-5">Metaverses:</caption>
-            <thead>
-            <tr>
-                <th scope="col" class="col-1">#</th>
-                <th scope="col">Name</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="metaverse, iterStat : ${metaverses}">
-                <th scope="row" th:text="${iterStat.count}"></th>
-                <td th:text="${metaverse.name}"></td>
-            </tr>
-            </tbody>
-        </table>
+                    <table class="table table-striped caption-top entities-table">
+                        <caption class="fs-5">Metaverses:</caption>
+                        <thead>
+                        <tr>
+                            <th scope="col" class="col-1">#</th>
+                            <th scope="col">Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="metaverse, iterStat : ${metaverses}">
+                            <th scope="row" th:text="${iterStat.count}"></th>
+                            <th th:text="${metaverse.name}"></th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 </body>

@@ -21,7 +21,7 @@ public class Metaverse {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "metaverse")
+    /*@OneToMany(mappedBy = "metaverse")
     @JsonBackReference
     private List<Classroom> classrooms;
 
@@ -39,5 +39,9 @@ public class Metaverse {
 
     @OneToMany(mappedBy = "metaverse")
     @JsonIgnoreProperties("metaverse")
-    private List<Office> offices;
+    private List<Office> offices;*/
+
+    @OneToMany(mappedBy = "metaverse")
+    @JsonBackReference
+    private List<Space> spaces;
 }

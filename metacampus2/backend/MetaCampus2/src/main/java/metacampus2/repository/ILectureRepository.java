@@ -1,3 +1,4 @@
+/*
 package metacampus2.repository;
 
 import metacampus2.model.Lecture;
@@ -15,3 +16,4 @@ public interface ILectureRepository extends JpaRepository<Lecture, Long> {
     @Query("SELECT l FROM Lecture l WHERE l.dateTime >= CURRENT_TIMESTAMP")
     List<Lecture> findAllByMetaverseStartingFromCurrentTime(String metaverseName);
 }
+*/

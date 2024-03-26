@@ -1,3 +1,4 @@
+/*
 package metacampus2.repository;
 
 import metacampus2.model.Classroom;
@@ -11,3 +12,4 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Long> {
     Classroom findByNumberAndMetaverseName(String classroomNumber, String metaverseName);
     List<Classroom> findAllByMetaverseName(String metaverseName);
 }
+*/

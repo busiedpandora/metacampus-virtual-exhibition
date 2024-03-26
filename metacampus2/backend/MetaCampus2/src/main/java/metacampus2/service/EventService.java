@@ -1,3 +1,4 @@
+/*
 package metacampus2.service;
 
 import metacampus2.model.Event;
@@ -40,3 +41,4 @@ public class EventService implements IEventService {
 }
 
 
+*/

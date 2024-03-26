@@ -7,31 +7,36 @@
 </head>
 <body>
 <main>
-    <div class="container-fluid form-container">
-        <form th:href="@{/metaverses/new}" method="post">
-            <div class="row justify-content-center">
-                <div class="col-6 border border-1 border-primary rounded-3 px-5 py-5">
-                    <div class="mb-5">
-                        <span class="fs-4 text-body-secondary ">New metaverse:</span>
-                    </div>
-
-                    <div class="row mb-3">
-                        <label for="name" class="col-form-label col-2">Name</label>
-                        <div class="col">
-                            <input id="name" class="form-control" type="text" name="name" required>
+    <div id="mainContainer" class="container-fluid">
+        <div class="row">
+            <div id="categoryMenuContainer" class="col-2 bg-body-secondary">
+                <div th:insert="category-navigation-menu"></div>
+            </div>
+            <div class="col">
+                <div class="form-container">
+                    <form th:href="@{/metaverses/new}" method="post">
+                        <div class="mb-5">
+                            <span class="fs-4 text-body-secondary ">New metaverse:</span>
                         </div>
-                    </div>
 
-                    <div th:if="${error != null}" class="mb-3">
-                        <span class="error-message">Error occurred while creating a metaverse</span>
-                    </div>
+                        <div class="row mb-3">
+                            <label for="name" class="col-form-label col-2">Name</label>
+                            <div class="col">
+                                <input id="name" class="form-control" type="text" name="name" required>
+                            </div>
+                        </div>
 
-                    <div class="col-2 mt-5">
-                        <button type="submit" class="btn btn-primary">Create</button>
-                    </div>
+                        <div th:if="${error != null}" class="mb-3">
+                            <span class="error-message">Error occurred while creating a metaverse</span>
+                        </div>
+
+                        <div class="col-2 mt-5">
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </main>
 </body>

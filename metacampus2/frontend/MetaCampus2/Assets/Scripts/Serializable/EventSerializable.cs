@@ -8,5 +8,5 @@ public class EventSerializable
 {
     public string name;
     public string dateTime;
-    public LocationSerializable location;
+    public CoordinateSerializable location;
 }

@@ -1,3 +1,4 @@
+/*
 package metacampus2.service;
 
 import metacampus2.AbstractTest;
@@ -74,4 +75,4 @@ class ClassroomServiceTest extends AbstractTest {
 
         assertEquals("B3.05", classroomService.getAllClassroomsFromMetaverse("Campus Est SUPSI").get(1).getNumber());
     }
-}
+}*/

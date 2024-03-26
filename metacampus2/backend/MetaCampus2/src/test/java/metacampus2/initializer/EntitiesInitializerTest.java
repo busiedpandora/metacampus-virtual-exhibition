@@ -1,65 +1,57 @@
 package metacampus2.initializer;
 
+import metacampus2.AbstractTest;
+import metacampus2.model.DisplayPanelType;
 import metacampus2.model.Metaverse;
 import metacampus2.service.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(MockitoExtension.class)
-class EntitiesInitializerTest {
+class EntitiesInitializerTest extends AbstractTest {
+    @Autowired
     private EntitiesInitializer entitiesInitializer;
-
-    @Mock
+    @Autowired
     private IMetaverseService metaverseService;
-    @Mock
-    private IClassroomService classroomService;
-    @Mock
-    private IOfficeService officeService;
+    @Autowired
+    private ITextPanelService textPanelService;
+    @Autowired
+    private IDisplayPanelService displayPanelService;
+    @Autowired
+    private ISpaceService spaceService;
 
 
     @BeforeEach
     void setUp() {
-        entitiesInitializer = new EntitiesInitializer(metaverseService, classroomService, officeService);
-    }
-
-
-    @Test
-    void runByCreatingMetaverse() throws Exception {
-        when(metaverseService.getMetaverse(anyString())).thenReturn(null);
-
-        entitiesInitializer.run();
-
-        verify(metaverseService, times(1)).addNewMetaverse(any());
+        entitiesInitializer = new EntitiesInitializer(metaverseService, textPanelService,
+                                                        displayPanelService, spaceService);
     }
 
     @Test
-    void runByCreatingClassrooms() throws Exception {
-        when(metaverseService.getMetaverse(anyString())).thenReturn(new Metaverse());
-        when(classroomService.getClassroomFromMetaverse(anyString(), anyString())).thenReturn(null);
+    void run() throws Exception {
+        Metaverse metaverse = metaverseService.getMetaverse("Campus Est SUPSI");
+        assertNotNull(metaverse);
+        assertEquals("Campus Est SUPSI", metaverse.getName());
 
-        entitiesInitializer.run();
+        var textPanels = textPanelService.getAllTextPanelsFromMetaverse("Campus Est SUPSI");
+        assertEquals(1, textPanels.size());
+        assertEquals("Text Panel 1",  textPanels.get(0).getName());
+        assertEquals(-5,  textPanels.get(0).getCoordinates().getX());
+        assertEquals(0,  textPanels.get(0).getCoordinates().getY());
+        assertEquals(5,  textPanels.get(0).getCoordinates().getZ());
 
-        verify(classroomService, times(2)).addNewClassroom(any());
-    }
-
-    @Test
-    void runByCreatingOffice() throws Exception {
-        when(metaverseService.getMetaverse(anyString())).thenReturn(new Metaverse());
-        when(officeService.getOfficeFromMetaverse(anyString(), anyString())).thenReturn(null);
-
-        entitiesInitializer.run();
-
-        verify(officeService, times(1)).addNewOffice(any());
+        var displayPanels = displayPanelService.getAllDisplayPanelsFromMetaverse("Campus Est SUPSI");
+        assertEquals(1, displayPanels.size());
+        assertEquals("Display Panel 1",  displayPanels.get(0).getName());
+        assertEquals(DisplayPanelType.SINGLE, displayPanels.get(0).getType());
+        assertEquals(5,  displayPanels.get(0).getCoordinates().getX());
+        assertEquals(0,  displayPanels.get(0).getCoordinates().getY());
+        assertEquals(5,  displayPanels.get(0).getCoordinates().getZ());
     }
 }

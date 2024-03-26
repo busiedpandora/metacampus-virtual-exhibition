@@ -1,3 +1,4 @@
+/*
 package metacampus2.service;
 
 import metacampus2.model.Person;
@@ -17,3 +18,4 @@ public interface IPersonService {
     List<Person> getAllPeopleFromMetaverse(String metaverseName);
 
 }
+*/

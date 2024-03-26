@@ -1,3 +1,4 @@
+/*
 package metacampus2.service;
 
 import metacampus2.model.Resource;
@@ -26,3 +27,4 @@ public class ResourceService implements IResourceService {
         return IResourceRepository.findAllByMetaverseName(metaverseName);
     }
 }
+*/

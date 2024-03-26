@@ -1,3 +1,4 @@
+/*
 package metacampus2.controller;
 
 import metacampus2.model.MenuItem;
@@ -85,3 +86,4 @@ public class PersonController extends MainController {
         return "redirect:" + CTRL_PEOPLE + CTRL_NEW + "?error";
     }
 }
+*/
