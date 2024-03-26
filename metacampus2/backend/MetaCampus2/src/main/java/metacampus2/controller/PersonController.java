@@ -70,12 +70,12 @@ public class PersonController extends MainController {
     @PostMapping(CTRL_PEOPLE + CTRL_NEW)
     public String person(Person person) {
         Metaverse metaverse = person.getMetaverse();
-        if(person.getOffice() != null &&
+        if (person.getOffice() != null &&
                 !Objects.equals(metaverse, person.getOffice().getMetaverse())) {
             return "redirect:" + CTRL_PEOPLE + CTRL_NEW + "?error";
         }
 
-        if(personService.getPersonFromMetaverse(person.getFirstName(), person.getLastName(),
+        if (personService.getPersonFromMetaverse(person.getFirstName(), person.getLastName(),
                 person.getCellphone(), person.getMetaverse().getName()) == null) {
             personService.addNewPerson(person);
 

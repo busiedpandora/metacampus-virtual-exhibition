@@ -60,7 +60,7 @@ public class EventController extends MainController {
 
     @PostMapping(CTRL_EVENTS + CTRL_NEW)
     public String event(Event event) {
-        if(eventService.getEventFromMetaverse(event.getName(),
+        if (eventService.getEventFromMetaverse(event.getName(),
                 event.getDateTime(), event.getMetaverse().getName()) == null) {
             eventService.addNewEvent(event);
 

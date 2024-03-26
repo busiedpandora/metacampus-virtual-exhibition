@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface OfficeRepository extends JpaRepository<Office, Long> {
+public interface IOfficeRepository extends JpaRepository<Office, Long> {
     Office findByNumberAndMetaverseName(String officeNumber, String metaverseName);
     List<Office> findAllByMetaverseName(String metaverseName);
 }
