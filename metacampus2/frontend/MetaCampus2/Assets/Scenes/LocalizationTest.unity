@@ -280,7 +280,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textPanelObject: {fileID: 4454352505267271757, guid: 23d101417e4c4f642ba6d0a8c0cbfd84, type: 3}
   singleDisplayPanelObject: {fileID: 6322482833769128490, guid: bcf4599e28657a7418538a6b175329ca, type: 3}
-  sixPackDisplayPanelObject: {fileID: 1298397279284414578, guid: ffccb57852b0b94438d5345730ba9dda, type: 3}
+  sixPackDiagonalDisplayPanelObject: {fileID: 1298397279284414578, guid: ffccb57852b0b94438d5345730ba9dda, type: 3}
+  sixPackCircularDisplayPanelObject: {fileID: 2505343625553553035, guid: 31d748d3176c06e439b46fc5d23de6ff, type: 3}
 --- !u!4 &667983698
 Transform:
   m_ObjectHideFlags: 0
@@ -493,7 +494,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &929210315
 Transform:
   m_ObjectHideFlags: 0
@@ -551,7 +552,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4d1ca21aa2c364b47ab91174d192f64d, type: 2}
+  - {fileID: 2100000, guid: b1064f1a1c822b9458273217619a7e33, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

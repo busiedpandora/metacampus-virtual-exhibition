@@ -15,7 +15,8 @@ public class ResourcesManager : MonoBehaviour
 {
     [SerializeField] private GameObject textPanelObject;
     [SerializeField] private GameObject singleDisplayPanelObject;
-    [SerializeField] private GameObject sixPackDisplayPanelObject;
+    [SerializeField] private GameObject sixPackDiagonalDisplayPanelObject;
+    [SerializeField] private GameObject sixPackCircularDisplayPanelObject;
 
     private const string metaverseName = "Campus Est Supsi";
 
@@ -152,11 +153,11 @@ public class ResourcesManager : MonoBehaviour
                             }
                         }
 
-                        else if (displayPanel.type == "SIX_PACK")
+                        else if (displayPanel.type == "SIX_PACK_DIAGONAL")
                         {
-                            var sixPackDisplalPanelInstance =
-                                Instantiate(sixPackDisplayPanelObject, position, Quaternion.identity);
-                            sixPackDisplalPanelInstance.transform.parent = coordObject.transform;
+                            var sixPackDiagonalDisplalPanelInstance =
+                                Instantiate(sixPackDiagonalDisplayPanelObject, position, Quaternion.identity);
+                            sixPackDiagonalDisplalPanelInstance.transform.parent = coordObject.transform;
 
                             for (int i = 0; i < imagesCount; i++)
                             {
@@ -168,7 +169,29 @@ public class ResourcesManager : MonoBehaviour
 
                                     Texture2D texture = new Texture2D(2, 2);
                                     texture.LoadImage(imageData);
-                                    var image = sixPackDisplalPanelInstance.transform.Find($"Board/Canvas/Image{i + 1}");
+                                    var image = sixPackDiagonalDisplalPanelInstance.transform.Find($"Panel/Board/Canvas/Image{i + 1}");
+                                    image.GetComponent<RawImage>().texture = texture;
+                                }
+                            }
+                        }
+
+                        else if (displayPanel.type == "SIX_PACK_CIRCULAR")
+                        {
+                            var sixPackCircularDisplalPanelInstance =
+                                Instantiate(sixPackCircularDisplayPanelObject, position, Quaternion.identity);
+                            sixPackCircularDisplalPanelInstance.transform.parent = coordObject.transform;
+
+                            for (int i = 0; i < imagesCount; i++)
+                            {
+                                string imagePath = displayPanel.images[i].path;
+
+                                if (System.IO.File.Exists(imagePath))
+                                {
+                                    byte[] imageData = System.IO.File.ReadAllBytes(displayPanel.images[i].path);
+
+                                    Texture2D texture = new Texture2D(2, 2);
+                                    texture.LoadImage(imageData);
+                                    var image = sixPackCircularDisplalPanelInstance.transform.Find($"Panel/Board/Canvas/Image{i + 1}");
                                     image.GetComponent<RawImage>().texture = texture;
                                 }
                             }
