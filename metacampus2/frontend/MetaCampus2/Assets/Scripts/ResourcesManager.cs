@@ -18,9 +18,9 @@ public class ResourcesManager : MonoBehaviour
     [SerializeField] private GameObject sixPackDiagonalDisplayPanelObject;
     [SerializeField] private GameObject sixPackCircularDisplayPanelObject;
 
-    private const string metaverseName = "Campus Est Supsi";
+    private const string metaverseName = "CampusEstSUPSI";
 
-    private const string hostName = "www.localhost";
+    private const string hostName = "192.168.45.81";
     private const string port = "8080";
     private const string baseUrlPath = "spaces";
     private string serverUrl = "";
@@ -50,7 +50,14 @@ public class ResourcesManager : MonoBehaviour
 
     public void StartInitResources()
     {
-        StartCoroutine(InitTexts());
+        try
+        {
+            StartCoroutine(InitTexts());
+        }
+        catch(Exception e)
+        {
+            DebugLog.instance.Log("Exception Occurred", e.Message);
+        }
     }
 
     private IEnumerator InitTexts()
@@ -143,7 +150,12 @@ public class ResourcesManager : MonoBehaviour
                                 
                                 if (System.IO.File.Exists(imagePath))
                                 {
-                                    byte[] imageData = System.IO.File.ReadAllBytes(displayPanel.images[i].path);
+                                    byte[] imageData = System.IO.File.ReadAllBytes(displayPanel.images[i].path);//qui faccio una get all'uri che espongo (via controller in spring) in cui ritorno l'immagine in byte,
+                                    //oppure un json che può contenere altre info dell'immagine. Lato unity, quindi accedo l'immagine lato server
+                                    //senza dover accedere al file system che cambia da utente a utente.
+
+                                    //Base64.getEncoder().encodeToString(Files.readAllBytes(Path.of(file.getPath)) in java
+                                    //byte[] bytes = System.Convert.FromBase64String(image.data) in C#
 
                                     Texture2D texture = new Texture2D(2, 2);
                                     texture.LoadImage(imageData);
