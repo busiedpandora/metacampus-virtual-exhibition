@@ -21,6 +21,9 @@ public class Metaverse {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @Column(nullable = false, unique = true)
+    private String urlName;
+
     /*@OneToMany(mappedBy = "metaverse")
     @JsonBackReference
     private List<Classroom> classrooms;
@@ -44,4 +47,14 @@ public class Metaverse {
     @OneToMany(mappedBy = "metaverse")
     @JsonBackReference
     private List<Space> spaces;
+
+
+
+    @PrePersist
+    private void setUrlName() {
+        this.urlName = this.name
+                .toLowerCase()
+                .replaceAll("[*!?,.+/]+", "-")
+                .replaceAll(" ", "-");
+    }
 }

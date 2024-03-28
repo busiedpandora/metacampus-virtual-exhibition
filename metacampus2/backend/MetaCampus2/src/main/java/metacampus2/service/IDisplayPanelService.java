@@ -8,4 +8,5 @@ public interface IDisplayPanelService {
     void addNewDisplayPanel(DisplayPanel displayPanel);
     List<DisplayPanel> getAllDisplayPanels();
     List<DisplayPanel> getAllDisplayPanelsFromMetaverse(String metaverseName);
+    List<DisplayPanel> getAllDisplayPanelsFromMetaverseByUrlName(String metaverseUrlName);
 }

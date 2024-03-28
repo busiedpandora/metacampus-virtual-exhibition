@@ -58,9 +58,12 @@ public class DisplayPanelController extends MainController {
         return VIEW_DISPLAY_PANEL_FORM;
     }
 
-    @GetMapping("/{metaverseName}" + CTRL_DISPLAY_PANELS)
-    public ResponseEntity<List<DisplayPanel>> displayPanelsFromMetaverse(@PathVariable("metaverseName") String metaverseName) {
-        return new ResponseEntity<>(displayPanelService.getAllDisplayPanelsFromMetaverse(metaverseName), HttpStatus.OK);
+    @GetMapping("/{metaverseUrlName}" + CTRL_DISPLAY_PANELS)
+    public ResponseEntity<List<DisplayPanel>> displayPanelsFromMetaverse(
+            @PathVariable("metaverseUrlName") String metaverseUrlName) {
+        return new ResponseEntity<>(
+                displayPanelService.getAllDisplayPanelsFromMetaverseByUrlName(metaverseUrlName),
+                HttpStatus.OK);
     }
 
     @PostMapping(CTRL_DISPLAY_PANELS + CTRL_NEW)

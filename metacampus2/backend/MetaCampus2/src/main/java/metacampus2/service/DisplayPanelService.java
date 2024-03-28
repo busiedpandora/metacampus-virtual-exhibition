@@ -31,4 +31,9 @@ public class DisplayPanelService implements IDisplayPanelService {
     public List<DisplayPanel> getAllDisplayPanelsFromMetaverse(String metaverseName) {
         return displayPanelRepository.findAllByMetaverseName(metaverseName);
     }
+
+    @Override
+    public List<DisplayPanel> getAllDisplayPanelsFromMetaverseByUrlName(String metaverseUrlName) {
+        return displayPanelRepository.findAllByMetaverseUrlName(metaverseUrlName);
+    }
 }
