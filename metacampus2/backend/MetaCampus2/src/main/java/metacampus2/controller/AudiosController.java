@@ -67,9 +67,10 @@ public class AudiosController extends MainController {
 
         if (!audioFile.isEmpty()) {
 
-            String pathWork = System.getProperty("user.home");
+            String pathWork = "src";
+            String folderAudio = "audio_files";
 
-            File folder = new File("audio_files");
+            File folder = new File(pathWork + File.separator + folderAudio);
 
             if (!folder.exists()) {
                 if (!folder.mkdirs()) {
@@ -77,7 +78,7 @@ public class AudiosController extends MainController {
                 }
 
             }
-            String targetLocationPath = pathWork + File.separator + "audio_files" + File.separator + audioFile.getOriginalFilename();
+            String targetLocationPath = pathWork + File.separator + folderAudio + File.separator + audioFile.getOriginalFilename();
 
             Path targetLocation = Paths.get(targetLocationPath);
 
