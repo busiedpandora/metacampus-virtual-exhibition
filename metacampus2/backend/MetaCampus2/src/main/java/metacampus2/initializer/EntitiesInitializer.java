@@ -1,5 +1,6 @@
 package metacampus2.initializer;
 
+import metacampus2.controller.MainController;
 import metacampus2.model.*;
 import metacampus2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.yaml.snakeyaml.Yaml;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +73,12 @@ public class EntitiesInitializer implements CommandLineRunner {
             metaverse.setName((String) m.get("name"));
 
             metaverseService.addNewMetaverse(metaverse);
+
+            File metaverseDirectory = new File(MainController.METAVERSES_PATH + metaverse.getUrlName());
+
+            if(!metaverseDirectory.exists()) {
+                metaverseDirectory.mkdirs();
+            }
         }
     }
 
@@ -83,8 +91,8 @@ public class EntitiesInitializer implements CommandLineRunner {
         String metaverseName = (String) tp.get("metaverse");
         Metaverse metaverse = metaverseService.getMetaverse(metaverseName);
 
-        if(metaverse != null &&
-                spaceService.getSpaceByCoordinatesAndMetaverse(x, y, z, metaverseName) == null) {
+        if(metaverse != null && spaceService.getSpaceByNameAndMetaverse(name, metaverseName) == null
+                && spaceService.getSpaceByCoordinatesAndMetaverse(x, y, z, metaverseName) == null) {
             TextPanel textPanel = new TextPanel();
             textPanel.setName(name);
 
@@ -111,8 +119,8 @@ public class EntitiesInitializer implements CommandLineRunner {
         String metaverseName = (String) tp.get("metaverse");
         Metaverse metaverse = metaverseService.getMetaverse(metaverseName);
 
-        if(metaverse != null &&
-                spaceService.getSpaceByCoordinatesAndMetaverse(x, y, z, metaverseName) == null) {
+        if(metaverse != null && spaceService.getSpaceByNameAndMetaverse(name, metaverseName) == null
+                && spaceService.getSpaceByCoordinatesAndMetaverse(x, y, z, metaverseName) == null) {
             DisplayPanel displayPanel = new DisplayPanel();
             displayPanel.setName(name);
             displayPanel.setType(type);
@@ -125,6 +133,14 @@ public class EntitiesInitializer implements CommandLineRunner {
             displayPanel.setCoordinates(coordinates);
 
             displayPanelService.addNewDisplayPanel(displayPanel);
+
+            File displayPanelDirectory = new File(MainController.METAVERSES_PATH
+                    + displayPanel.getMetaverse().getUrlName() + MainController.SEPARATOR
+                    + MainController.DISPLAY_PANELS_PATH + displayPanel.getUrlName());
+
+            if(!displayPanelDirectory.exists()) {
+                displayPanelDirectory.mkdirs();
+            }
         }
     }
 

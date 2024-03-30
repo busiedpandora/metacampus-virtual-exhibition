@@ -16,8 +16,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class Image extends Resource {
-    private String path;
-
     @ManyToMany(mappedBy = "images")
     @JsonBackReference
     private List<DisplayPanel> displayPanels;

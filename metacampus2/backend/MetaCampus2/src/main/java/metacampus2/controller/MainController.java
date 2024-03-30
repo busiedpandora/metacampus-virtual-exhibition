@@ -31,10 +31,12 @@ public class MainController {
     protected static final String MODEL_LECTURES = "lectures";
     protected static final String MODEL_PEOPLE = "people";
 
-    protected static final String SEPARATOR = FileSystems.getDefault().getSeparator();
+    public static final String SEPARATOR = FileSystems.getDefault().getSeparator();
     protected static final String RESOURCES_PATH = "." + SEPARATOR + "resources" + SEPARATOR;
-    protected static final String IMAGES_PATH = RESOURCES_PATH + "images";
-    protected static final String AUDIO_PATH = RESOURCES_PATH + "audios";
+    public static final String METAVERSES_PATH = RESOURCES_PATH + "metaverses" + SEPARATOR;
+    public static final String DISPLAY_PANELS_PATH = "display-panels" + SEPARATOR;
+    protected static final String IMAGES_PATH = "images" + SEPARATOR;
+    protected static final String AUDIO_PATH = "audios" + SEPARATOR;
 
 
     @Value("${project.name}")

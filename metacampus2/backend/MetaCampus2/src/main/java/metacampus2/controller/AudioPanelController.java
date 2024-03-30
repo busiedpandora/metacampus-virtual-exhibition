@@ -71,7 +71,9 @@ public class AudioPanelController extends MainController {
     public String newAudioPanel(@ModelAttribute AudioPanel audioPanel) throws IOException {
         Coordinate coordinates = audioPanel.getCoordinates();
 
-        if (spaceService.getSpaceByCoordinatesAndMetaverse(coordinates.getX(), coordinates.getY(), coordinates.getZ(), audioPanel.getMetaverse().getName()) == null) {
+        if (spaceService.getSpaceByNameAndMetaverse(audioPanel.getName(), audioPanel.getMetaverse().getName()) == null &&
+                spaceService.getSpaceByCoordinatesAndMetaverse(coordinates.getX(),
+                coordinates.getY(), coordinates.getZ(), audioPanel.getMetaverse().getName()) == null) {
 
 
             audioPanelService.addNewAudioPane(audioPanel);
