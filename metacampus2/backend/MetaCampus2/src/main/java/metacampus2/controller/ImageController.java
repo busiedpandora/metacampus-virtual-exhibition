@@ -63,11 +63,7 @@ public class ImageController extends MainController {
     @PostMapping(CTRL_IMAGES + CTRL_NEW)
     public String newImage(Image image, @RequestParam(value = "imageFile") MultipartFile imageFile) {
         if(imageFile != null && !imageFile.isEmpty()) {
-
-            String pathWork = "src";
-            String folderImage = "image_files";
-
-            File imagesDirectory = new File(pathWork + File.separator + folderImage);
+            File imagesDirectory = new File(IMAGES_PATH);
             if(!imagesDirectory.exists()) {
                 if(!imagesDirectory.mkdirs()) {
                     return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW + "?error";
@@ -75,8 +71,7 @@ public class ImageController extends MainController {
             }
 
             String imageName = imageFile.getOriginalFilename();
-            String targetLocationPath = pathWork + File.separator + folderImage + File.separator + imageName;
-            Path imagePath = Path.of(targetLocationPath);
+            Path imagePath = Path.of(imagesDirectory.getPath() + SEPARATOR + imageName);
 
             try {
                 Files.copy(imageFile.getInputStream(), imagePath, StandardCopyOption.REPLACE_EXISTING);
