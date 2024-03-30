@@ -97,11 +97,12 @@ public class DisplayPanelController extends MainController {
     @GetMapping("/{metaverseUrlName}" + CTRL_DISPLAY_PANELS + "/{displayPanelUrlName}" + CTRL_IMAGES + "/{imageName}")
     @ResponseBody
     public String getImage(@PathVariable("metaverseUrlName") String metaverseUrlName,
-                           @PathVariable("displayPanelUrlName") String displaPanelUrlName,
+                           @PathVariable("displayPanelUrlName") String displayPanelUrlName,
                            @PathVariable("imageName") String imageName) {
         try {
+            String imageNameWithoutExtension = imageName.substring(0, imageName.lastIndexOf('.'));
             File imagesDirectory = new File(METAVERSES_PATH + metaverseUrlName +
-                    SEPARATOR + DISPLAY_PANELS_PATH + displaPanelUrlName + SEPARATOR + IMAGES_PATH);
+                    SEPARATOR + DISPLAY_PANELS_PATH + displayPanelUrlName + SEPARATOR + IMAGES_PATH + imageNameWithoutExtension);
             if(!imagesDirectory.exists()) {
                 return null;
             }

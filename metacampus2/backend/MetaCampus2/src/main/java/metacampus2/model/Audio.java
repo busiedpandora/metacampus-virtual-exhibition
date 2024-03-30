@@ -1,10 +1,8 @@
 package metacampus2.model;
 
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrePersist;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,8 +14,9 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class Audio extends Resource {
-
-    private String audioPath;
+    @OneToOne
+    @JoinColumn(name = "image_id")
+    private Image image;
 
     @OneToMany(mappedBy = "audio")
     List<AudioPanel> audioPanels;

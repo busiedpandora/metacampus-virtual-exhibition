@@ -36,7 +36,7 @@ public class MainController {
     public static final String METAVERSES_PATH = RESOURCES_PATH + "metaverses" + SEPARATOR;
     public static final String DISPLAY_PANELS_PATH = "display-panels" + SEPARATOR;
     protected static final String IMAGES_PATH = "images" + SEPARATOR;
-    protected static final String AUDIO_PATH = "audios" + SEPARATOR;
+    protected static final String AUDIO_PATH = "audio" + SEPARATOR;
 
 
     @Value("${project.name}")

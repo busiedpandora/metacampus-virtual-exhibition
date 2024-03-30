@@ -22,33 +22,27 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="name" class="col-form-label col-2">Name</label>
+                            <label for="audioFile" class="col-form-label col-2">Audio file</label>
                             <div class="col-6">
-                                <input id="name" class="form-control" type="text" name="name" required>
+                                <input id="audioFile" class="form-control" type="file" name="audioFile"
+                                       accept="audio/*" required>
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label for="fileAudio" class="col-form-label col-2">File</label>
-                            <div class="col-4">
-                                <input id="fileAudio" type="file" accept="audio/*" name="fileAudio" required>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="audioPanels" class="col-form-label col-2">Audio panels</label>
+                            <label for="images" class="col-form-label col-2">Images</label>
                             <div class="col-6">
-                                <select id="audioPanels" class="form-select" name="selectedAudioPanelId" multiple size="3" required>
-                                    <option th:each="audioPanel : ${audioPanels}"
-                                            th:value="${audioPanel.id}"
-                                            th:text="${audioPanel.name + ' - ' + audioPanel.metaverse.name}">
+                                <select id="images" class="form-select" name="image" size="3" required>
+                                    <option th:each="image : ${images}"
+                                            th:value="${image.id}"
+                                            th:text="${image.name}">
                                     </option>
                                 </select>
                             </div>
                         </div>
 
                         <div th:if="${error != null}" class="mb-3">
-                            <span class="error-message">Error occurred while creating a text</span>
+                            <span class="error-message">Error occurred while creating an audio</span>
                         </div>
 
                         <div class="col-2 mt-5">

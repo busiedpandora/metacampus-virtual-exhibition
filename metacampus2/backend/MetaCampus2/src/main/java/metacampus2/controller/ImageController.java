@@ -62,19 +62,19 @@ public class ImageController extends MainController {
     @PostMapping(CTRL_IMAGES + CTRL_NEW)
     public String newImage(Image image, @RequestParam(value = "imageFile") MultipartFile imageFile) {
         if(imageFile != null && !imageFile.isEmpty()) {
-            String imageName = imageFile.getOriginalFilename();
-
+            String imageFullName = imageFile.getOriginalFilename();
+            String imageNameWithoutExtension = imageFullName.substring(0, imageFullName.lastIndexOf('.'));
             for (DisplayPanel displayPanel: image.getDisplayPanels()) {
-                File imagesDirectory = new File(METAVERSES_PATH + displayPanel.getMetaverse().getUrlName() +
-                        SEPARATOR + DISPLAY_PANELS_PATH + displayPanel.getUrlName() + SEPARATOR + IMAGES_PATH);
+                File imageDirectory = new File(METAVERSES_PATH + displayPanel.getMetaverse().getUrlName() +
+                        SEPARATOR + DISPLAY_PANELS_PATH + displayPanel.getUrlName() + SEPARATOR + IMAGES_PATH + imageNameWithoutExtension);
 
-                if(!imagesDirectory.exists()) {
-                    if(!imagesDirectory.mkdirs()) {
+                if(!imageDirectory.exists()) {
+                    if(!imageDirectory.mkdirs()) {
                         return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW + "?error";
                     }
                 }
 
-                Path imagePath = Path.of(imagesDirectory.getPath() + SEPARATOR + imageName);
+                Path imagePath = Path.of(imageDirectory.getPath() + SEPARATOR + imageFullName);
 
                 try {
                     Files.copy(imageFile.getInputStream(), imagePath, StandardCopyOption.REPLACE_EXISTING);
@@ -83,7 +83,7 @@ public class ImageController extends MainController {
                 }
             }
 
-            image.setName(imageName);
+            image.setName(imageFullName);
             imageService.addNewImage(image);
 
             return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES;

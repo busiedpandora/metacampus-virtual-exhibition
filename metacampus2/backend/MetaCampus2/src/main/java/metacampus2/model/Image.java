@@ -3,6 +3,7 @@ package metacampus2.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,9 @@ public class Image extends Resource {
     @ManyToMany(mappedBy = "images")
     @JsonBackReference
     private List<DisplayPanel> displayPanels;
+
+    @OneToOne(mappedBy = "image")
+    private Audio audio;
 
     @PrePersist
     public void prePersist() {

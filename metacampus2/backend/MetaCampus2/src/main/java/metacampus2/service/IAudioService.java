@@ -7,7 +7,4 @@ public interface IAudioService {
     void addNewAudio(Audio audio);
 
     List<Audio> getAllAudios();
-
-    Audio getAudioByPath(String path);
-
 }

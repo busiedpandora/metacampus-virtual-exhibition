@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AudiosService implements IAudioService {
+public class AudioService implements IAudioService {
 
     private IAudiosRepository audioRepository;
 
     @Autowired
-    public AudiosService(IAudiosRepository audioRepository) {
+    public AudioService(IAudiosRepository audioRepository) {
         this.audioRepository = audioRepository;
     }
 
@@ -26,10 +26,5 @@ public class AudiosService implements IAudioService {
     @Override
     public List<Audio> getAllAudios() {
         return audioRepository.findAll();
-    }
-
-    @Override
-    public Audio getAudioByPath(String path) {
-        return audioRepository.findByAudioPath(path);
     }
 }
