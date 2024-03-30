@@ -27,4 +27,9 @@ public class AudioService implements IAudioService {
     public List<Audio> getAllAudios() {
         return audioRepository.findAll();
     }
+
+    @Override
+    public void removeAudio(Audio audio) {
+        audioRepository.delete(audio);
+    }
 }

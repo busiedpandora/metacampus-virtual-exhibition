@@ -62,11 +62,11 @@ public class AudioController extends MainController {
     }
 
     @PostMapping(CTRL_AUDIOS + CTRL_NEW)
-    public String newAudio(Audio audio, @RequestParam("audioFile") MultipartFile audioFile) throws IOException {
+    public String newAudio(Audio audio, @RequestParam("audioFile") MultipartFile audioFile,
+                           @RequestParam(value = "imageToAdd") Image image) throws IOException {
         if(audioFile != null && !audioFile.isEmpty()) {
             String audioName = audioFile.getOriginalFilename();
-            Image image = audio.getImage();
-            for(DisplayPanel displayPanel : audio.getImage().getDisplayPanels()) {
+            for(DisplayPanel displayPanel : image.getDisplayPanels()) {
                 String imageNameWithoutExtension = image.getName().substring(0, image.getName().lastIndexOf('.'));
                 File imageDirectory = new File(METAVERSES_PATH + displayPanel.getMetaverse().getUrlName() +
                         SEPARATOR + DISPLAY_PANELS_PATH + displayPanel.getUrlName() + SEPARATOR
@@ -93,7 +93,12 @@ public class AudioController extends MainController {
                 }
             }
 
+            if(image.getAudio() != null) {
+                audioService.removeAudio(image.getAudio());
+            }
+
             audio.setName(audioName);
+            audio.setImage(image);
             audioService.addNewAudio(audio);
 
             return "redirect:" + CTRL_RESOURCES + CTRL_AUDIOS;

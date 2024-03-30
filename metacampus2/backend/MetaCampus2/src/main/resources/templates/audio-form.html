@@ -32,7 +32,7 @@
                         <div class="row mb-3">
                             <label for="images" class="col-form-label col-2">Images</label>
                             <div class="col-6">
-                                <select id="images" class="form-select" name="image" size="3" required>
+                                <select id="images" class="form-select" name="imageToAdd" size="3" required>
                                     <option th:each="image : ${images}"
                                             th:value="${image.id}"
                                             th:text="${image.name}">

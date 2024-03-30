@@ -26,12 +26,14 @@
                         <tr>
                             <th scope="col" class="col-1">#</th>
                             <th scope="col" class="col">Name</th>
+                            <th scope="col" class="col">Image</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="audio, iterStat : ${audios}">
                             <th scope="row" th:text="${iterStat.count}"></th>
                             <th th:text="${audio.name}"></th>
+                            <th th:text="${audio.image.name}"></th>
                         </tr>
                         </tbody>
                     </table>
