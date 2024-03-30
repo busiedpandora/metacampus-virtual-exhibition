@@ -51,10 +51,9 @@ public class MetaverseController extends MainController {
     @PostMapping(CTRL_NEW)
     public String newMetaverse(Metaverse metaverse) {
         if(metaverseService.getMetaverse(metaverse.getName()) == null) {
-            File metaverseDirectory = new File(METAVERSES_PATH + metaverse.getUrlName());
-
             metaverseService.addNewMetaverse(metaverse);
 
+            File metaverseDirectory = new File(METAVERSES_PATH + metaverse.getUrlName());
             if(!metaverseDirectory.exists()) {
                 metaverseDirectory.mkdirs();
             }
