@@ -88,10 +88,21 @@ public class ImageController extends MainController {
     }
 
     @GetMapping(CTRL_IMAGES + "/{imageName}")
+    @ResponseBody
     public String getImage(@PathVariable("imageName") String imageName) {
         try {
-            String imageData = Base64.getEncoder().encodeToString(Files.readAllBytes(Path.of(imageName)));
-            return imageData;
+            File imagesDirectory = new File(IMAGES_PATH);
+            if(!imagesDirectory.exists()) {
+                return null;
+            }
+
+            Path imagePath = Path.of(imagesDirectory.getPath() + SEPARATOR + imageName);
+            if(!Files.exists(imagePath)) {
+                return null;
+            }
+
+            return Base64.getEncoder().encodeToString(Files.readAllBytes(imagePath));
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

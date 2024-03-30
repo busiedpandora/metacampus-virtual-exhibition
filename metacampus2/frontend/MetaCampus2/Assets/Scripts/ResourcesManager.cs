@@ -20,10 +20,13 @@ public class ResourcesManager : MonoBehaviour
 
     private const string metaverseUrlName = "campus-est-supsi";
 
-    private const string hostName = "192.168.45.81";
+    //private const string hostName = "192.168.45.81";
+    private const string hostName = "localhost";
     private const string port = "8080";
-    private const string baseUrlPath = "spaces";
-    private string serverUrl = "";
+    private const string spacesPath = "spaces";
+    private string spacesServerUrl = "";
+    private const string resourcesPath = "resources";
+    private string resourcesServerUrl = "";
 
     private HTTPRequest httpRequest;
 
@@ -63,11 +66,11 @@ public class ResourcesManager : MonoBehaviour
     private IEnumerator InitTexts()
     {
         string pathResource = "text-panels";
-        serverUrl = $"http://{hostName}:{port}/{baseUrlPath}/{metaverseUrlName}/{pathResource}";
+        spacesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{pathResource}";
 
         string responseData = null;
 
-        yield return StartCoroutine(httpRequest.GetDataFromServer(serverUrl, ""));
+        yield return StartCoroutine(httpRequest.GetDataFromServer(spacesServerUrl, ""));
 
         responseData = httpRequest.ResponseData;
 
@@ -111,12 +114,13 @@ public class ResourcesManager : MonoBehaviour
 
     private IEnumerator InitImages()
     {
-        string pathResource = "display-panels";
-        serverUrl = $"http://{hostName}:{port}/{baseUrlPath}/{metaverseUrlName}/{pathResource}";
+        string spacePath = "display-panels";
+        string resourcePath = "images";
+        spacesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}";
 
         string responseData = null;
 
-        yield return StartCoroutine(httpRequest.GetDataFromServer(serverUrl, ""));
+        yield return StartCoroutine(httpRequest.GetDataFromServer(spacesServerUrl, ""));
 
         responseData = httpRequest.ResponseData;
 
@@ -146,26 +150,16 @@ public class ResourcesManager : MonoBehaviour
 
                             for (int i = 0; i < imagesCount; i++)
                             {
-                                string imagePath = displayPanel.images[i].path;
-                                
-                                if (System.IO.File.Exists(imagePath))
-                                {
-                                    //byte[] imageData = System.IO.File.ReadAllBytes(displayPanel.images[i].path); versione precedente
+                                string imageName = displayPanel.images[i].name;
+                                resourcesServerUrl = $"http://{hostName}:{port}/{resourcesPath}/{resourcePath}/{imageName}";
+                                yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
+                                responseData = httpRequest.ResponseData;
+                                byte[] imageData = System.Convert.FromBase64String(responseData);
 
-                                    //qui faccio una get all'uri che espongo (via controller in spring) in cui ritorno l'immagine in byte,
-                                    //oppure un json che può contenere altre info dell'immagine. Lato unity, quindi accedo l'immagine lato server
-                                    //senza dover accedere al file system che cambia da utente a utente.
-
-                                    
-
-                                    //Base64.getEncoder().encodeToString(Files.readAllBytes(Path.of(file.getPath)) in java
-                                    //byte[] bytes = System.Convert.FromBase64String(image.data) in C#
-
-                                    Texture2D texture = new Texture2D(2, 2);
-                                    //texture.LoadImage(imageData);
-                                    var image = singleDisplalPanelInstance.transform.Find($"Board/Canvas/Image{i + 1}");
-                                    image.GetComponent<RawImage>().texture = texture;
-                                }
+                                Texture2D texture = new Texture2D(2, 2);
+                                texture.LoadImage(imageData);
+                                var image = singleDisplalPanelInstance.transform.Find($"Board/Canvas/Image{i + 1}");
+                                image.GetComponent<RawImage>().texture = texture;
                             }
                         }
 
@@ -177,17 +171,16 @@ public class ResourcesManager : MonoBehaviour
 
                             for (int i = 0; i < imagesCount; i++)
                             {
-                                string imagePath = displayPanel.images[i].path;
+                                string imageName = displayPanel.images[i].name;
+                                resourcesServerUrl = $"http://{hostName}:{port}/{resourcesPath}/{resourcePath}/{imageName}";
+                                yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
+                                responseData = httpRequest.ResponseData;
+                                byte[] imageData = System.Convert.FromBase64String(responseData);
 
-                                if (System.IO.File.Exists(imagePath))
-                                {
-                                    byte[] imageData = System.IO.File.ReadAllBytes(displayPanel.images[i].path);
-
-                                    Texture2D texture = new Texture2D(2, 2);
-                                    texture.LoadImage(imageData);
-                                    var image = sixPackDiagonalDisplalPanelInstance.transform.Find($"Panel/Board/Canvas/Image{i + 1}");
-                                    image.GetComponent<RawImage>().texture = texture;
-                                }
+                                Texture2D texture = new Texture2D(2, 2);
+                                texture.LoadImage(imageData);
+                                var image = sixPackDiagonalDisplalPanelInstance.transform.Find($"Panel/Board/Canvas/Image{i + 1}");
+                                image.GetComponent<RawImage>().texture = texture;
                             }
                         }
 
@@ -199,17 +192,16 @@ public class ResourcesManager : MonoBehaviour
 
                             for (int i = 0; i < imagesCount; i++)
                             {
-                                string imagePath = displayPanel.images[i].path;
+                                string imageName = displayPanel.images[i].name;
+                                resourcesServerUrl = $"http://{hostName}:{port}/{resourcesPath}/{resourcePath}/{imageName}";
+                                yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
+                                responseData = httpRequest.ResponseData;
+                                byte[] imageData = System.Convert.FromBase64String(responseData);
 
-                                if (System.IO.File.Exists(imagePath))
-                                {
-                                    byte[] imageData = System.IO.File.ReadAllBytes(displayPanel.images[i].path);
-
-                                    Texture2D texture = new Texture2D(2, 2);
-                                    texture.LoadImage(imageData);
-                                    var image = sixPackCircularDisplalPanelInstance.transform.Find($"Panel/Board/Canvas/Image{i + 1}");
-                                    image.GetComponent<RawImage>().texture = texture;
-                                }
+                                Texture2D texture = new Texture2D(2, 2);
+                                texture.LoadImage(imageData);
+                                var image = sixPackCircularDisplalPanelInstance.transform.Find($"Panel/Board/Canvas/Image{i + 1}");
+                                image.GetComponent<RawImage>().texture = texture;
                             }
                         }
                     }
