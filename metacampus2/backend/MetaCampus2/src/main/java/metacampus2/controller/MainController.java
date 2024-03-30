@@ -32,9 +32,9 @@ public class MainController {
     protected static final String MODEL_PEOPLE = "people";
 
     protected static final String SEPARATOR = FileSystems.getDefault().getSeparator();
-    private static final String RESOURCES_DIRECTORY_PATH =
-            System.getProperty("user.home") + SEPARATOR + ".metacampus" + SEPARATOR + "resources";
-    protected static final String IMAGES_DIRECTORY_PATH = RESOURCES_DIRECTORY_PATH + SEPARATOR + "images";
+    protected static final String RESOURCES_PATH = "." + SEPARATOR;
+    protected static final String IMAGES_PATH = RESOURCES_PATH + "images";
+    protected static final String AUDIO_PATH = RESOURCES_PATH + "audios";
 
 
     @Value("${project.name}")

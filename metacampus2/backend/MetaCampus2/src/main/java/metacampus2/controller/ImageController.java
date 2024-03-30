@@ -61,8 +61,8 @@ public class ImageController extends MainController {
     @PostMapping(CTRL_IMAGES + CTRL_NEW)
     public String newImage(Image image, @RequestParam(value = "imageFile") MultipartFile imageFile) {
         if(imageFile != null && !imageFile.isEmpty()) {
-            File imagesDirectory = new File(IMAGES_DIRECTORY_PATH);
-            if(!imagesDirectory.isDirectory()) {
+            File imagesDirectory = new File(IMAGES_PATH);
+            if(!imagesDirectory.exists()) {
                 if(!imagesDirectory.mkdirs()) {
                     return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW + "?error";
                 }
