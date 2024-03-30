@@ -8,10 +8,7 @@ import metacampus2.service.IImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -19,6 +16,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.Base64;
 
 @Controller
 @RequestMapping(MainController.CTRL_RESOURCES)
@@ -87,5 +85,15 @@ public class ImageController extends MainController {
         }
 
         return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW + "?error";
+    }
+
+    @GetMapping(CTRL_IMAGES + "/{imageName}")
+    public String getImage(@PathVariable("imageName") String imageName) {
+        try {
+            String imageData = Base64.getEncoder().encodeToString(Files.readAllBytes(Path.of(imageName)));
+            return imageData;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
