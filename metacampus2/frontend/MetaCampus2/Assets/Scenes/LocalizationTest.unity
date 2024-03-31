@@ -566,9 +566,9 @@ MonoBehaviour:
   interactable: {fileID: 0}
   toggleHandlesOnClick: 0
   dragToggleThreshold: 0.02
-  target: {fileID: 0}
+  target: {fileID: 1881156586}
   handlesActive: 1
-  enabledHandles: 3
+  enabledHandles: 5
   rotateAnchor: 1
   scaleAnchor: 0
   scaleBehavior: 0
@@ -1231,7 +1231,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1881156584
 MonoBehaviour:
   m_ObjectHideFlags: 0
