@@ -44,6 +44,7 @@ public class HTTPRequest : MonoBehaviour
             onError: error =>
             {
                 Debug.LogError("Error occurred: " + error);
+                DebugLog.instance.Log("Error occurred: ", error + " " + serverUrl);
             }));
 
         if(responseData != null)
