@@ -70,7 +70,8 @@ public class TextPanelController extends MainController {
     public String newTextPanel(TextPanel textPanel) {
         Coordinate coordinates = textPanel.getCoordinates();
 
-        if(spaceService.getSpaceByCoordinatesAndMetaverse(coordinates.getX(), coordinates.getY(),
+        if(spaceService.getSpaceByNameAndMetaverse(textPanel.getName(), textPanel.getMetaverse().getName()) == null &&
+                spaceService.getSpaceByCoordinatesAndMetaverse(coordinates.getX(), coordinates.getY(),
                 coordinates.getZ(), textPanel.getMetaverse().getName()) == null) {
             textPanelService.addNewTextPanel(textPanel);
 

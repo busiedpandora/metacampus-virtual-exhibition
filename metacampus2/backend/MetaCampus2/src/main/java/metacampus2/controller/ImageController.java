@@ -1,5 +1,6 @@
 package metacampus2.controller;
 
+import metacampus2.model.DisplayPanel;
 import metacampus2.model.Image;
 import metacampus2.model.MenuCategory;
 import metacampus2.model.MenuEntity;
@@ -61,50 +62,33 @@ public class ImageController extends MainController {
     @PostMapping(CTRL_IMAGES + CTRL_NEW)
     public String newImage(Image image, @RequestParam(value = "imageFile") MultipartFile imageFile) {
         if(imageFile != null && !imageFile.isEmpty()) {
-            File imagesDirectory = new File(IMAGES_PATH);
-            if(!imagesDirectory.exists()) {
-                if(!imagesDirectory.mkdirs()) {
+            String imageFullName = imageFile.getOriginalFilename();
+            String imageNameWithoutExtension = imageFullName.substring(0, imageFullName.lastIndexOf('.'));
+            for (DisplayPanel displayPanel: image.getDisplayPanels()) {
+                File imageDirectory = new File(METAVERSES_PATH + displayPanel.getMetaverse().getUrlName() +
+                        SEPARATOR + DISPLAY_PANELS_PATH + displayPanel.getUrlName() + SEPARATOR + IMAGES_PATH + imageNameWithoutExtension);
+
+                if(!imageDirectory.exists()) {
+                    if(!imageDirectory.mkdirs()) {
+                        return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW + "?error";
+                    }
+                }
+
+                Path imagePath = Path.of(imageDirectory.getPath() + SEPARATOR + imageFullName);
+
+                try {
+                    Files.copy(imageFile.getInputStream(), imagePath, StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException e) {
                     return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW + "?error";
                 }
             }
 
-            String imageName = imageFile.getOriginalFilename();
-            Path imagePath = Path.of(imagesDirectory.getPath() + SEPARATOR + imageName);
-
-            try {
-                Files.copy(imageFile.getInputStream(), imagePath, StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW + "?error";
-            }
-
-            image.setName(imageName);
-            image.setPath(imagePath.toString());
+            image.setName(imageFullName);
             imageService.addNewImage(image);
 
             return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES;
         }
 
         return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW + "?error";
-    }
-
-    @GetMapping(CTRL_IMAGES + "/{imageName}")
-    @ResponseBody
-    public String getImage(@PathVariable("imageName") String imageName) {
-        try {
-            File imagesDirectory = new File(IMAGES_PATH);
-            if(!imagesDirectory.exists()) {
-                return null;
-            }
-
-            Path imagePath = Path.of(imagesDirectory.getPath() + SEPARATOR + imageName);
-            if(!Files.exists(imagePath)) {
-                return null;
-            }
-
-            return Base64.getEncoder().encodeToString(Files.readAllBytes(imagePath));
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

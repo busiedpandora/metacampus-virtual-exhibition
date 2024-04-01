@@ -26,14 +26,12 @@
                         <tr>
                             <th scope="col" class="col-1">#</th>
                             <th scope="col" class="col">Name</th>
-                            <th scope="col" class="col">Path</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="image, iterStat : ${images}">
                             <th scope="row" th:text="${iterStat.count}"></th>
                             <th th:text="${image.name}"></th>
-                            <th th:text="${image.path}" class="col"></th>
                         </tr>
                         </tbody>
                     </table>

@@ -11,6 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -70,13 +75,47 @@ public class DisplayPanelController extends MainController {
     public String newDisplayPanel(DisplayPanel displayPanel) {
         Coordinate coordinates = displayPanel.getCoordinates();
 
-        if(spaceService.getSpaceByCoordinatesAndMetaverse(coordinates.getX(), coordinates.getY(),
+        if(spaceService.getSpaceByNameAndMetaverse(displayPanel.getName(), displayPanel.getMetaverse().getName()) == null
+                && spaceService.getSpaceByCoordinatesAndMetaverse(coordinates.getX(), coordinates.getY(),
                 coordinates.getZ(), displayPanel.getMetaverse().getName()) == null) {
+
             displayPanelService.addNewDisplayPanel(displayPanel);
+
+            File displayPanelDirectory = new File(METAVERSES_PATH
+                    + displayPanel.getMetaverse().getUrlName() + SEPARATOR + DISPLAY_PANELS_PATH + displayPanel.getUrlName());
+
+            if(!displayPanelDirectory.exists()) {
+                displayPanelDirectory.mkdirs();
+            }
 
             return "redirect:" + CTRL_SPACES + CTRL_DISPLAY_PANELS;
         }
 
         return "redirect:" + CTRL_SPACES + CTRL_DISPLAY_PANELS + CTRL_NEW + "?error";
+    }
+
+    @GetMapping("/{metaverseUrlName}" + CTRL_DISPLAY_PANELS + "/{displayPanelUrlName}" + CTRL_IMAGES + "/{imageName}")
+    @ResponseBody
+    public String getImage(@PathVariable("metaverseUrlName") String metaverseUrlName,
+                           @PathVariable("displayPanelUrlName") String displayPanelUrlName,
+                           @PathVariable("imageName") String imageName) {
+        try {
+            String imageNameWithoutExtension = imageName.substring(0, imageName.lastIndexOf('.'));
+            File imagesDirectory = new File(METAVERSES_PATH + metaverseUrlName +
+                    SEPARATOR + DISPLAY_PANELS_PATH + displayPanelUrlName + SEPARATOR + IMAGES_PATH + imageNameWithoutExtension);
+            if(!imagesDirectory.exists()) {
+                return null;
+            }
+
+            Path imagePath = Path.of(imagesDirectory.getPath() + SEPARATOR + imageName);
+            if(!Files.exists(imagePath)) {
+                return null;
+            }
+
+            return Base64.getEncoder().encodeToString(Files.readAllBytes(imagePath));
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

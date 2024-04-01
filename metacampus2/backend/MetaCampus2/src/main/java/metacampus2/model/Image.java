@@ -1,8 +1,10 @@
 package metacampus2.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,11 +18,13 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class Image extends Resource {
-    private String path;
-
     @ManyToMany(mappedBy = "images")
     @JsonBackReference
     private List<DisplayPanel> displayPanels;
+
+    @OneToOne(mappedBy = "image")
+    @JsonManagedReference
+    private Audio audio;
 
     @PrePersist
     public void prePersist() {

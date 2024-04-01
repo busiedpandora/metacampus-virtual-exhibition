@@ -6,6 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IAudiosRepository extends JpaRepository<Audio, Long> {
-
-    Audio findByAudioPath(String path);
 }

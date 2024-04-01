@@ -151,7 +151,7 @@ public class ResourcesManager : MonoBehaviour
                             for (int i = 0; i < imagesCount; i++)
                             {
                                 string imageName = displayPanel.images[i].name;
-                                resourcesServerUrl = $"http://{hostName}:{port}/{resourcesPath}/{resourcePath}/{imageName}";
+                                resourcesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}/{displayPanel.urlName}/{resourcePath}/{imageName}";
                                 yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
                                 responseData = httpRequest.ResponseData;
                                 byte[] imageData = System.Convert.FromBase64String(responseData);
@@ -172,7 +172,7 @@ public class ResourcesManager : MonoBehaviour
                             for (int i = 0; i < imagesCount; i++)
                             {
                                 string imageName = displayPanel.images[i].name;
-                                resourcesServerUrl = $"http://{hostName}:{port}/{resourcesPath}/{resourcePath}/{imageName}";
+                                resourcesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}/{displayPanel.urlName}/{resourcePath}/{imageName}";
                                 yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
                                 responseData = httpRequest.ResponseData;
                                 byte[] imageData = System.Convert.FromBase64String(responseData);
@@ -193,7 +193,7 @@ public class ResourcesManager : MonoBehaviour
                             for (int i = 0; i < imagesCount; i++)
                             {
                                 string imageName = displayPanel.images[i].name;
-                                resourcesServerUrl = $"http://{hostName}:{port}/{resourcesPath}/{resourcePath}/{imageName}";
+                                resourcesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}/{displayPanel.urlName}/{resourcePath}/{imageName}";
                                 yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
                                 responseData = httpRequest.ResponseData;
                                 byte[] imageData = System.Convert.FromBase64String(responseData);

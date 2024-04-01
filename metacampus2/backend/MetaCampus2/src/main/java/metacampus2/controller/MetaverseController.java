@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.File;
+
 @Controller
 @RequestMapping(MainController.CTRL_METAVERSES)
 public class MetaverseController extends MainController {
@@ -50,6 +52,11 @@ public class MetaverseController extends MainController {
     public String newMetaverse(Metaverse metaverse) {
         if(metaverseService.getMetaverse(metaverse.getName()) == null) {
             metaverseService.addNewMetaverse(metaverse);
+
+            File metaverseDirectory = new File(METAVERSES_PATH + metaverse.getUrlName());
+            if(!metaverseDirectory.exists()) {
+                metaverseDirectory.mkdirs();
+            }
 
             return "redirect:" + CTRL_METAVERSES;
         }

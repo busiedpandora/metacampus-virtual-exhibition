@@ -20,4 +20,9 @@ public class SpaceService implements ISpaceService {
     public Space getSpaceByCoordinatesAndMetaverse(int x, int y, int z, String metaverseName) {
         return spaceRepository.findByCoordinatesAndMetaverseName(x, y, z, metaverseName);
     }
+
+    @Override
+    public Space getSpaceByNameAndMetaverse(String name, String metaverseName) {
+        return spaceRepository.findByNameAndMetaverseName(name, metaverseName);
+    }
 }

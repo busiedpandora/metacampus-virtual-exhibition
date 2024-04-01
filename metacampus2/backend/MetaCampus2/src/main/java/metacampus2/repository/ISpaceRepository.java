@@ -12,4 +12,5 @@ public interface ISpaceRepository extends JpaRepository<Space, Long> {
             "AND s.metaverse.name = :metaverseName")
     Space findByCoordinatesAndMetaverseName(@Param("x") int x, @Param("y") int y, @Param("z") int z,
                                             @Param("metaverseName") String metaverseName);
+    Space findByNameAndMetaverseName(String name, String metaverseName);
 }
