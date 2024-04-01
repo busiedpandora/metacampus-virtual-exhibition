@@ -163,12 +163,15 @@ public class ResourcesManager : MonoBehaviour
                                 resourcesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}/{displayPanel.urlName}/{resourcePath}/{imageName}";
                                 yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
                                 responseData = httpRequest.ResponseData;
-                                byte[] imageData = System.Convert.FromBase64String(responseData);
+                                if (responseData != null)
+                                {
+                                    byte[] imageData = System.Convert.FromBase64String(responseData);
 
-                                Texture2D texture = new Texture2D(2, 2);
-                                texture.LoadImage(imageData);
-                                var image = singleDisplalPanelInstance.transform.Find($"Board/Canvas/Image{i + 1}");
-                                image.GetComponent<RawImage>().texture = texture;
+                                    Texture2D texture = new Texture2D(2, 2);
+                                    texture.LoadImage(imageData);
+                                    var image = singleDisplalPanelInstance.transform.Find($"Board/Canvas/Image{i + 1}");
+                                    image.GetComponent<RawImage>().texture = texture;
+                                }
                             }
                         }
 
@@ -184,12 +187,15 @@ public class ResourcesManager : MonoBehaviour
                                 resourcesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}/{displayPanel.urlName}/{resourcePath}/{imageName}";
                                 yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
                                 responseData = httpRequest.ResponseData;
-                                byte[] imageData = System.Convert.FromBase64String(responseData);
+                                if (responseData != null)
+                                {
+                                    byte[] imageData = System.Convert.FromBase64String(responseData);
 
-                                Texture2D texture = new Texture2D(2, 2);
-                                texture.LoadImage(imageData);
-                                var image = sixPackDiagonalDisplalPanelInstance.transform.Find($"Panel/Board/Canvas/Image{i + 1}");
-                                image.GetComponent<RawImage>().texture = texture;
+                                    Texture2D texture = new Texture2D(2, 2);
+                                    texture.LoadImage(imageData);
+                                    var image = sixPackDiagonalDisplalPanelInstance.transform.Find($"Panel/Board/Canvas/Image{i + 1}");
+                                    image.GetComponent<RawImage>().texture = texture;
+                                }
                             }
                         }
 
@@ -205,12 +211,15 @@ public class ResourcesManager : MonoBehaviour
                                 resourcesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}/{displayPanel.urlName}/{resourcePath}/{imageName}";
                                 yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
                                 responseData = httpRequest.ResponseData;
-                                byte[] imageData = System.Convert.FromBase64String(responseData);
+                                if (responseData != null)
+                                {
+                                    byte[] imageData = System.Convert.FromBase64String(responseData);
 
-                                Texture2D texture = new Texture2D(2, 2);
-                                texture.LoadImage(imageData);
-                                var image = sixPackCircularDisplalPanelInstance.transform.Find($"Panel/Board/Canvas/Image{i + 1}");
-                                image.GetComponent<RawImage>().texture = texture;
+                                    Texture2D texture = new Texture2D(2, 2);
+                                    texture.LoadImage(imageData);
+                                    var image = sixPackCircularDisplalPanelInstance.transform.Find($"Panel/Board/Canvas/Image{i + 1}");
+                                    image.GetComponent<RawImage>().texture = texture;
+                                }
                             }
                         }
                     }

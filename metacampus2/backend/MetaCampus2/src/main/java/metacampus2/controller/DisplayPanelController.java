@@ -115,7 +115,7 @@ public class DisplayPanelController extends MainController {
             return Base64.getEncoder().encodeToString(Files.readAllBytes(imagePath));
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return null;
         }
     }
 }
