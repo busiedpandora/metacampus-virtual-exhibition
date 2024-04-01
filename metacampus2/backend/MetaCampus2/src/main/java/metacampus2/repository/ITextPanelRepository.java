@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface ITextPanelRepository extends JpaRepository<TextPanel, Long> {
     List<TextPanel> findAllByMetaverseName(String metaverseName);
+    List<TextPanel> findAllByMetaverseUrlName(String metaverseUrlName);
 }

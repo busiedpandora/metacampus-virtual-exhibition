@@ -34,7 +34,9 @@ public class MainController {
     public static final String SEPARATOR = FileSystems.getDefault().getSeparator();
     protected static final String RESOURCES_PATH = "." + SEPARATOR + "resources" + SEPARATOR;
     public static final String METAVERSES_PATH = RESOURCES_PATH + "metaverses" + SEPARATOR;
+    public static final String TEXT_PANELS_PATH = "text-panels" + SEPARATOR;
     public static final String DISPLAY_PANELS_PATH = "display-panels" + SEPARATOR;
+    protected static final String TEXT_PATH = "text" + SEPARATOR;
     protected static final String IMAGES_PATH = "images" + SEPARATOR;
     protected static final String AUDIO_PATH = "audio" + SEPARATOR;
 

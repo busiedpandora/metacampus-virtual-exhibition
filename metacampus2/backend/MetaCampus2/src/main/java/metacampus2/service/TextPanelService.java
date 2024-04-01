@@ -31,4 +31,9 @@ public class TextPanelService implements ITextPanelService {
     public List<TextPanel> getAllTextPanelsFromMetaverse(String metaverseName) {
         return textPanelRepository.findAllByMetaverseName(metaverseName);
     }
+
+    @Override
+    public List<TextPanel> getAllTextPanelsFromMetaverseByUrlName(String metaverseUrlName) {
+        return textPanelRepository.findAllByMetaverseUrlName(metaverseUrlName);
+    }
 }

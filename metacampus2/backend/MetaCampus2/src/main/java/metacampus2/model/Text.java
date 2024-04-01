@@ -15,8 +15,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class Text extends Resource {
-    private String value;
-
     @OneToMany(mappedBy = "text")
     @JsonBackReference
     private List<TextPanel> textPanels;

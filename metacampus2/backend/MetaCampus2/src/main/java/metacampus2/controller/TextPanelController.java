@@ -15,6 +15,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -61,9 +66,9 @@ public class TextPanelController extends MainController {
         return VIEW_TEXT_PANEL_FORM;
     }
 
-    @GetMapping("/{metaverseName}" + CTRL_TEXT_PANELS)
-    public ResponseEntity<List<TextPanel>> textPanelsFromMetaverse(@PathVariable("metaverseName") String metaverseName) {
-        return new ResponseEntity<>(textPanelService.getAllTextPanelsFromMetaverse(metaverseName), HttpStatus.OK);
+    @GetMapping("/{metaverseUrlName}" + CTRL_TEXT_PANELS)
+    public ResponseEntity<List<TextPanel>> textPanelsFromMetaverse(@PathVariable("metaverseUrlName") String metaverseUrlName) {
+        return new ResponseEntity<>(textPanelService.getAllTextPanelsFromMetaverseByUrlName(metaverseUrlName), HttpStatus.OK);
     }
 
     @PostMapping(CTRL_TEXT_PANELS + CTRL_NEW)
@@ -79,5 +84,29 @@ public class TextPanelController extends MainController {
         }
 
         return "redirect:" + CTRL_SPACES + CTRL_TEXT_PANELS + CTRL_NEW + "?error";
+    }
+
+    @GetMapping("/{metaverseUrlName}" + CTRL_TEXT_PANELS + "/{textPanelUrlName}" + CTRL_TEXTS + "/{textName}")
+    @ResponseBody
+    public String getText(@PathVariable("metaverseUrlName") String metaverseUrlName,
+                          @PathVariable("textPanelUrlName") String textPanelUrlName,
+                          @PathVariable("textName") String textName) {
+        try {
+            File textDirectory = new File(METAVERSES_PATH + metaverseUrlName +
+                    SEPARATOR + TEXT_PANELS_PATH + textPanelUrlName + SEPARATOR + TEXT_PATH);
+            if(!textDirectory.exists()) {
+                return null;
+            }
+
+            Path textPath = Path.of(textDirectory + SEPARATOR + textName);
+            if(!Files.exists(textPath)) {
+                return null;
+            }
+
+            return Base64.getEncoder().encodeToString(Files.readAllBytes(textPath));
+
+        } catch (IOException e) {
+            return null;
+        }
     }
 }

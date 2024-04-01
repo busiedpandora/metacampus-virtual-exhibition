@@ -1,5 +1,6 @@
 package metacampus2.initializer;
 
+import com.sun.tools.javac.Main;
 import metacampus2.controller.MainController;
 import metacampus2.model.*;
 import metacampus2.service.*;
@@ -95,7 +96,6 @@ public class EntitiesInitializer implements CommandLineRunner {
                 && spaceService.getSpaceByCoordinatesAndMetaverse(x, y, z, metaverseName) == null) {
             TextPanel textPanel = new TextPanel();
             textPanel.setName(name);
-
             textPanel.setMetaverse(metaverse);
 
             Coordinate coordinates = new Coordinate();
@@ -105,6 +105,14 @@ public class EntitiesInitializer implements CommandLineRunner {
             textPanel.setCoordinates(coordinates);
 
             textPanelService.addNewTextPanel(textPanel);
+
+            File textPanelDirectory = new File(MainController.METAVERSES_PATH
+            + textPanel.getMetaverse().getUrlName() + MainController.SEPARATOR
+            + MainController.TEXT_PANELS_PATH + textPanel.getUrlName());
+
+            if(!textPanelDirectory.exists()) {
+                textPanelDirectory.mkdirs();
+            }
         }
     }
 

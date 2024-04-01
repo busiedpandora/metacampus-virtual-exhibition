@@ -10,6 +10,7 @@ using System.IO;
 using UnityEngine.UIElements;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
+using System.Text;
 
 public class ResourcesManager : MonoBehaviour
 {
@@ -65,8 +66,10 @@ public class ResourcesManager : MonoBehaviour
 
     private IEnumerator InitTexts()
     {
-        string pathResource = "text-panels";
-        spacesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{pathResource}";
+        string spacePath = "text-panels";
+        string resourcePath = "texts";
+
+        spacesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}";
 
         string responseData = null;
 
@@ -94,16 +97,22 @@ public class ResourcesManager : MonoBehaviour
                         var textPanelInstance = Instantiate(textPanelObject, position, Quaternion.identity);
                         textPanelInstance.transform.parent = coordObject.transform;
 
-                        var frontTextName = textPanelInstance.transform.Find("Board/FrontTextName").gameObject;
-                        var frontText = textPanelInstance.transform.Find("Board/FrontText").gameObject;
-                        var backTextName = textPanelInstance.transform.Find("Board/BackTextName").gameObject;
-                        var backText = textPanelInstance.transform.Find("Board/BackText").gameObject;
+                        var textName = textPanel.text.name;
+                        resourcesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}/{textPanel.urlName}/{resourcePath}/{textName}";
+                        yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
+                        responseData = httpRequest.ResponseData;
 
-                        var text = textPanel.text;
-                        frontTextName.GetComponent<TextMeshPro>().text = text.name;
-                        frontText.GetComponent<TextMeshPro>().text = text.value;
-                        backTextName.GetComponent<TextMeshPro>().text = text.name;
-                        backText.GetComponent<TextMeshPro>().text = text.value;
+                        if (responseData != null)
+                        {
+                            byte[] textData = System.Convert.FromBase64String(responseData);
+                            string text = Encoding.UTF8.GetString(textData);
+                            
+                            var frontText = textPanelInstance.transform.Find("Board/FrontText").gameObject;
+                            var backText = textPanelInstance.transform.Find("Board/BackText").gameObject;
+
+                            frontText.GetComponent<TextMeshPro>().text = text;
+                            backText.GetComponent<TextMeshPro>().text = text;
+                        }
                     }
                 }
             }

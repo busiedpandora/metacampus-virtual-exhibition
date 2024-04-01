@@ -25,15 +25,13 @@
                         <thead>
                         <tr>
                             <th scope="col" class="col-1">#</th>
-                            <th scope="col" class="col">Name</th>
-                            <th scope="col" class="col">Value</th>
+                            <th scope="col" class="col">File</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="text, iterStat : ${texts}">
                             <th scope="row" th:text="${iterStat.count}"></th>
                             <th th:text="${text.name}"></th>
-                            <th th:text="${text.value}" class="col"></th>
                         </tr>
                         </tbody>
                     </table>

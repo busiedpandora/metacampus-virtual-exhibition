@@ -5,5 +5,4 @@ using UnityEngine;
 public class TextSerializable
 {
     public string name;
-    public string value;
 }

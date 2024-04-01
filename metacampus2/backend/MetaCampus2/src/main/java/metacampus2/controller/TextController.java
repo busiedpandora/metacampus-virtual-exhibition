@@ -10,6 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 @Controller
 @RequestMapping(MainController.CTRL_RESOURCES)
@@ -52,9 +59,34 @@ public class TextController extends MainController {
     }
 
     @PostMapping(CTRL_TEXTS + CTRL_NEW)
-    public String newText(Text text) {
-        textService.addNewText(text);
+    public String newText(Text text, @RequestParam(value = "textFile") MultipartFile textFile) {
+        if(textFile != null && !textFile.isEmpty()) {
+            String textFullName = textFile.getOriginalFilename();
+            for(TextPanel textPanel : text.getTextPanels()) {
+                File textDirectory = new File(METAVERSES_PATH + textPanel.getMetaverse().getUrlName() +
+                        SEPARATOR + TEXT_PANELS_PATH + textPanel.getUrlName() + SEPARATOR + TEXT_PATH);
 
-        return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS;
+                if(!textDirectory.exists()) {
+                    if(!textDirectory.mkdirs()) {
+                        return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS + CTRL_NEW + "?error";
+                    }
+                }
+
+                Path textPath = Path.of(textDirectory.getPath() + SEPARATOR + textFullName);
+
+                try {
+                    Files.copy(textFile.getInputStream(), textPath, StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException e) {
+                    return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS + CTRL_NEW + "?error";
+                }
+            }
+
+            text.setName(textFullName);
+            textService.addNewText(text);
+
+            return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS;
+        }
+
+        return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS + CTRL_NEW + "?error";
     }
 }

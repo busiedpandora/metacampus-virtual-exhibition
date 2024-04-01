@@ -8,4 +8,5 @@ public interface ITextPanelService {
     void addNewTextPanel(TextPanel textPanel);
     List<TextPanel> getAllTextPanels();
     List<TextPanel> getAllTextPanelsFromMetaverse(String metaverseName);
+    List<TextPanel> getAllTextPanelsFromMetaverseByUrlName(String metaverseUrlName);
 }
