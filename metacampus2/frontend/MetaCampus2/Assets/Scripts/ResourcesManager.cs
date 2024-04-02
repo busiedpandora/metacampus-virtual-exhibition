@@ -21,8 +21,9 @@ public class ResourcesManager : MonoBehaviour
 
     private const string metaverseUrlName = "campus-est-supsi";
 
-    //private const string hostName = "192.168.45.81";
-    private const string hostName = "localhost";
+    //private const string hostName = "192.168.45.81"; //hotspot
+    private const string hostName = "10.21.56.224"; //eduroam
+    //private const string hostName = "localhost";
     private const string port = "8080";
     private const string spacesPath = "spaces";
     private string spacesServerUrl = "";
