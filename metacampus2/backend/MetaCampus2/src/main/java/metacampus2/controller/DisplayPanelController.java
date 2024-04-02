@@ -102,7 +102,8 @@ public class DisplayPanelController extends MainController {
         try {
             String imageNameWithoutExtension = imageName.substring(0, imageName.lastIndexOf('.'));
             File imagesDirectory = new File(METAVERSES_PATH + metaverseUrlName +
-                    SEPARATOR + DISPLAY_PANELS_PATH + displayPanelUrlName + SEPARATOR + IMAGES_PATH + imageNameWithoutExtension);
+                    SEPARATOR + DISPLAY_PANELS_PATH + displayPanelUrlName + SEPARATOR +
+                    IMAGES_PATH + imageNameWithoutExtension);
             if (!imagesDirectory.exists()) {
                 return null;
             }
@@ -119,33 +120,34 @@ public class DisplayPanelController extends MainController {
         }
     }
 
-    @GetMapping("/{metaverseUrl}" + CTRL_DISPLAY_PANELS + "/{displayPanelUrlName}" + CTRL_IMAGES + "/{imageName}" + CTRL_AUDIOS + "/{audioName}")
-    @ResponseBody
-    public String getAudio(@PathVariable("metaverseUrlName") String metaverseUrlName,
-                           @PathVariable("displayPanelUrlName") String displayPanelUrlName,
-                           @PathVariable("imageName") String imageName, @PathVariable("audioName") String audioName) {
-
-
+    @GetMapping("/{metaverseUrlName}" + CTRL_DISPLAY_PANELS + "/{displayPanelUrlName}"
+            + CTRL_IMAGES + "/{imageName}" + CTRL_AUDIOS + "/{audioName}")
+    public ResponseEntity<byte[]> getAudio(@PathVariable("metaverseUrlName") String metaverseUrlName,
+                                           @PathVariable("displayPanelUrlName") String displayPanelUrlName,
+                                           @PathVariable("imageName") String imageName,
+                                           @PathVariable("audioName") String audioName) {
         try {
-
             String imageNameWithoutExtension = imageName.substring(0, imageName.lastIndexOf('.'));
             File audioDirectory = new File(METAVERSES_PATH + metaverseUrlName +
-                    SEPARATOR + DISPLAY_PANELS_PATH + displayPanelUrlName + SEPARATOR + IMAGES_PATH + imageNameWithoutExtension + SEPARATOR + AUDIO_PATH);
+                    SEPARATOR + DISPLAY_PANELS_PATH + displayPanelUrlName + SEPARATOR + IMAGES_PATH +
+                    imageNameWithoutExtension + SEPARATOR + AUDIO_PATH);
             if (!audioDirectory.exists()) {
-                return null;
+                return ResponseEntity.notFound().build();
             }
 
             Path audioPath = Path.of(audioDirectory.getPath() + SEPARATOR + audioName);
 
             if (!Files.exists(audioPath)) {
-                return null;
+                return ResponseEntity.notFound().build();
             }
 
-            return Base64.getEncoder().encodeToString(Files.readAllBytes(audioPath));
+            byte[] audioData = Files.readAllBytes(audioPath);
+            return ResponseEntity.ok()
+                    .header("Content-Type", "audio/wav")
+                    .body(audioData);
 
         } catch (IOException e) {
-            return null;
+            return ResponseEntity.notFound().build();
         }
-
     }
 }

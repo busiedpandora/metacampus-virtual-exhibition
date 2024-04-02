@@ -1,17 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class HTTPRequest : MonoBehaviour
 {
     private string responseData = null;
+    private AudioClip audioClip = null;
 
 
     public string ResponseData
     {
         get { return responseData; }
+    }
+
+    public AudioClip AudioClip
+    {
+        get { return audioClip; }
     }
 
     private IEnumerator GetRequest(string serverUrl, string endpoint, Action<string> onSuccess, Action<string> onError)
@@ -50,6 +57,29 @@ public class HTTPRequest : MonoBehaviour
         if(responseData != null)
         {
             yield return responseData;
+        }
+    }
+
+    public IEnumerator GetAudioClipFromServer(string url)
+    {
+        using (UnityWebRequest unityWebRequest = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.WAV))
+        {
+           yield return unityWebRequest.SendWebRequest();
+
+           if (unityWebRequest.result != UnityWebRequest.Result.Success)
+           {
+                Debug.Log("Audio download failed: " + unityWebRequest.error);
+                DebugLog.instance.Log("Audio download failed: ", unityWebRequest.error);
+            }
+           else
+           {
+                audioClip = DownloadHandlerAudioClip.GetContent(unityWebRequest);
+           }
+        }
+
+        if(audioClip != null)
+        {
+            yield return audioClip;
         }
     }
 }

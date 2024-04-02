@@ -11,6 +11,11 @@ using UnityEngine.UIElements;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 using System.Text;
+using Newtonsoft.Json.Linq;
+using Unity.Collections;
+using UnityEngine.Networking;
+using Unity.VisualScripting;
+using System.Net;
 
 public class ResourcesManager : MonoBehaviour
 {
@@ -22,8 +27,8 @@ public class ResourcesManager : MonoBehaviour
     private const string metaverseUrlName = "campus-est-supsi";
 
     //private const string hostName = "192.168.45.81"; //hotspot
-    private const string hostName = "10.21.56.224"; //eduroam
-    //private const string hostName = "localhost";
+    //private const string hostName = "10.21.56.224"; //eduroam
+    private const string hostName = "localhost";
     private const string port = "8080";
     private const string spacesPath = "spaces";
     private string spacesServerUrl = "";
@@ -108,8 +113,8 @@ public class ResourcesManager : MonoBehaviour
                             byte[] textData = System.Convert.FromBase64String(responseData);
                             string text = Encoding.UTF8.GetString(textData);
                             
-                            var frontText = textPanelInstance.transform.Find("Board/FrontText").gameObject;
-                            var backText = textPanelInstance.transform.Find("Board/BackText").gameObject;
+                            var frontText = textPanelInstance.transform.Find("Panel/Board/FrontText").gameObject;
+                            var backText = textPanelInstance.transform.Find("Panel/Board/BackText").gameObject;
 
                             frontText.GetComponent<TextMeshPro>().text = text;
                             backText.GetComponent<TextMeshPro>().text = text;
@@ -125,7 +130,8 @@ public class ResourcesManager : MonoBehaviour
     private IEnumerator InitImages()
     {
         string spacePath = "display-panels";
-        string resourcePath = "images";
+        string imagesPath = "images";
+        string audiosPath = "audios";
         spacesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}";
 
         string responseData = null;
@@ -134,13 +140,13 @@ public class ResourcesManager : MonoBehaviour
 
         responseData = httpRequest.ResponseData;
 
-        if(responseData != null )
+        if (responseData != null)
         {
             Debug.Log($"Display panels: {responseData}");
 
             var displayPanels = JsonConvert.DeserializeObject<List<DisplayPanelSerializable>>(responseData);
 
-            foreach(var displayPanel in displayPanels)
+            foreach (var displayPanel in displayPanels)
             {
                 if (displayPanel.images != null && displayPanel.images.Count > 0)
                 {
@@ -152,102 +158,50 @@ public class ResourcesManager : MonoBehaviour
                         var position = new Vector3(coord.x, coord.y, coord.z);
                         int imagesCount = displayPanel.images.Count;
 
+                        GameObject panelInstance = null;
                         if (displayPanel.type == "SINGLE")
                         {
-                            var singleDisplalPanelInstance =
-                                Instantiate(singleDisplayPanelObject, position, Quaternion.identity);
-                            singleDisplalPanelInstance.transform.parent = coordObject.transform;
-
-                            for (int i = 0; i < imagesCount; i++)
-                            {
-                                ImageSerializable image = displayPanel.images[i];
-
-                                string imageName = image.name;
-                                resourcesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}/{displayPanel.urlName}/{resourcePath}/{imageName}";
-                                yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
-                                responseData = httpRequest.ResponseData;
-                                if (responseData != null)
-                                {
-                                    byte[] imageData = System.Convert.FromBase64String(responseData);
-
-                                    Texture2D texture = new Texture2D(2, 2);
-                                    texture.LoadImage(imageData);
-                                    var imageIstance = singleDisplalPanelInstance.transform.Find($"Board/Canvas/Image{i + 1}");
-                                    imageIstance.GetComponent<RawImage>().texture = texture;
-
-                                    AudioSerializable audio = image.audio;
-
-                                    if (audio != null)
-                                    {
-                                        resourcesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}/{displayPanel.urlName}/{resourcePath}/{imageName}/audios/{audio.name}}";
-                                        yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
-                                        responseData = httpRequest.ResponseData;
-
-                                        if (responseData != null)
-                                        {
-                                            byte[] audioData = System.Convert.FromBase64String(responseData);
-
-                                            AudioClip audioClip = audioClip.Create(audio.name,audioData.Length,1,44100,false);
-
-                                            audioClip.setData(audioData, 0);
-
-                                            AudioSource audioSource = imageIstance.AddComponent<AudioSource>();
-                                         
-                                            audioSource.clip = audioClip;
-
-                                            audioSource.Play();
-                                            
-                                        }
-                                    }
-                                }
-                               
-                            }
+                            panelInstance = Instantiate(singleDisplayPanelObject, position, Quaternion.identity);
                         }
-
                         else if (displayPanel.type == "SIX_PACK_DIAGONAL")
                         {
-                            var sixPackDiagonalDisplalPanelInstance =
-                                Instantiate(sixPackDiagonalDisplayPanelObject, position, Quaternion.identity);
-                            sixPackDiagonalDisplalPanelInstance.transform.parent = coordObject.transform;
-
-                            for (int i = 0; i < imagesCount; i++)
-                            {
-                                string imageName = displayPanel.images[i].name;
-                                resourcesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}/{displayPanel.urlName}/{resourcePath}/{imageName}";
-                                yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
-                                responseData = httpRequest.ResponseData;
-                                if (responseData != null)
-                                {
-                                    byte[] imageData = System.Convert.FromBase64String(responseData);
-
-                                    Texture2D texture = new Texture2D(2, 2);
-                                    texture.LoadImage(imageData);
-                                    var image = sixPackDiagonalDisplalPanelInstance.transform.Find($"Panel/Board/Canvas/Image{i + 1}");
-                                    image.GetComponent<RawImage>().texture = texture;
-                                }
-                            }
+                            panelInstance = Instantiate(sixPackDiagonalDisplayPanelObject, position, Quaternion.identity);
                         }
-
                         else if (displayPanel.type == "SIX_PACK_CIRCULAR")
                         {
-                            var sixPackCircularDisplalPanelInstance =
-                                Instantiate(sixPackCircularDisplayPanelObject, position, Quaternion.identity);
-                            sixPackCircularDisplalPanelInstance.transform.parent = coordObject.transform;
+                            panelInstance = Instantiate(sixPackCircularDisplayPanelObject, position, Quaternion.identity);
+                        }
+                        panelInstance.transform.parent = coordObject.transform;
 
-                            for (int i = 0; i < imagesCount; i++)
+                        for (int i = 0; i < imagesCount; i++)
+                        {
+                            ImageSerializable image = displayPanel.images[i];
+                            string imageName = image.name;
+
+                            resourcesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}/{displayPanel.urlName}/{imagesPath}/{imageName}";
+                            yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
+                            responseData = httpRequest.ResponseData;
+                            if (responseData != null)
                             {
-                                string imageName = displayPanel.images[i].name;
-                                resourcesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}/{displayPanel.urlName}/{resourcePath}/{imageName}";
-                                yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
-                                responseData = httpRequest.ResponseData;
-                                if (responseData != null)
-                                {
-                                    byte[] imageData = System.Convert.FromBase64String(responseData);
+                                byte[] imageData = System.Convert.FromBase64String(responseData);
 
-                                    Texture2D texture = new Texture2D(2, 2);
-                                    texture.LoadImage(imageData);
-                                    var image = sixPackCircularDisplalPanelInstance.transform.Find($"Panel/Board/Canvas/Image{i + 1}");
-                                    image.GetComponent<RawImage>().texture = texture;
+                                Texture2D texture = new Texture2D(2, 2);
+                                texture.LoadImage(imageData);
+                                var imageIstance = panelInstance.transform.Find($"Panel/Board/Canvas/Image{i + 1}");
+                                imageIstance.GetComponent<RawImage>().texture = texture;
+
+                                AudioSerializable audio = image.audio;
+                                if(audio != null)
+                                {
+                                    resourcesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}/{displayPanel.urlName}/{imagesPath}/{imageName}/{audiosPath}/{audio.name}";
+                                    yield return StartCoroutine(httpRequest.GetAudioClipFromServer(resourcesServerUrl));
+                                    AudioClip audioClip = httpRequest.AudioClip;
+                                    if (audioClip != null)
+                                    {
+                                        AudioSource audioSource = imageIstance.gameObject.AddComponent<AudioSource>();
+                                        audioSource.clip = audioClip;
+                                        audioSource.Play();
+                                    }
                                 }
                             }
                         }

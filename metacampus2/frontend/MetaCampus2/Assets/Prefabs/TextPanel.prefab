@@ -34,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 6391330632959201841}
   - {fileID: 4294341262268189431}
-  m_Father: {fileID: 858209783092862605}
+  m_Father: {fileID: 4400756473566694754}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1856826125184849507
 MeshFilter:
@@ -519,7 +519,7 @@ Transform:
   m_Children:
   - {fileID: 5966927125342293086}
   - {fileID: 7425028531210797608}
-  m_Father: {fileID: 858209783092862605}
+  m_Father: {fileID: 4400756473566694754}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4454352505267271757
 GameObject:
@@ -550,9 +550,41 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4400756473566694754}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5343367221386284117
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4400756473566694754}
+  m_Layer: 0
+  m_Name: Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4400756473566694754
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5343367221386284117}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
   - {fileID: 615094881421885859}
   - {fileID: 7001212750086257631}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 858209783092862605}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7330059289989935782
 GameObject:
