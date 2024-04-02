@@ -50,7 +50,7 @@ public class ResourcesManager : MonoBehaviour
 
     public void StartInitResources()
     {
-        StartCoroutine(InitTexts());
+        //StartCoroutine(InitTexts());
     }
 
     private IEnumerator InitTexts()

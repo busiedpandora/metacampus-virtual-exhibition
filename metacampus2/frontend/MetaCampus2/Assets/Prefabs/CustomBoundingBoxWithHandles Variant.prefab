@@ -94,9 +94,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7800191923983097074, guid: 948a7c68cd6b19c449613d0541c50852, type: 3}
+      propertyPath: focusLerpTime
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 7800191923983097074, guid: 948a7c68cd6b19c449613d0541c50852, type: 3}
+      propertyPath: shrinkLerpTime
+      value: 1e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7800191923983097074, guid: 948a7c68cd6b19c449613d0541c50852, type: 3}
       propertyPath: handlesContainer
       value: 
       objectReference: {fileID: 1764198154292308066}
+    - target: {fileID: 7800191923983097074, guid: 948a7c68cd6b19c449613d0541c50852, type: 3}
+      propertyPath: activationLerpTime
+      value: 0.001
+      objectReference: {fileID: 0}
     - target: {fileID: 7800191923983097074, guid: 948a7c68cd6b19c449613d0541c50852, type: 3}
       propertyPath: showInternalHandles
       value: 1
