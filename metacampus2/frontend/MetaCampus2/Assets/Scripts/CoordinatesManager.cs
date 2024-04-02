@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CoordinatesManager : MonoBehaviour
 {
     [SerializeField] private GameObject coordinateObject;
+    [SerializeField] private GameObject edgeObject;
 
     private const string coordinatesPath = "/Campus/Coordinates";
+    private const string edgesPath = "/Campus/Edges";
 
     private const int minXCoordinate = -30;
     private const int maxXCoordinate = 30;
@@ -16,6 +19,10 @@ public class CoordinatesManager : MonoBehaviour
 
     private const int minZCoordinate = -30;
     private const int maxZCoordinate = 30;
+
+    private readonly Vector3 edge1Position = new Vector3(30, 0, 20);
+    private readonly Vector3 edge2Position = new Vector3(30, 0, -20);
+    private readonly Vector3 edge3Position = new Vector3(-30, 0, 20);
 
     //1° index: x position, 2° index: y position, 3° index: z position
     private GameObject[][][] coordinates;
@@ -28,6 +35,7 @@ public class CoordinatesManager : MonoBehaviour
     void Start()
     {
         InitCoordinates();
+        InitEdges();
 
         resourcesInitializer = GameObject.Find("ResourcesInitializer");
         ResourcesManager resourcesManager = resourcesInitializer.GetComponent<ResourcesManager>();
@@ -94,5 +102,19 @@ public class CoordinatesManager : MonoBehaviour
             Debug.Log("getGameObject: Out of bounds");
             return null;
         }
+    }
+
+    private void InitEdges()
+    {
+        GameObject parentObject = GameObject.Find(edgesPath);
+
+        GameObject edge1Instance = Instantiate(edgeObject, edge1Position, Quaternion.identity);
+        edge1Instance.transform.parent = parentObject.transform;
+
+        GameObject edge2Instance = Instantiate(edgeObject, edge2Position, Quaternion.identity);
+        edge2Instance.transform.parent = parentObject.transform;
+
+        GameObject edge3Instance = Instantiate(edgeObject, edge3Position, Quaternion.identity);
+        edge3Instance.transform.parent = parentObject.transform;
     }
 }
