@@ -160,7 +160,9 @@ public class ResourcesManager : MonoBehaviour
 
                             for (int i = 0; i < imagesCount; i++)
                             {
-                                string imageName = displayPanel.images[i].name;
+                                ImageSerializable image = displayPanel.images[i];
+
+                                string imageName = image.name;
                                 resourcesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}/{displayPanel.urlName}/{resourcePath}/{imageName}";
                                 yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
                                 responseData = httpRequest.ResponseData;
@@ -170,9 +172,35 @@ public class ResourcesManager : MonoBehaviour
 
                                     Texture2D texture = new Texture2D(2, 2);
                                     texture.LoadImage(imageData);
-                                    var image = singleDisplalPanelInstance.transform.Find($"Board/Canvas/Image{i + 1}");
-                                    image.GetComponent<RawImage>().texture = texture;
+                                    var imageIstance = singleDisplalPanelInstance.transform.Find($"Board/Canvas/Image{i + 1}");
+                                    imageIstance.GetComponent<RawImage>().texture = texture;
+
+                                    AudioSerializable audio = image.audio;
+
+                                    if (audio != null)
+                                    {
+                                        resourcesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}/{displayPanel.urlName}/{resourcePath}/{imageName}/audios/{audio.name}}";
+                                        yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
+                                        responseData = httpRequest.ResponseData;
+
+                                        if (responseData != null)
+                                        {
+                                            byte[] audioData = System.Convert.FromBase64String(responseData);
+
+                                            AudioClip audioClip = audioClip.Create(audio.name,audioData.Length,1,44100,false);
+
+                                            audioClip.setData(audioData, 0);
+
+                                            AudioSource audioSource = imageIstance.AddComponent<AudioSource>();
+                                         
+                                            audioSource.clip = audioClip;
+
+                                            audioSource.Play();
+                                            
+                                        }
+                                    }
                                 }
+                               
                             }
                         }
 

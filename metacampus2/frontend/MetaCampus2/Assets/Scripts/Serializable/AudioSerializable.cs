@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ImageSerializable {
+public class AudioSerializable
+{
+
     public string name;
-    public string path;
-    public AudioSerializable audio;
+  
 }

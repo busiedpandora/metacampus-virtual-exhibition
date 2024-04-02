@@ -51,7 +51,7 @@ public class DisplayPanelController extends MainController {
 
     @GetMapping(CTRL_DISPLAY_PANELS + CTRL_NEW)
     public String displayPanelForm(Model model,
-                                @RequestParam(value = "error", required = false) String error) {
+                                   @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.SPACES);
         model.addAttribute(MODEL_MENU_ENTITY, MenuEntity.DISPLAY_PANEL);
 
@@ -75,7 +75,7 @@ public class DisplayPanelController extends MainController {
     public String newDisplayPanel(DisplayPanel displayPanel) {
         Coordinate coordinates = displayPanel.getCoordinates();
 
-        if(spaceService.getSpaceByNameAndMetaverse(displayPanel.getName(), displayPanel.getMetaverse().getName()) == null
+        if (spaceService.getSpaceByNameAndMetaverse(displayPanel.getName(), displayPanel.getMetaverse().getName()) == null
                 && spaceService.getSpaceByCoordinatesAndMetaverse(coordinates.getX(), coordinates.getY(),
                 coordinates.getZ(), displayPanel.getMetaverse().getName()) == null) {
 
@@ -84,7 +84,7 @@ public class DisplayPanelController extends MainController {
             File displayPanelDirectory = new File(METAVERSES_PATH
                     + displayPanel.getMetaverse().getUrlName() + SEPARATOR + DISPLAY_PANELS_PATH + displayPanel.getUrlName());
 
-            if(!displayPanelDirectory.exists()) {
+            if (!displayPanelDirectory.exists()) {
                 displayPanelDirectory.mkdirs();
             }
 
@@ -103,12 +103,12 @@ public class DisplayPanelController extends MainController {
             String imageNameWithoutExtension = imageName.substring(0, imageName.lastIndexOf('.'));
             File imagesDirectory = new File(METAVERSES_PATH + metaverseUrlName +
                     SEPARATOR + DISPLAY_PANELS_PATH + displayPanelUrlName + SEPARATOR + IMAGES_PATH + imageNameWithoutExtension);
-            if(!imagesDirectory.exists()) {
+            if (!imagesDirectory.exists()) {
                 return null;
             }
 
             Path imagePath = Path.of(imagesDirectory.getPath() + SEPARATOR + imageName);
-            if(!Files.exists(imagePath)) {
+            if (!Files.exists(imagePath)) {
                 return null;
             }
 
@@ -117,5 +117,35 @@ public class DisplayPanelController extends MainController {
         } catch (IOException e) {
             return null;
         }
+    }
+
+    @GetMapping("/{metaverseUrl}" + CTRL_DISPLAY_PANELS + "/{displayPanelUrlName}" + CTRL_IMAGES + "/{imageName}" + CTRL_AUDIOS + "/{audioName}")
+    @ResponseBody
+    public String getAudio(@PathVariable("metaverseUrlName") String metaverseUrlName,
+                           @PathVariable("displayPanelUrlName") String displayPanelUrlName,
+                           @PathVariable("imageName") String imageName, @PathVariable("audioName") String audioName) {
+
+
+        try {
+
+            String imageNameWithoutExtension = imageName.substring(0, imageName.lastIndexOf('.'));
+            File audioDirectory = new File(METAVERSES_PATH + metaverseUrlName +
+                    SEPARATOR + DISPLAY_PANELS_PATH + displayPanelUrlName + SEPARATOR + IMAGES_PATH + imageNameWithoutExtension + SEPARATOR + AUDIO_PATH);
+            if (!audioDirectory.exists()) {
+                return null;
+            }
+
+            Path audioPath = Path.of(audioDirectory.getPath() + SEPARATOR + audioName);
+
+            if (!Files.exists(audioPath)) {
+                return null;
+            }
+
+            return Base64.getEncoder().encodeToString(Files.readAllBytes(audioPath));
+
+        } catch (IOException e) {
+            return null;
+        }
+
     }
 }
