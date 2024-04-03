@@ -20,9 +20,9 @@ using System.Net;
 public class ResourcesManager : MonoBehaviour
 {
     [SerializeField] private GameObject textPanelObject;
-    [SerializeField] private GameObject singleDisplayPanelObject;
-    [SerializeField] private GameObject sixPackDiagonalDisplayPanelObject;
-    [SerializeField] private GameObject sixPackCircularDisplayPanelObject;
+    [SerializeField] private GameObject oneDisplayPanelExhibitionObject;
+    [SerializeField] private GameObject sixDisplayPanelDiagonalExhibitionObject;
+    [SerializeField] private GameObject sixDisplayPanelCircularExhibitionObject;
 
     private const string metaverseUrlName = "campus-est-supsi";
 
@@ -161,15 +161,15 @@ public class ResourcesManager : MonoBehaviour
                         GameObject panelInstance = null;
                         if (displayPanel.type == "SINGLE")
                         {
-                            panelInstance = Instantiate(singleDisplayPanelObject, position, Quaternion.identity);
+                            panelInstance = Instantiate(oneDisplayPanelExhibitionObject, position, Quaternion.identity);
                         }
                         else if (displayPanel.type == "SIX_PACK_DIAGONAL")
                         {
-                            panelInstance = Instantiate(sixPackDiagonalDisplayPanelObject, position, Quaternion.identity);
+                            panelInstance = Instantiate(sixDisplayPanelDiagonalExhibitionObject, position, Quaternion.identity);
                         }
                         else if (displayPanel.type == "SIX_PACK_CIRCULAR")
                         {
-                            panelInstance = Instantiate(sixPackCircularDisplayPanelObject, position, Quaternion.identity);
+                            panelInstance = Instantiate(sixDisplayPanelCircularExhibitionObject, position, Quaternion.identity);
                         }
                         panelInstance.transform.parent = coordObject.transform;
 
@@ -187,7 +187,9 @@ public class ResourcesManager : MonoBehaviour
 
                                 Texture2D texture = new Texture2D(2, 2);
                                 texture.LoadImage(imageData);
-                                var imageIstance = panelInstance.transform.Find($"Panel/Board/Canvas/Image{i + 1}");
+
+
+                                var imageIstance = panelInstance.transform.Find($"DisplayPanel{(i / 2) + 1}/Board/Canvas/Image{(i % 2) + 1}");
                                 imageIstance.GetComponent<RawImage>().texture = texture;
 
                                 AudioSerializable audio = image.audio;
