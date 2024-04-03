@@ -189,7 +189,7 @@ public class ResourcesManager : MonoBehaviour
                                 texture.LoadImage(imageData);
 
 
-                                var imageIstance = panelInstance.transform.Find($"DisplayPanel{(i / 2) + 1}/Board/Canvas/Image{(i % 2) + 1}");
+                                var imageIstance = panelInstance.transform.Find($"DisplayPanel{(i / 2) + 1}/Board/Canvas/Image{(i % 2) + 1}").gameObject;
                                 imageIstance.GetComponent<RawImage>().texture = texture;
 
                                 AudioSerializable audio = image.audio;
@@ -200,7 +200,7 @@ public class ResourcesManager : MonoBehaviour
                                     AudioClip audioClip = httpRequest.AudioClip;
                                     if (audioClip != null)
                                     {
-                                        AudioSource audioSource = imageIstance.gameObject.AddComponent<AudioSource>();
+                                        AudioSource audioSource = imageIstance.GetComponent<AudioSource>();
                                         audioSource.clip = audioClip;
                                         audioSource.Play();
                                     }
