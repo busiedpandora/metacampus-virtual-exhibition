@@ -202,7 +202,6 @@ public class ResourcesManager : MonoBehaviour
                                     {
                                         AudioSource audioSource = imageIstance.GetComponent<AudioSource>();
                                         audioSource.clip = audioClip;
-                                        audioSource.Play();
                                     }
                                 }
                             }

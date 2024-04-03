@@ -4,15 +4,34 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField] private GameObject image;
-
     private AudioSource imageAudioSource;
+    private bool isPaused = false;
+    private bool isWaitingToReplay = false;
+    private Coroutine waitToReplayCoroutine = null;
+
+    private bool isCameraClose = false;
+
+    public bool IsCameraClose
+    {
+        get { return isCameraClose; }
+        set { isCameraClose = value; }
+    }
+
+    public bool IsPaused
+    {
+        get { return isPaused; }
+    }
+
+    public bool IsWaitingToReplay
+    {
+        get { return isWaitingToReplay; }
+    }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        imageAudioSource = image.GetComponent<AudioSource>();
+        imageAudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -27,6 +46,15 @@ public class AudioManager : MonoBehaviour
         { 
             imageAudioSource.Stop();  
             imageAudioSource.Play();
+            isPaused = false;
+
+            if(waitToReplayCoroutine != null)
+            {
+                StopCoroutine(waitToReplayCoroutine);
+            }
+
+            isWaitingToReplay = true;
+            waitToReplayCoroutine = StartCoroutine(WaitToReplayAudio(GetAudioClipDuration() + 10.0f));
         }
     }
 
@@ -37,6 +65,7 @@ public class AudioManager : MonoBehaviour
             if (imageAudioSource.isPlaying)
             {
                 imageAudioSource.Pause();
+                isPaused = true;
             }
         }
     }
@@ -48,7 +77,42 @@ public class AudioManager : MonoBehaviour
             if (!imageAudioSource.isPlaying)
             {
                 imageAudioSource.Play();
+                isPaused = false;
+
+                if (waitToReplayCoroutine != null)
+                {
+                    StopCoroutine(waitToReplayCoroutine);
+                }
+
+                isWaitingToReplay = true;
+                waitToReplayCoroutine = StartCoroutine(WaitToReplayAudio(GetAudioClipDuration() + 10.0f));
             }
         }
+    }
+
+    public void StopAudio()
+    {
+        if(imageAudioSource != null)
+        {
+            imageAudioSource.Stop();
+        }
+    }
+
+    public bool IsAudioPlaying()
+    {
+        return imageAudioSource.isPlaying;
+    }
+
+    private float GetAudioClipDuration()
+    {
+        return imageAudioSource.clip.length;
+    }
+
+    private IEnumerator WaitToReplayAudio(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        isWaitingToReplay = false;
+        waitToReplayCoroutine = null;
     }
 }
