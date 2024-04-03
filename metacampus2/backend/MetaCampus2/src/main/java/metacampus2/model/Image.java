@@ -2,10 +2,7 @@ package metacampus2.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrePersist;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,19 +23,31 @@ public class Image extends Resource {
     @JsonManagedReference
     private Audio audio;
 
+    @Transient
+    private List<Integer> imageIndexes;
+
     @PrePersist
     public void prePersist() {
-        if(displayPanels != null) {
-            for (DisplayPanel panel : displayPanels) {
-                if(panel.getImages() == null) {
-                    panel.setImages(new ArrayList<>());
-                }
-                if(panel.isFull()) {
-                    panel.getImages().add(0, this);
-                    panel.getImages().remove(panel.getImages().size() - 1);
-                }
-                else {
-                    panel.getImages().add(this);
+        if(displayPanels == null) {
+            displayPanels = new ArrayList<>();
+        }
+
+        for(int i = 0; i < displayPanels.size(); i++) {
+            DisplayPanel displayPanel = displayPanels.get(i);
+
+            if(displayPanel.getImages() == null) {
+                displayPanel.setImages(new ArrayList<>());
+            }
+
+            if(i < imageIndexes.size()) {
+                int imageIndex = imageIndexes.get(i);
+
+                if(imageIndex < displayPanel.getType().getCapacity()) {
+                    if (imageIndex == displayPanel.getImages().size()) {
+                        displayPanel.getImages().add(this);
+                    } else {
+                        displayPanel.getImages().set(imageIndex, this);
+                    }
                 }
             }
         }

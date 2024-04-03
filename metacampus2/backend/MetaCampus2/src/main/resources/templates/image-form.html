@@ -9,7 +9,7 @@
 <main>
     <div id="mainContainer" class="container-fluid">
         <div class="row">
-            <div id="categoryMenuContainer" class="col-2 bg-body-secondary">
+            <div id="categoryMenuContainer" class="col-2">
                 <div th:insert="category-navigation-menu"></div>
             </div>
             <div class="col">
@@ -33,14 +33,21 @@
                             <label for="displayPanels" class="col-form-label col-2">Display panels</label>
                             <div class="col-6">
                                 <select id="displayPanels" class="form-select" name="displayPanels"
-                                        multiple size="3" required>
-                                    <option th:each="displayPanel : ${displayPanels}"
-                                            th:value="${displayPanel.id}"
-                                            th:text="${displayPanel.name + ' - ' + displayPanel.metaverse.name}">
-                                    </option>
+                                        multiple size="12" required>
+                                    <optgroup th:each="displayPanel : ${displayPanels}"
+                                              th:label="${displayPanel.name + ' - ' + displayPanel.metaverse.name}">
+                                        <option th:each="i : ${#numbers.sequence(0, displayPanel.images.size)}"
+                                                th:if="${i < displayPanel.type.capacity}"
+                                                th:text="'panel ' + ${(i / 2) + 1} + ' - ' + ${i % 2 == 0 ? 'front' : 'back'}"
+                                                th:value="${displayPanel.id}"
+                                                th:attr="imageIndex=${i}">
+                                        </option>
+                                    </optgroup>
                                 </select>
                             </div>
                         </div>
+
+                        <input type="hidden" id="imageIndexes" name="imageIndexes" value="">
 
                         <div th:if="${error != null}" class="mb-3">
                             <span class="error-message">Error occurred while creating an image</span>
@@ -54,6 +61,22 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('displayPanels').addEventListener('change', function() {
+            let select = this;
+            let selectedOptions = select.selectedOptions;
+
+            let imageIndexes = [];
+
+            for (let i = 0; i < selectedOptions.length; i++) {
+                let option = selectedOptions[i];
+                imageIndexes.push(option.getAttribute('imageIndex'));
+            }
+
+            document.getElementById('imageIndexes').value = imageIndexes;
+        });
+    </script>
 </main>
 </body>
 </html>

@@ -9,10 +9,20 @@
 <main>
     <div id="mainContainer" class="container-fluid">
         <div class="row">
-            <div id="categoryMenuContainer" class="col-2 bg-body-secondary">
+            <div id="categoryMenuContainer" class="col-2">
                 <div th:insert="category-navigation-menu"></div>
             </div>
             <div class="col">
+                <div>
+                    <div id="metaverseNavigationMenu" class="row justify-content-around text-center bg-body-secondary">
+                        <div class="col">
+                            <span class="entity-item">
+                                Metaverse
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-container">
                     <form th:href="@{/metaverses/new}" method="post">
                         <div class="mb-5">

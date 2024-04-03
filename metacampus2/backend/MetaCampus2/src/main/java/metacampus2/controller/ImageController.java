@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Base64;
+import java.util.List;
 
 @Controller
 @RequestMapping(MainController.CTRL_RESOURCES)
@@ -60,7 +61,8 @@ public class ImageController extends MainController {
     }
 
     @PostMapping(CTRL_IMAGES + CTRL_NEW)
-    public String newImage(Image image, @RequestParam(value = "imageFile") MultipartFile imageFile) {
+    public String newImage(Image image, @RequestParam(value = "imageFile") MultipartFile imageFile,
+                           @RequestParam(value = "imageIndexes") List<Integer> imageIndexes) {
         if(imageFile != null && !imageFile.isEmpty()) {
             String imageFullName = imageFile.getOriginalFilename();
             String imageNameWithoutExtension = imageFullName.substring(0, imageFullName.lastIndexOf('.'));
@@ -84,6 +86,7 @@ public class ImageController extends MainController {
             }
 
             image.setName(imageFullName);
+            image.setImageIndexes(imageIndexes);
             imageService.addNewImage(image);
 
             return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES;
