@@ -167,6 +167,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textPanelObject: {fileID: 4454352505267271757, guid: 23d101417e4c4f642ba6d0a8c0cbfd84, type: 3}
   oneDisplayPanelExhibitionObject: {fileID: 6322482833769128490, guid: 3be0412031193674fbf672e45100306c, type: 3}
+  fourDisplayPanelStraightExhibitionObject: {fileID: 1298397279284414578, guid: ae2241108bc29be4a8b91f1014bf1a1b, type: 3}
+  fourDisplayPanelRectangularExhibitionObject: {fileID: 1298397279284414578, guid: 114bcedfce639bf45b9ab30c2aedba58, type: 3}
   sixDisplayPanelDiagonalExhibitionObject: {fileID: 1298397279284414578, guid: ad0948af608e5644f8bb73c72b25b6fa, type: 3}
   sixDisplayPanelCircularExhibitionObject: {fileID: 2505343625553553035, guid: 5a009916fb3bca94e82f98e0198e6dac, type: 3}
 --- !u!4 &13064588

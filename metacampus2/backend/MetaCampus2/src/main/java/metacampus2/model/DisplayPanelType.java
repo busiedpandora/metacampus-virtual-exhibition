@@ -5,6 +5,8 @@ import lombok.Getter;
 @Getter
 public enum DisplayPanelType {
     ONE_DISPLAY_PANEL_EXHIBITION("one-display-panel-exhibition", "can contain up to two images", 2),
+    FOUR_DISPLAY_PANEL_STRAIGHT_EXHIBITION("four-display-panel-straight-exhibition", "can contain up to eight images", 8),
+    FOUR_DISPLAY_PANEL_RECTANGULAR_EXHIBITION("four-display-panel-rectangular-exhibition", "can contain up to eight images", 8),
     SIX_DISPLAY_PANEL_DIAGONAL_EXHIBITION("six-display-panel-diagonal-exhibition", "can contain up to twelve images", 12),
     SIX_DISPLAY_PANEL_CIRCULAR_EXHIBITION("six-display-panel-circular-exhibition", "can contain up to twelve images", 12);
 

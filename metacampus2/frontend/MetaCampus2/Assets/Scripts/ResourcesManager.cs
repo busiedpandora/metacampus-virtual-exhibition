@@ -22,6 +22,8 @@ public class ResourcesManager : MonoBehaviour
 {
     [SerializeField] private GameObject textPanelObject;
     [SerializeField] private GameObject oneDisplayPanelExhibitionObject;
+    [SerializeField] private GameObject fourDisplayPanelStraightExhibitionObject;
+    [SerializeField] private GameObject fourDisplayPanelRectangularExhibitionObject;
     [SerializeField] private GameObject sixDisplayPanelDiagonalExhibitionObject;
     [SerializeField] private GameObject sixDisplayPanelCircularExhibitionObject;
 
@@ -166,6 +168,14 @@ public class ResourcesManager : MonoBehaviour
                         if (displayPanel.type == "ONE_DISPLAY_PANEL_EXHIBITION")
                         {
                             panelInstance = Instantiate(oneDisplayPanelExhibitionObject, position, Quaternion.identity);
+                        }
+                        else if (displayPanel.type == "FOUR_DISPLAY_PANEL_STRAIGHT_EXHIBITION")
+                        {
+                            panelInstance = Instantiate(fourDisplayPanelStraightExhibitionObject, position, Quaternion.identity);
+                        }
+                        else if (displayPanel.type == "FOUR_DISPLAY_PANEL_RECTANGULAR_EXHIBITION")
+                        {
+                            panelInstance = Instantiate(fourDisplayPanelRectangularExhibitionObject, position, Quaternion.identity);
                         }
                         else if (displayPanel.type == "SIX_DISPLAY_PANEL_DIAGONAL_EXHIBITION")
                         {
