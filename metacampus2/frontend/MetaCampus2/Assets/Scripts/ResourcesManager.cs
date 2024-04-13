@@ -27,11 +27,7 @@ public class ResourcesManager : MonoBehaviour
 
     private const string metaverseUrlName = "campus-est-supsi";
 
-    //private const string hostName = "192.168.45.81"; //hotspot
-    //private const string hostName = "10.21.56.224"; //eduroam hololens
-    private const string hostName = "10.21.57.147"; //eduroam android
-    //private const string hostName = "localhost";
-    //private const string hostName = "10.11.73.241"; //SUPSI
+    private string hostName;
     private const string port = "8080";
     private const string spacesPath = "spaces";
     private string spacesServerUrl = "";
@@ -46,6 +42,10 @@ public class ResourcesManager : MonoBehaviour
 
     private void Awake()
     {
+        //hostName = "10.21.56.224"; //eduroam hololens
+        //hostName = "10.21.57.147"; //eduroam android
+        hostName = "192.168.1.126"; //ssi
+
         httpRequest = GetComponent<HTTPRequest>();
     }
 
