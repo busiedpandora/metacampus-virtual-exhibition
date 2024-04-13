@@ -163,15 +163,15 @@ public class ResourcesManager : MonoBehaviour
                         int imagesCount = displayPanel.images.Count;
 
                         GameObject panelInstance = null;
-                        if (displayPanel.type == "SINGLE")
+                        if (displayPanel.type == "ONE_DISPLAY_PANEL_EXHIBITION")
                         {
                             panelInstance = Instantiate(oneDisplayPanelExhibitionObject, position, Quaternion.identity);
                         }
-                        else if (displayPanel.type == "SIX_PACK_DIAGONAL")
+                        else if (displayPanel.type == "SIX_DISPLAY_PANEL_DIAGONAL_EXHIBITION")
                         {
                             panelInstance = Instantiate(sixDisplayPanelDiagonalExhibitionObject, position, Quaternion.identity);
                         }
-                        else if (displayPanel.type == "SIX_PACK_CIRCULAR")
+                        else if (displayPanel.type == "SIX_DISPLAY_PANEL_CIRCULAR_EXHIBITION")
                         {
                             panelInstance = Instantiate(sixDisplayPanelCircularExhibitionObject, position, Quaternion.identity);
                         }

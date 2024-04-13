@@ -5,31 +5,31 @@ startupEntities:
   - type: "metaverse"
     name: "Campus Est SUPSI"
   - type: "textPanel"
-    name: "Text Panel 1"
+    name: "text panel 1"
     coordinates:
       x: 0
       y: 0
       z: 3
     metaverse: "Campus Est SUPSI"
   - type: "displayPanel"
-    name: "Single Display Panel"
-    displayPanelType: "single"
+    name: "one display panel exhibition"
+    displayPanelType: "one-display-panel-exhibition"
     coordinates:
       x: 2
       y: 0
       z: 4
     metaverse: "Campus Est SUPSI"
   - type: "displayPanel"
-    name: "Six-pack-diagonal Display Panel"
-    displayPanelType: "six-pack-diagonal"
+    name: "six display panel diagonal exhibition 1"
+    displayPanelType: "six-display-panel-diagonal-exhibition"
     coordinates:
       x: 10
       y: 0
       z: -10
     metaverse: "Campus Est SUPSI"
   - type: "displayPanel"
-    name: "Six-pack-circular Display Panel"
-    displayPanelType: "six-pack-circular"
+    name: "six display panel circular exhibition 1"
+    displayPanelType: "six-display-panel-circular-exhibition"
     coordinates:
       x: -10
       y: 0

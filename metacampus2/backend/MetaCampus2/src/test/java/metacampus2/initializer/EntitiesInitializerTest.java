@@ -49,7 +49,7 @@ class EntitiesInitializerTest extends AbstractTest {
         var displayPanels = displayPanelService.getAllDisplayPanelsFromMetaverse("Campus Est SUPSI");
         assertEquals(1, displayPanels.size());
         assertEquals("Display Panel 1",  displayPanels.get(0).getName());
-        assertEquals(DisplayPanelType.SINGLE, displayPanels.get(0).getType());
+        assertEquals(DisplayPanelType.ONE_DISPLAY_PANEL_EXHIBITION, displayPanels.get(0).getType());
         assertEquals(5,  displayPanels.get(0).getCoordinates().getX());
         assertEquals(0,  displayPanels.get(0).getCoordinates().getY());
         assertEquals(5,  displayPanels.get(0).getCoordinates().getZ());
