@@ -103,9 +103,14 @@ public class AudioManager : MonoBehaviour
         return imageAudioSource.isPlaying;
     }
 
-    private float GetAudioClipDuration()
+    public float GetAudioClipDuration()
     {
-        return imageAudioSource.clip.length;
+        if(imageAudioSource != null && imageAudioSource.clip != null)
+        {
+            return imageAudioSource.clip.length;
+        }
+
+        return 0f;
     }
 
     private IEnumerator WaitToReplayAudio(float delay)

@@ -5,11 +5,12 @@ using UnityEngine;
 public class ColliderManager : MonoBehaviour
 {
     [SerializeField] private AudioManager audioManager;
+    [SerializeField] private GameObject imageButtons;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        imageButtons.SetActive(false);
     }
 
     // Update is called once per frame
@@ -23,6 +24,11 @@ public class ColliderManager : MonoBehaviour
         Debug.Log("On trigger enter");
         if (other.CompareTag("MainCamera"))
         {
+            if(audioManager.GetAudioClipDuration() > 0f)
+            {
+                imageButtons.SetActive(true);
+            }
+
             audioManager.IsCameraClose = true;
         }
     }
@@ -32,6 +38,8 @@ public class ColliderManager : MonoBehaviour
         Debug.Log("On trigger exit");
         if (other.CompareTag("MainCamera"))
         {
+            imageButtons.SetActive(false);
+
             audioManager.IsCameraClose = false;
             audioManager.StopAudio();
         }
