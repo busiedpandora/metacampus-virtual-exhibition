@@ -9,15 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.Optional;
-
 @Controller
 @RequestMapping(MainController.CTRL_RESOURCES)
 public class AudioController extends MainController {
@@ -60,32 +51,11 @@ public class AudioController extends MainController {
 
     @PostMapping(CTRL_AUDIOS + CTRL_NEW)
     public String newAudio(Audio audio, @RequestParam("audioFile") MultipartFile audioFile,
-                           @RequestParam(value = "imageToAdd") Image image) throws IOException {
+                           @RequestParam(value = "imageToAdd") Image image) {
         if(audioFile != null && !audioFile.isEmpty()) {
             String audioName = audioFile.getOriginalFilename();
             for(DisplayPanel displayPanel : image.getDisplayPanels()) {
-                String imageNameWithoutExtension = image.getName().substring(0, image.getName().lastIndexOf('.'));
-                File imageDirectory = new File(METAVERSES_PATH + displayPanel.getMetaverse().getUrlName() +
-                        SEPARATOR + DISPLAY_PANELS_PATH + displayPanel.getUrlName() + SEPARATOR
-                        + IMAGES_PATH + imageNameWithoutExtension);
-
-                if(!imageDirectory.exists()) {
-                    return "redirect:" + CTRL_RESOURCES + CTRL_AUDIOS + CTRL_NEW + "?error";
-                }
-
-                File audioDirectory = new File(imageDirectory.getPath() + SEPARATOR + AUDIO_PATH);
-
-                if(!audioDirectory.exists()) {
-                    if(!audioDirectory.mkdirs()) {
-                        return "redirect:" + CTRL_RESOURCES + CTRL_AUDIOS + CTRL_NEW + "?error";
-                    }
-                }
-
-                Path audioPath = Path.of(audioDirectory.getPath() + SEPARATOR + audioName);
-
-                try {
-                    Files.copy(audioFile.getInputStream(), audioPath, StandardCopyOption.REPLACE_EXISTING);
-                } catch (IOException e) {
+                if(!audioService.createFile(audio, audioFile, image, displayPanel)) {
                     return "redirect:" + CTRL_RESOURCES + CTRL_AUDIOS + CTRL_NEW + "?error";
                 }
             }

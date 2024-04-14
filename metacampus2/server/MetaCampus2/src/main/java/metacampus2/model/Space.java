@@ -17,10 +17,10 @@ public abstract class Space {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String urlName;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -32,13 +32,4 @@ public abstract class Space {
     @JoinColumn(name = "metaverse_id", nullable = false)
     @JsonManagedReference
     private Metaverse metaverse;
-
-
-    @PrePersist
-    private void setUrlName() {
-        this.urlName = this.name
-                .toLowerCase()
-                .replaceAll("[*!?,.+/]+", "-")
-                .replaceAll(" ", "-");
-    }
 }

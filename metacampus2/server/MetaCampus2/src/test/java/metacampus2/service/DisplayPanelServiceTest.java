@@ -1,7 +1,6 @@
 package metacampus2.service;
 
 import metacampus2.AbstractTest;
-import metacampus2.model.AudioPanel;
 import metacampus2.model.DisplayPanel;
 import metacampus2.model.Image;
 import metacampus2.repository.IDisplayPanelRepository;

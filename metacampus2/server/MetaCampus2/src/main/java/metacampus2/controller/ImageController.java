@@ -12,12 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -65,22 +59,8 @@ public class ImageController extends MainController {
                            @RequestParam(value = "imageIndexes") List<Integer> imageIndexes) {
         if(imageFile != null && !imageFile.isEmpty()) {
             String imageFullName = imageFile.getOriginalFilename();
-            String imageNameWithoutExtension = imageFullName.substring(0, imageFullName.lastIndexOf('.'));
             for (DisplayPanel displayPanel: image.getDisplayPanels()) {
-                File imageDirectory = new File(METAVERSES_PATH + displayPanel.getMetaverse().getUrlName() +
-                        SEPARATOR + DISPLAY_PANELS_PATH + displayPanel.getUrlName() + SEPARATOR + IMAGES_PATH + imageNameWithoutExtension);
-
-                if(!imageDirectory.exists()) {
-                    if(!imageDirectory.mkdirs()) {
-                        return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW + "?error";
-                    }
-                }
-
-                Path imagePath = Path.of(imageDirectory.getPath() + SEPARATOR + imageFullName);
-
-                try {
-                    Files.copy(imageFile.getInputStream(), imagePath, StandardCopyOption.REPLACE_EXISTING);
-                } catch (IOException e) {
+                if(!imageService.createFile(image, imageFile, displayPanel)) {
                     return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW + "?error";
                 }
             }

@@ -5,11 +5,12 @@ import metacampus2.repository.IMetaverseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.List;
 
 
 @Service
-public class MetaverseService implements IMetaverseService {
+public class MetaverseService extends AbstractService implements IMetaverseService {
     private IMetaverseRepository IMetaverseRepository;
 
 
@@ -20,7 +21,16 @@ public class MetaverseService implements IMetaverseService {
 
     @Override
     public void addNewMetaverse(Metaverse metaverse) {
+        metaverse.setUrlName(getUrlName(metaverse.getName()));
+
         IMetaverseRepository.save(metaverse);
+    }
+
+    @Override
+    public boolean createDirectory(Metaverse metaverse) {
+        File metaverseDirectory = new File(METAVERSES_PATH + getUrlName(metaverse.getName()));
+
+        return !metaverseDirectory.exists() && metaverseDirectory.mkdirs();
     }
 
     @Override

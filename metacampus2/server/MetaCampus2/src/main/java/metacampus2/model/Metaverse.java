@@ -24,37 +24,7 @@ public class Metaverse {
     @Column(nullable = false, unique = true)
     private String urlName;
 
-    /*@OneToMany(mappedBy = "metaverse")
-    @JsonBackReference
-    private List<Classroom> classrooms;
-
-    @OneToMany(mappedBy = "metaverse")
-    @JsonIgnoreProperties("metaverse")
-    private List<Event> events;
-
-    @OneToMany(mappedBy = "metaverse")
-    @JsonIgnoreProperties("metaverse")
-    private List<Lecture> lectures;
-
-    @OneToMany(mappedBy = "metaverse")
-    @JsonIgnoreProperties("metaverse")
-    private List<Person> people;
-
-    @OneToMany(mappedBy = "metaverse")
-    @JsonIgnoreProperties("metaverse")
-    private List<Office> offices;*/
-
     @OneToMany(mappedBy = "metaverse")
     @JsonBackReference
     private List<Space> spaces;
-
-
-
-    @PrePersist
-    private void setUrlName() {
-        this.urlName = this.name
-                .toLowerCase()
-                .replaceAll("[*!?,.+/]+", "-")
-                .replaceAll(" ", "-");
-    }
 }

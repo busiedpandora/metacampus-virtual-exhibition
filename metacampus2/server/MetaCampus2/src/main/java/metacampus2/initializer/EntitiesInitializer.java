@@ -73,12 +73,8 @@ public class EntitiesInitializer implements CommandLineRunner {
             Metaverse metaverse = new Metaverse();
             metaverse.setName((String) m.get("name"));
 
-            metaverseService.addNewMetaverse(metaverse);
-
-            File metaverseDirectory = new File(MainController.METAVERSES_PATH + metaverse.getUrlName());
-
-            if(!metaverseDirectory.exists()) {
-                metaverseDirectory.mkdirs();
+            if(metaverseService.createDirectory(metaverse)) {
+                metaverseService.addNewMetaverse(metaverse);
             }
         }
     }
@@ -104,14 +100,8 @@ public class EntitiesInitializer implements CommandLineRunner {
             coordinates.setZ(z);
             textPanel.setCoordinates(coordinates);
 
-            textPanelService.addNewTextPanel(textPanel);
-
-            File textPanelDirectory = new File(MainController.METAVERSES_PATH
-            + textPanel.getMetaverse().getUrlName() + MainController.SEPARATOR
-            + MainController.TEXT_PANELS_PATH + textPanel.getUrlName());
-
-            if(!textPanelDirectory.exists()) {
-                textPanelDirectory.mkdirs();
+            if(textPanelService.createDirectory(textPanel)) {
+                textPanelService.addNewTextPanel(textPanel);
             }
         }
     }
@@ -140,14 +130,8 @@ public class EntitiesInitializer implements CommandLineRunner {
             coordinates.setZ(z);
             displayPanel.setCoordinates(coordinates);
 
-            displayPanelService.addNewDisplayPanel(displayPanel);
-
-            File displayPanelDirectory = new File(MainController.METAVERSES_PATH
-                    + displayPanel.getMetaverse().getUrlName() + MainController.SEPARATOR
-                    + MainController.DISPLAY_PANELS_PATH + displayPanel.getUrlName());
-
-            if(!displayPanelDirectory.exists()) {
-                displayPanelDirectory.mkdirs();
+            if(displayPanelService.createDirectory(displayPanel)) {
+                displayPanelService.addNewDisplayPanel(displayPanel);
             }
         }
     }

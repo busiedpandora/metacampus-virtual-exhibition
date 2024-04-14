@@ -12,12 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-
 @Controller
 @RequestMapping(MainController.CTRL_RESOURCES)
 public class TextController extends MainController {
@@ -63,20 +57,7 @@ public class TextController extends MainController {
         if(textFile != null && !textFile.isEmpty()) {
             String textFullName = textFile.getOriginalFilename();
             for(TextPanel textPanel : text.getTextPanels()) {
-                File textDirectory = new File(METAVERSES_PATH + textPanel.getMetaverse().getUrlName() +
-                        SEPARATOR + TEXT_PANELS_PATH + textPanel.getUrlName() + SEPARATOR + TEXT_PATH);
-
-                if(!textDirectory.exists()) {
-                    if(!textDirectory.mkdirs()) {
-                        return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS + CTRL_NEW + "?error";
-                    }
-                }
-
-                Path textPath = Path.of(textDirectory.getPath() + SEPARATOR + textFullName);
-
-                try {
-                    Files.copy(textFile.getInputStream(), textPath, StandardCopyOption.REPLACE_EXISTING);
-                } catch (IOException e) {
+                if(!textService.createFile(text, textFile, textPanel)) {
                     return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS + CTRL_NEW + "?error";
                 }
             }

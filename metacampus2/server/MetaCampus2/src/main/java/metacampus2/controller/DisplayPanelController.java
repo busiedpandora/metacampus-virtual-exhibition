@@ -11,11 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -79,16 +74,11 @@ public class DisplayPanelController extends MainController {
                 && spaceService.getSpaceByCoordinatesAndMetaverse(coordinates.getX(), coordinates.getY(),
                 coordinates.getZ(), displayPanel.getMetaverse().getName()) == null) {
 
-            displayPanelService.addNewDisplayPanel(displayPanel);
+            if(displayPanelService.createDirectory(displayPanel)) {
+                displayPanelService.addNewDisplayPanel(displayPanel);
 
-            File displayPanelDirectory = new File(METAVERSES_PATH
-                    + displayPanel.getMetaverse().getUrlName() + SEPARATOR + DISPLAY_PANELS_PATH + displayPanel.getUrlName());
-
-            if (!displayPanelDirectory.exists()) {
-                displayPanelDirectory.mkdirs();
+                return "redirect:" + CTRL_SPACES + CTRL_DISPLAY_PANELS;
             }
-
-            return "redirect:" + CTRL_SPACES + CTRL_DISPLAY_PANELS;
         }
 
         return "redirect:" + CTRL_SPACES + CTRL_DISPLAY_PANELS + CTRL_NEW + "?error";
@@ -99,25 +89,8 @@ public class DisplayPanelController extends MainController {
     public String getImage(@PathVariable("metaverseUrlName") String metaverseUrlName,
                            @PathVariable("displayPanelUrlName") String displayPanelUrlName,
                            @PathVariable("imageName") String imageName) {
-        try {
-            String imageNameWithoutExtension = imageName.substring(0, imageName.lastIndexOf('.'));
-            File imagesDirectory = new File(METAVERSES_PATH + metaverseUrlName +
-                    SEPARATOR + DISPLAY_PANELS_PATH + displayPanelUrlName + SEPARATOR +
-                    IMAGES_PATH + imageNameWithoutExtension);
-            if (!imagesDirectory.exists()) {
-                return null;
-            }
 
-            Path imagePath = Path.of(imagesDirectory.getPath() + SEPARATOR + imageName);
-            if (!Files.exists(imagePath)) {
-                return null;
-            }
-
-            return Base64.getEncoder().encodeToString(Files.readAllBytes(imagePath));
-
-        } catch (IOException e) {
-            return null;
-        }
+        return displayPanelService.getImageFile(metaverseUrlName, displayPanelUrlName, imageName);
     }
 
     @GetMapping("/{metaverseUrlName}" + CTRL_DISPLAY_PANELS + "/{displayPanelUrlName}"
@@ -126,28 +99,16 @@ public class DisplayPanelController extends MainController {
                                            @PathVariable("displayPanelUrlName") String displayPanelUrlName,
                                            @PathVariable("imageName") String imageName,
                                            @PathVariable("audioName") String audioName) {
-        try {
-            String imageNameWithoutExtension = imageName.substring(0, imageName.lastIndexOf('.'));
-            File audioDirectory = new File(METAVERSES_PATH + metaverseUrlName +
-                    SEPARATOR + DISPLAY_PANELS_PATH + displayPanelUrlName + SEPARATOR + IMAGES_PATH +
-                    imageNameWithoutExtension + SEPARATOR + AUDIO_PATH);
-            if (!audioDirectory.exists()) {
-                return ResponseEntity.notFound().build();
-            }
 
-            Path audioPath = Path.of(audioDirectory.getPath() + SEPARATOR + audioName);
+        byte[] audioData = displayPanelService.getAudioFile(metaverseUrlName, displayPanelUrlName,
+                imageName, audioName);
 
-            if (!Files.exists(audioPath)) {
-                return ResponseEntity.notFound().build();
-            }
-
-            byte[] audioData = Files.readAllBytes(audioPath);
+        if(audioData != null) {
             return ResponseEntity.ok()
                     .header("Content-Type", "audio/wav")
                     .body(audioData);
-
-        } catch (IOException e) {
-            return ResponseEntity.notFound().build();
         }
+
+        return ResponseEntity.notFound().build();
     }
 }

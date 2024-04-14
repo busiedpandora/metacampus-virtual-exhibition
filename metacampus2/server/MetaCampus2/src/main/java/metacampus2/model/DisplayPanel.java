@@ -22,13 +22,4 @@ public class DisplayPanel extends Space {
 
     @Enumerated(EnumType.STRING)
     private DisplayPanelType type;
-
-
-    public boolean isFull() {
-        if(images != null) {
-            return images.size() >= type.getCapacity();
-        }
-
-        return false;
-    }
 }

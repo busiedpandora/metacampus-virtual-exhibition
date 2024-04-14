@@ -53,12 +53,11 @@ public class MetaverseController extends MainController {
         if(metaverseService.getMetaverse(metaverse.getName()) == null) {
             metaverseService.addNewMetaverse(metaverse);
 
-            File metaverseDirectory = new File(METAVERSES_PATH + metaverse.getUrlName());
-            if(!metaverseDirectory.exists()) {
-                metaverseDirectory.mkdirs();
-            }
+            if(metaverseService.createDirectory(metaverse)) {
+                metaverseService.addNewMetaverse(metaverse);
 
-            return "redirect:" + CTRL_METAVERSES;
+                return "redirect:" + CTRL_METAVERSES;
+            }
         }
 
         return "redirect:" + CTRL_METAVERSES + CTRL_NEW + "?error";

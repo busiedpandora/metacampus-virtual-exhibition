@@ -15,11 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -67,8 +62,11 @@ public class TextPanelController extends MainController {
     }
 
     @GetMapping("/{metaverseUrlName}" + CTRL_TEXT_PANELS)
-    public ResponseEntity<List<TextPanel>> textPanelsFromMetaverse(@PathVariable("metaverseUrlName") String metaverseUrlName) {
-        return new ResponseEntity<>(textPanelService.getAllTextPanelsFromMetaverseByUrlName(metaverseUrlName), HttpStatus.OK);
+    public ResponseEntity<List<TextPanel>> textPanelsFromMetaverse(@PathVariable("metaverseUrlName")
+                                                                       String metaverseUrlName) {
+        return new ResponseEntity<>(
+                textPanelService.getAllTextPanelsFromMetaverseByUrlName(metaverseUrlName),
+                HttpStatus.OK);
     }
 
     @PostMapping(CTRL_TEXT_PANELS + CTRL_NEW)
@@ -78,9 +76,12 @@ public class TextPanelController extends MainController {
         if(spaceService.getSpaceByNameAndMetaverse(textPanel.getName(), textPanel.getMetaverse().getName()) == null &&
                 spaceService.getSpaceByCoordinatesAndMetaverse(coordinates.getX(), coordinates.getY(),
                 coordinates.getZ(), textPanel.getMetaverse().getName()) == null) {
-            textPanelService.addNewTextPanel(textPanel);
 
-            return "redirect:" + CTRL_SPACES + CTRL_TEXT_PANELS;
+            if(textPanelService.createDirectory(textPanel)) {
+                textPanelService.addNewTextPanel(textPanel);
+
+                return "redirect:" + CTRL_SPACES + CTRL_TEXT_PANELS;
+            }
         }
 
         return "redirect:" + CTRL_SPACES + CTRL_TEXT_PANELS + CTRL_NEW + "?error";
@@ -91,22 +92,7 @@ public class TextPanelController extends MainController {
     public String getText(@PathVariable("metaverseUrlName") String metaverseUrlName,
                           @PathVariable("textPanelUrlName") String textPanelUrlName,
                           @PathVariable("textName") String textName) {
-        try {
-            File textDirectory = new File(METAVERSES_PATH + metaverseUrlName +
-                    SEPARATOR + TEXT_PANELS_PATH + textPanelUrlName + SEPARATOR + TEXT_PATH);
-            if(!textDirectory.exists()) {
-                return null;
-            }
 
-            Path textPath = Path.of(textDirectory + SEPARATOR + textName);
-            if(!Files.exists(textPath)) {
-                return null;
-            }
-
-            return Base64.getEncoder().encodeToString(Files.readAllBytes(textPath));
-
-        } catch (IOException e) {
-            return null;
-        }
+        return textPanelService.getTextFile(metaverseUrlName, textPanelUrlName, textName);
     }
 }
