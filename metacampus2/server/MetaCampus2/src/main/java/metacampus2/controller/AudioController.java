@@ -1,7 +1,6 @@
 package metacampus2.controller;
 
 import metacampus2.model.*;
-import metacampus2.service.IAudioPanelService;
 import metacampus2.service.IAudioService;
 import metacampus2.service.IImageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +28,11 @@ public class AudioController extends MainController {
 
     private IAudioService audioService;
     private IImageService imageService;
-    private IAudioPanelService audioPanelService;
 
     @Autowired
-    public AudioController(IAudioService audioService, IImageService imageService, IAudioPanelService audioPanelService) {
+    public AudioController(IAudioService audioService, IImageService imageService) {
         this.audioService = audioService;
         this.imageService = imageService;
-        this.audioPanelService = audioPanelService;
     }
 
     @GetMapping(CTRL_AUDIOS)

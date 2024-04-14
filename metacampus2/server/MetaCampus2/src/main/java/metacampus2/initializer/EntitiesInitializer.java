@@ -151,55 +151,5 @@ public class EntitiesInitializer implements CommandLineRunner {
             }
         }
     }
-
-    /*protected void createClassroom(Map<String, Object> c) {
-        String number = (String) c.get("number");
-        Map<String, Object> location = (Map<String, Object>) c.get("location");
-        int floorNumber = (int) location.get("floorNumber");
-        int xPosition = (int) location.get("xPosition");
-        int zPosition = (int) location.get("zPosition");
-        String metaverseName = (String) c.get("metaverse");
-        Metaverse metaverse = metaverseService.getMetaverse(metaverseName);
-
-        if (metaverse != null &&
-                classroomService.getClassroomFromMetaverse(number, metaverseName) == null) {
-            Classroom classroom = new Classroom();
-            classroom.setNumber(number);
-            classroom.setMetaverse(metaverse);
-
-            Coordinate l = new Coordinate();
-            l.setY(floorNumber);
-            l.setX(xPosition);
-            l.setZ(zPosition);
-            classroom.setCoordinate(l);
-
-            classroomService.addNewClassroom(classroom);
-        }
-    }*/
-
-    /*protected void createOffice(Map<String, Object> o) {
-        String number = (String) o.get("number");
-        Map<String, Object> location = (Map<String, Object>) o.get("location");
-        int floorNumber = (int) location.get("floorNumber");
-        int xPosition = (int) location.get("xPosition");
-        int zPosition = (int) location.get("zPosition");
-        String metaverseName = (String) o.get("metaverse");
-        Metaverse metaverse = metaverseService.getMetaverse(metaverseName);
-
-        if (metaverse != null &&
-                officeService.getOfficeFromMetaverse(number, metaverseName) == null) {
-            Office office = new Office();
-            office.setNumber(number);
-            office.setMetaverse(metaverse);
-
-            Coordinate l = new Coordinate();
-            l.setY(floorNumber);
-            l.setX(xPosition);
-            l.setZ(zPosition);
-            office.setCoordinate(l);
-
-            officeService.addNewOffice(office);
-        }
-    }*/
 }
 
