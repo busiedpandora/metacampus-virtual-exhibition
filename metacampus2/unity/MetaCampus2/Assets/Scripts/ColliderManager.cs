@@ -21,7 +21,6 @@ public class ColliderManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("On trigger enter");
         if (other.CompareTag("MainCamera"))
         {
             if(audioManager.GetAudioClipDuration() > 0f)
@@ -35,7 +34,6 @@ public class ColliderManager : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("On trigger exit");
         if (other.CompareTag("MainCamera"))
         {
             imageButtons.SetActive(false);

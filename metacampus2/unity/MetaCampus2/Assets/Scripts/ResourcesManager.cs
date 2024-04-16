@@ -44,9 +44,9 @@ public class ResourcesManager : MonoBehaviour
 
     private void Awake()
     {
-        //hostName = "10.21.56.224"; //eduroam hololens
+        hostName = "10.21.57.105"; //eduroam hololens
         //hostName = "10.21.57.147"; //eduroam android
-        hostName = "192.168.1.126"; //ssi
+        //hostName = "192.168.1.126"; //ssi
 
         httpRequest = GetComponent<HTTPRequest>();
     }
