@@ -5,18 +5,18 @@ import metacampus2.model.MenuCategory;
 import metacampus2.model.Metaverse;
 import metacampus2.service.IMetaverseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
+import java.util.List;
 
 @Controller
 @RequestMapping(MainController.CTRL_METAVERSES)
 public class MetaverseController extends MainController {
+    protected static final String CTRL_METAVERSES_LIST = "/metaversesList";
     private static final String VIEW_METAVERSES = "metaverses";
     private static final String VIEW_METAVERSE_FORM = "metaverse-form";
 
@@ -50,7 +50,7 @@ public class MetaverseController extends MainController {
 
     @PostMapping(CTRL_NEW)
     public String newMetaverse(Metaverse metaverse) {
-        if(metaverseService.getMetaverse(metaverse.getName()) == null) {
+        if(metaverseService.getMetaverseByName(metaverse.getName()) == null) {
             metaverseService.addNewMetaverse(metaverse);
 
             if(metaverseService.createDirectory(metaverse)) {
@@ -61,6 +61,17 @@ public class MetaverseController extends MainController {
         }
 
         return "redirect:" + CTRL_METAVERSES + CTRL_NEW + "?error";
+    }
+
+    @GetMapping(CTRL_METAVERSES_LIST)
+    public ResponseEntity<List<Metaverse>> metaversesList() {
+        return new ResponseEntity<>(metaverseService.getAllMetaverses(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{metaverseUrlName}")
+    public ResponseEntity<Metaverse> metaverse(@PathVariable("metaverseUrlName")
+                                                   String metaverseUrlName) {
+        return new ResponseEntity<>(metaverseService.getMetaverseByUrlName(metaverseUrlName), HttpStatus.OK);
     }
 }
 

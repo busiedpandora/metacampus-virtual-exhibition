@@ -4,7 +4,13 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MetaverseSelection.unity
+    guid: 705ed4335313e884b8c27b1e8f3dddc1
+  - enabled: 1
+    path: Assets/Scenes/Metaverse.unity
+    guid: 72ae601f29b878044941b59733aee60c
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 0ba6ec57b78df2746a8fb7153cf608a3, type: 2}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 0e9ce5b5cfdb8404a9b3ce0d5088cc23, type: 2}

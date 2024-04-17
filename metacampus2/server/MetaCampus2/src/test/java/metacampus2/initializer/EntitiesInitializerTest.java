@@ -35,7 +35,7 @@ class EntitiesInitializerTest extends AbstractTest {
 
     @Test
     void run() throws Exception {
-        Metaverse metaverse = metaverseService.getMetaverse("Campus Est SUPSI");
+        Metaverse metaverse = metaverseService.getMetaverseByName("Campus Est SUPSI");
         assertNotNull(metaverse);
         assertEquals("Campus Est SUPSI", metaverse.getName());
 

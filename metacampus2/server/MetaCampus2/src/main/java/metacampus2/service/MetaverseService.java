@@ -11,19 +11,19 @@ import java.util.List;
 
 @Service
 public class MetaverseService extends AbstractService implements IMetaverseService {
-    private IMetaverseRepository IMetaverseRepository;
+    private IMetaverseRepository metaverseRepository;
 
 
     @Autowired
-    public MetaverseService(IMetaverseRepository IMetaverseRepository) {
-        this.IMetaverseRepository = IMetaverseRepository;
+    public MetaverseService(IMetaverseRepository metaverseRepository) {
+        this.metaverseRepository = metaverseRepository;
     }
 
     @Override
     public void addNewMetaverse(Metaverse metaverse) {
         metaverse.setUrlName(getUrlName(metaverse.getName()));
 
-        IMetaverseRepository.save(metaverse);
+        metaverseRepository.save(metaverse);
     }
 
     @Override
@@ -34,13 +34,18 @@ public class MetaverseService extends AbstractService implements IMetaverseServi
     }
 
     @Override
-    public Metaverse getMetaverse(String name) {
-        return IMetaverseRepository.findByName(name);
+    public Metaverse getMetaverseByName(String name) {
+        return metaverseRepository.findByName(name);
+    }
+
+    @Override
+    public Metaverse getMetaverseByUrlName(String urlName) {
+        return metaverseRepository.findByUrlName(urlName);
     }
 
     @Override
     public List<Metaverse> getAllMetaverses() {
-        return IMetaverseRepository.findAll();
+        return metaverseRepository.findAll();
     }
 }
 

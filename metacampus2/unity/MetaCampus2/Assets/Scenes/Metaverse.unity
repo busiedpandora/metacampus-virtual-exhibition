@@ -476,7 +476,7 @@ Transform:
   m_GameObject: {fileID: 517953805}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.59893614, y: 0.66793275, z: 1.3542333}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -642,6 +642,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 928107513}
+  - component: {fileID: 928107514}
   - component: {fileID: 928107512}
   m_Layer: 0
   m_Name: CoordinatesSystem
@@ -679,6 +680,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &928107514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 928107511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20396ad2732cc4d4b8029a6d1db6df99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1009659311 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7139685226904977895, guid: c09856e5586c5a540b4a3036d9fad482, type: 3}
@@ -776,7 +789,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1205088370}
   m_Layer: 0
-  m_Name: Campus
+  m_Name: Metaverse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1026,7 +1039,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7158015198322463044, guid: c09856e5586c5a540b4a3036d9fad482, type: 3}
       propertyPath: m_Name
-      value: CampusManipolator
+      value: MetaverseManipolator
       objectReference: {fileID: 0}
     - target: {fileID: 7477035715767683917, guid: c09856e5586c5a540b4a3036d9fad482, type: 3}
       propertyPath: target

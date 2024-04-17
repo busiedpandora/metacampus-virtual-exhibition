@@ -24,6 +24,24 @@ public class Metaverse {
     @Column(nullable = false, unique = true)
     private String urlName;
 
+    @Column(nullable = false)
+    private int minXDimension;
+
+    @Column(nullable = false)
+    private int maxXDimension;
+
+    @Column(nullable = false)
+    private int minYDimension;
+
+    @Column(nullable = false)
+    private int maxYDimension;
+
+    @Column(nullable = false)
+    private int minZDimension;
+
+    @Column(nullable = false)
+    private int maxZDimension;
+
     @OneToMany(mappedBy = "metaverse")
     @JsonBackReference
     private List<Space> spaces;

@@ -40,7 +40,7 @@ class MetaverseServiceTest extends AbstractTest {
 
         when(metaverseRepository.findByName(Mockito.anyString())).thenReturn(metaverse);
 
-        assertEquals(metaverse,metaverseService.getMetaverse("Campus Est SUPSI"));
+        assertEquals(metaverse,metaverseService.getMetaverseByName("Campus Est SUPSI"));
 
     }
 

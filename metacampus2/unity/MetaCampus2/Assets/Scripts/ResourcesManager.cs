@@ -29,11 +29,7 @@ public class ResourcesManager : MonoBehaviour
 
     private const string metaverseUrlName = "campus-est-supsi";
 
-    private string hostName;
-    private const string port = "8080";
-    private const string spacesPath = "spaces";
     private string spacesServerUrl = "";
-    private const string resourcesPath = "resources";
     private string resourcesServerUrl = "";
 
     private HTTPRequest httpRequest;
@@ -44,10 +40,6 @@ public class ResourcesManager : MonoBehaviour
 
     private void Awake()
     {
-        hostName = "10.21.57.105"; //eduroam hololens
-        //hostName = "10.21.57.147"; //eduroam android
-        //hostName = "192.168.1.126"; //ssi
-
         httpRequest = GetComponent<HTTPRequest>();
     }
 
@@ -78,10 +70,7 @@ public class ResourcesManager : MonoBehaviour
 
     private IEnumerator InitTexts()
     {
-        string spacePath = "text-panels";
-        string resourcePath = "texts";
-
-        spacesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}";
+        spacesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{metaverseUrlName}/text-panels";
 
         string responseData = null;
 
@@ -110,7 +99,7 @@ public class ResourcesManager : MonoBehaviour
                         textPanelInstance.transform.parent = coordObject.transform;
 
                         var textName = textPanel.text.name;
-                        resourcesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}/{textPanel.urlName}/{resourcePath}/{textName}";
+                        resourcesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{metaverseUrlName}/text-panels/{textPanel.urlName}/texts/{textName}";
                         yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
                         responseData = httpRequest.ResponseData;
 
@@ -135,10 +124,7 @@ public class ResourcesManager : MonoBehaviour
 
     private IEnumerator InitImages()
     {
-        string spacePath = "display-panels";
-        string imagesPath = "images";
-        string audiosPath = "audios";
-        spacesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}";
+        spacesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{metaverseUrlName}/display-panels";
 
         string responseData = null;
 
@@ -192,7 +178,7 @@ public class ResourcesManager : MonoBehaviour
                             ImageSerializable image = displayPanel.images[i];
                             string imageName = image.name;
 
-                            resourcesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}/{displayPanel.urlName}/{imagesPath}/{imageName}";
+                            resourcesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{metaverseUrlName}/display-panels/{displayPanel.urlName}/images/{imageName}";
                             yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
                             responseData = httpRequest.ResponseData;
                             if (responseData != null)
@@ -209,7 +195,7 @@ public class ResourcesManager : MonoBehaviour
                                 AudioSerializable audio = image.audio;
                                 if(audio != null)
                                 {
-                                    resourcesServerUrl = $"http://{hostName}:{port}/{spacesPath}/{metaverseUrlName}/{spacePath}/{displayPanel.urlName}/{imagesPath}/{imageName}/{audiosPath}/{audio.name}";
+                                    resourcesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{metaverseUrlName}/display-panels/{displayPanel.urlName}/images/{imageName}/audios/{audio.name}";
                                     yield return StartCoroutine(httpRequest.GetAudioClipFromServer(resourcesServerUrl));
                                     AudioClip audioClip = httpRequest.AudioClip;
                                     if (audioClip != null)

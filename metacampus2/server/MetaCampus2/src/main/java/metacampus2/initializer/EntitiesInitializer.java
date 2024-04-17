@@ -1,7 +1,5 @@
 package metacampus2.initializer;
 
-import com.sun.tools.javac.Main;
-import metacampus2.controller.MainController;
 import metacampus2.model.*;
 import metacampus2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +7,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.yaml.snakeyaml.Yaml;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
@@ -68,10 +65,22 @@ public class EntitiesInitializer implements CommandLineRunner {
 
     protected void createMetaverse(Map<String, Object> m) {
         String name = (String) m.get("name");
+        int minXDimension = (int) m.get("minXDimension");
+        int maxXDimension = (int) m.get("maxXDimension");
+        int minYDimension = (int) m.get("minYDimension");
+        int maxYDimension = (int) m.get("maxYDimension");
+        int minZDimension = (int) m.get("minZDimension");
+        int maxZDimension = (int) m.get("maxZDimension");
 
-        if (metaverseService.getMetaverse(name) == null) {
+        if (metaverseService.getMetaverseByName(name) == null) {
             Metaverse metaverse = new Metaverse();
             metaverse.setName((String) m.get("name"));
+            metaverse.setMinXDimension(minXDimension);
+            metaverse.setMaxXDimension(maxXDimension);
+            metaverse.setMinYDimension(minYDimension);
+            metaverse.setMaxYDimension(maxYDimension);
+            metaverse.setMinZDimension(minZDimension);
+            metaverse.setMaxZDimension(maxZDimension);
 
             if(metaverseService.createDirectory(metaverse)) {
                 metaverseService.addNewMetaverse(metaverse);
@@ -86,7 +95,7 @@ public class EntitiesInitializer implements CommandLineRunner {
         int y = (int) coords.get("y");
         int z = (int) coords.get("z");
         String metaverseName = (String) tp.get("metaverse");
-        Metaverse metaverse = metaverseService.getMetaverse(metaverseName);
+        Metaverse metaverse = metaverseService.getMetaverseByName(metaverseName);
 
         if(metaverse != null && spaceService.getSpaceByNameAndMetaverse(name, metaverseName) == null
                 && spaceService.getSpaceByCoordinatesAndMetaverse(x, y, z, metaverseName) == null) {
@@ -115,7 +124,7 @@ public class EntitiesInitializer implements CommandLineRunner {
         int y = (int) coords.get("y");
         int z = (int) coords.get("z");
         String metaverseName = (String) tp.get("metaverse");
-        Metaverse metaverse = metaverseService.getMetaverse(metaverseName);
+        Metaverse metaverse = metaverseService.getMetaverseByName(metaverseName);
 
         if(metaverse != null && spaceService.getSpaceByNameAndMetaverse(name, metaverseName) == null
                 && spaceService.getSpaceByCoordinatesAndMetaverse(x, y, z, metaverseName) == null) {

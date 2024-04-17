@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class CampusManipolatorManager : MonoBehaviour
+public class MetaverseManipolatorManager : MonoBehaviour
 {
     [SerializeField] private GameObject manipolatorStateButton;
 

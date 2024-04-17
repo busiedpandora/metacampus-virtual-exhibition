@@ -4,12 +4,18 @@ project:
 startupEntities:
   - type: "metaverse"
     name: "Campus Est SUPSI"
+    minXDimension: -30
+    maxXDimension: 30
+    minYDimension: 0
+    maxYDimension: 5
+    minZDimension: -30
+    maxZDimension: 30
   - type: "textPanel"
     name: "text panel 1"
     coordinates:
       x: -2
       y: 0
-      z: 3
+      z: 2
     metaverse: "Campus Est SUPSI"
   - type: "displayPanel"
     name: "one display panel exhibition"
@@ -17,7 +23,7 @@ startupEntities:
     coordinates:
       x: 2
       y: 0
-      z: 3
+      z: 2
     metaverse: "Campus Est SUPSI"
   - type: "displayPanel"
     name: "four display panel straight exhibition 1"

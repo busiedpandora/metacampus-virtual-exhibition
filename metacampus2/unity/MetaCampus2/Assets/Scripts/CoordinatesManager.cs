@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,21 +10,23 @@ public class CoordinatesManager : MonoBehaviour
     [SerializeField] private GameObject coordinateObject;
     [SerializeField] private GameObject edgeObject;
 
-    private const string coordinatesPath = "/Campus/Coordinates";
-    private const string edgesPath = "/Campus/Edges";
+    private HTTPRequest httpRequest;
 
-    private const int minXCoordinate = -30;
-    private const int maxXCoordinate = 30;
+    private const string coordinatesPath = "/Metaverse/Coordinates";
+    private const string edgesPath = "/Metaverse/Edges";
 
-    private const int minYCoordinate = 0;
-    private const int maxYCoordinate = 5;
+    private int minXCoordinate = 0;
+    private int maxXCoordinate = 0;
 
-    private const int minZCoordinate = -30;
-    private const int maxZCoordinate = 30;
+    private int minYCoordinate = 0;
+    private int maxYCoordinate = 0;
 
-    private readonly Vector3 edge1Position = new Vector3(30, 0, 20);
-    private readonly Vector3 edge2Position = new Vector3(30, 0, -20);
-    private readonly Vector3 edge3Position = new Vector3(-30, 0, 20);
+    private int minZCoordinate = 0;
+    private int maxZCoordinate = 0;
+
+    private Vector3 edge1Position;
+    private Vector3 edge2Position;
+    private Vector3 edge3Position;
 
     //1° index: x position, 2° index: y position, 3° index: z position
     private GameObject[][][] coordinates;
@@ -30,22 +34,62 @@ public class CoordinatesManager : MonoBehaviour
     private GameObject resourcesInitializer;
 
 
+    private void Awake()
+    {
+        httpRequest = GetComponent<HTTPRequest>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        InitCoordinates();
-        InitEdges();
+        Debug.Log($"Loaded scene for {MetaverseSelectionManager.metaverseNameSelected} with URL {MetaverseSelectionManager.metaverseUrlNameSelected}");
 
-        resourcesInitializer = GameObject.Find("ResourcesInitializer");
-        ResourcesManager resourcesManager = resourcesInitializer.GetComponent<ResourcesManager>();
-        resourcesManager.StartInitResources();
+        try
+        {
+            StartCoroutine(SetUpMetaverse());
+        }
+        catch (Exception e)
+        {
+            DebugLog.instance.Log("Exception Occurred", e.Message);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private IEnumerator SetUpMetaverse()
+    {
+        string url = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.metaversesPath}/{MetaverseSelectionManager.metaverseUrlNameSelected}";
+
+        string responseData = null;
+        yield return StartCoroutine(httpRequest.GetDataFromServer(url, ""));
+        responseData = httpRequest.ResponseData;
+
+        if(responseData == null || responseData.Length == 0)
+        {
+            throw new Exception($"Metaverse with urlName {MetaverseSelectionManager.metaverseUrlNameSelected} not found");
+        }
+
+        Debug.Log($"Metaverse: {responseData}");
+
+        var metaverse = JsonConvert.DeserializeObject<MetaverseSerializable>(responseData);
+
+        minXCoordinate = metaverse.minXDimension;
+        maxXCoordinate = metaverse.maxXDimension;
+        minYCoordinate = metaverse.minYDimension;
+        maxYCoordinate = metaverse.maxYDimension;
+        minZCoordinate = metaverse.minZDimension;
+        maxZCoordinate = metaverse.maxZDimension;
+
+        InitCoordinates();
+        InitEdges();
+
+        resourcesInitializer = GameObject.Find("ResourcesInitializer");
+        ResourcesManager resourcesManager = resourcesInitializer.GetComponent<ResourcesManager>();
+        resourcesManager.StartInitResources();
     }
 
     private void InitCoordinates()
@@ -108,12 +152,15 @@ public class CoordinatesManager : MonoBehaviour
     {
         GameObject parentObject = GameObject.Find(edgesPath);
 
+        edge1Position = new Vector3(minXCoordinate, minYCoordinate, minZCoordinate);
         GameObject edge1Instance = Instantiate(edgeObject, edge1Position, Quaternion.identity);
         edge1Instance.transform.parent = parentObject.transform;
 
+        edge2Position = new Vector3(maxXCoordinate, minYCoordinate, maxZCoordinate);
         GameObject edge2Instance = Instantiate(edgeObject, edge2Position, Quaternion.identity);
         edge2Instance.transform.parent = parentObject.transform;
 
+        edge3Position = new Vector3(minXCoordinate, minYCoordinate, maxZCoordinate);
         GameObject edge3Instance = Instantiate(edgeObject, edge3Position, Quaternion.identity);
         edge3Instance.transform.parent = parentObject.transform;
     }

@@ -2518,7 +2518,7 @@ GameObject:
   - component: {fileID: 2414139630646266319}
   - component: {fileID: 7822871037087512683}
   m_Layer: 0
-  m_Name: CampusManipolator
+  m_Name: MetaverseManipolator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
