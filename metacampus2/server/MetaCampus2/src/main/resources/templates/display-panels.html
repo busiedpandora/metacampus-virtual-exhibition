@@ -17,11 +17,11 @@
 
                 <div class="table-container">
                     <a class="btn btn-outline-primary" role="button" th:href="@{/spaces/display-panels/new}">
-                        Create display panel
+                        Create display panel exhibition
                     </a>
 
                     <table class="table table-striped caption-top entities-table">
-                        <caption class="fs-5">Display panels:</caption>
+                        <caption class="fs-5">Display panel exhibitions:</caption>
                         <thead>
                         <tr>
                             <th scope="col" class="col-1">#</th>
@@ -29,7 +29,7 @@
                             <th scope="col">Type</th>
                             <th scope="col">Metaverse</th>
                             <th scope="col">Coordinates</th>
-                            <th scope="col">Image files</th>
+                            <th scope="col" class="col-3">Image files</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -44,8 +44,8 @@
                             <th>
                                 <span th:if="${displayPanel.images.isEmpty()}">-</span>
                                 <span th:each="image, imageIter : ${displayPanel.images}">
-                                    <span th:text="${image.name}"></span>
-                                    <span th:if="${!imageIter.last}">,</span>
+                                    <span th:text="${'panel ' + imageIter.count + ': ' + image.name}"></span>
+                                    <br>
                                 </span>
                             </th>
                         </tr>

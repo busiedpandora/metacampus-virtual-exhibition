@@ -3,7 +3,7 @@
       th:replace="~{master :: layout(~{::title},~{::main})}">
 <head>
     <meta charset="UTF-8">
-    <title>Display panel form</title>
+    <title>Display panel exhibition form</title>
 </head>
 <body>
 <main>
@@ -18,7 +18,7 @@
                 <div class="form-container">
                     <form th:href="@{/spaces/display-panels/new}" method="post">
                         <div class="mb-5">
-                            <span class="fs-4 text-body-secondary ">New display panel:</span>
+                            <span class="fs-4 text-body-secondary ">New display panel exhibition:</span>
                         </div>
 
                         <div class="row mb-3">
@@ -54,7 +54,7 @@
                         <div th:insert="coordinates-form"></div>
 
                         <div th:if="${error != null}" class="mb-3">
-                            <span class="error-message" th:text="${error}">Error occurred while creating a display panel</span>
+                            <span class="error-message" th:text="${error}">Error occurred while creating a display panel exhibition</span>
                         </div>
 
                         <div class="col-2 mt-5">
