@@ -28,7 +28,7 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">Metaverse</th>
                                 <th scope="col">Coordinates</th>
-                                <th scope="col">Text file</th>
+                                <th scope="col">Text</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -39,7 +39,7 @@
                                 <td th:text="'x: ' + ${textPanel.coordinates.x}
                                     + ', y: ' + ${textPanel.coordinates.y}
                                     + ', z: ' + ${textPanel.coordinates.z}"></td>
-                                <th th:text="${textPanel.text != null ? textPanel.text.fileName : '-'}"></th>
+                                <th th:text="${textPanel.text != null ? textPanel.text.title : '-'}"></th>
                             </tr>
                             </tbody>
                         </table>

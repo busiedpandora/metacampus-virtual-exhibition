@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class TextSerializable
 {
+    public string title;
     public string fileName;
 }

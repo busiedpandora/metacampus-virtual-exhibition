@@ -29,7 +29,7 @@
                             <th scope="col">Type</th>
                             <th scope="col">Metaverse</th>
                             <th scope="col">Coordinates</th>
-                            <th scope="col" class="col-3">Image files</th>
+                            <th scope="col" class="col-3">Images</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -44,7 +44,7 @@
                             <th>
                                 <span th:if="${displayPanel.images.isEmpty()}">-</span>
                                 <span th:each="image, imageIter : ${displayPanel.images}">
-                                    <span th:text="${'panel ' + imageIter.count + ': ' + image.fileName}"></span>
+                                    <span th:text="${'panel ' + imageIter.count + ': ' + image.title}"></span>
                                     <br>
                                 </span>
                             </th>

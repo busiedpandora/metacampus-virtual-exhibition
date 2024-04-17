@@ -25,15 +25,19 @@
                         <thead>
                         <tr>
                             <th scope="col" class="col-1">#</th>
+                            <th scope="col" class="col">Title</th>
                             <th scope="col" class="col">File</th>
                             <th scope="col" class="col">Image</th>
+                            <th scope="col" class="col">Last edit</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="audio, iterStat : ${audios}">
                             <th scope="row" th:text="${iterStat.count}"></th>
+                            <th th:text="${audio.title}"></th>
                             <th th:text="${audio.fileName}"></th>
-                            <th th:text="${audio.image.fileName}"></th>
+                            <th th:text="${audio.image.title}"></th>
+                            <th th:text="${#temporals.format(audio.lastEditDate, 'HH:mm dd-MM-yyyy')}"></th>
                         </tr>
                         </tbody>
                     </table>

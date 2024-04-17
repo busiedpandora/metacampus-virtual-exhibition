@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -26,6 +27,8 @@ public class TextService extends AbstractService implements ITextService {
 
     @Override
     public void addNewText(Text text) {
+        text.setLastEditDate(LocalDateTime.now());
+
         textRepository.save(text);
     }
 

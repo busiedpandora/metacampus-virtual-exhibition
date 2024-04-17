@@ -25,13 +25,17 @@
                         <thead>
                         <tr>
                             <th scope="col" class="col-1">#</th>
+                            <th scope="col" class="col">Title</th>
                             <th scope="col" class="col">File</th>
+                            <th scope="col" class="col">Last edit</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="image, iterStat : ${images}">
                             <th scope="row" th:text="${iterStat.count}"></th>
+                            <th th:text="${image.title}"></th>
                             <th th:text="${image.fileName}"></th>
+                            <th th:text="${#temporals.format(image.lastEditDate, 'HH:mm dd-MM-yyyy')}"></th>
                         </tr>
                         </tbody>
                     </table>
