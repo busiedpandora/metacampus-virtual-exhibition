@@ -27,8 +27,6 @@ public class ResourcesManager : MonoBehaviour
     [SerializeField] private GameObject sixDisplayPanelDiagonalExhibitionObject;
     [SerializeField] private GameObject sixDisplayPanelCircularExhibitionObject;
 
-    private const string metaverseUrlName = "campus-est-supsi";
-
     private string spacesServerUrl = "";
     private string resourcesServerUrl = "";
 
@@ -70,8 +68,8 @@ public class ResourcesManager : MonoBehaviour
 
     private IEnumerator InitTexts()
     {
-        spacesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{metaverseUrlName}/text-panels";
-
+        spacesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{MetaverseSelectionManager.metaverseUrlNameSelected}/text-panels";
+        
         string responseData = null;
 
         yield return StartCoroutine(httpRequest.GetDataFromServer(spacesServerUrl, ""));
@@ -99,7 +97,7 @@ public class ResourcesManager : MonoBehaviour
                         textPanelInstance.transform.parent = coordObject.transform;
 
                         var textName = textPanel.text.name;
-                        resourcesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{metaverseUrlName}/text-panels/{textPanel.urlName}/texts/{textName}";
+                        resourcesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{MetaverseSelectionManager.metaverseUrlNameSelected}/text-panels/{textPanel.urlName}/texts/{textName}";
                         yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
                         responseData = httpRequest.ResponseData;
 
@@ -124,7 +122,7 @@ public class ResourcesManager : MonoBehaviour
 
     private IEnumerator InitImages()
     {
-        spacesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{metaverseUrlName}/display-panels";
+        spacesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{MetaverseSelectionManager.metaverseUrlNameSelected}/display-panels";
 
         string responseData = null;
 
@@ -178,7 +176,7 @@ public class ResourcesManager : MonoBehaviour
                             ImageSerializable image = displayPanel.images[i];
                             string imageName = image.name;
 
-                            resourcesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{metaverseUrlName}/display-panels/{displayPanel.urlName}/images/{imageName}";
+                            resourcesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{MetaverseSelectionManager.metaverseUrlNameSelected}/display-panels/{displayPanel.urlName}/images/{imageName}";
                             yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
                             responseData = httpRequest.ResponseData;
                             if (responseData != null)
@@ -195,7 +193,7 @@ public class ResourcesManager : MonoBehaviour
                                 AudioSerializable audio = image.audio;
                                 if(audio != null)
                                 {
-                                    resourcesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{metaverseUrlName}/display-panels/{displayPanel.urlName}/images/{imageName}/audios/{audio.name}";
+                                    resourcesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{MetaverseSelectionManager.metaverseUrlNameSelected}/display-panels/{displayPanel.urlName}/images/{imageName}/audios/{audio.name}";
                                     yield return StartCoroutine(httpRequest.GetAudioClipFromServer(resourcesServerUrl));
                                     AudioClip audioClip = httpRequest.AudioClip;
                                     if (audioClip != null)
