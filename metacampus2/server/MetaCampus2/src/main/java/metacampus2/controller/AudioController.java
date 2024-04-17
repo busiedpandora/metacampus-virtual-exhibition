@@ -56,7 +56,8 @@ public class AudioController extends MainController {
             String audioName = audioFile.getOriginalFilename();
             for(DisplayPanel displayPanel : image.getDisplayPanels()) {
                 if(!audioService.createFile(audio, audioFile, image, displayPanel)) {
-                    return "redirect:" + CTRL_RESOURCES + CTRL_AUDIOS + CTRL_NEW + "?error";
+                    return "redirect:" + CTRL_RESOURCES + CTRL_AUDIOS + CTRL_NEW
+                            + "?error=error while copying audio file into resources folder";
                 }
             }
 
@@ -71,6 +72,6 @@ public class AudioController extends MainController {
             return "redirect:" + CTRL_RESOURCES + CTRL_AUDIOS;
         }
 
-        return "redirect:" + CTRL_RESOURCES + CTRL_AUDIOS + CTRL_NEW + "?error";
+        return "redirect:" + CTRL_RESOURCES + CTRL_AUDIOS + CTRL_NEW + "?error=audio file is null or empty";
     }
 }

@@ -42,7 +42,7 @@
                         </div>
 
                         <div th:if="${error != null}" class="mb-3">
-                            <span class="error-message">Error occurred while creating an audio</span>
+                            <span class="error-message" th:text="${error}">Error occurred while creating an audio</span>
                         </div>
 
                         <div class="col-2 mt-5">

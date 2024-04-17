@@ -73,10 +73,14 @@ public class TextPanelController extends MainController {
     public String newTextPanel(TextPanel textPanel) {
         Coordinate coordinates = textPanel.getCoordinates();
 
-        if(spaceService.getSpaceByNameAndMetaverse(textPanel.getName(), textPanel.getMetaverse().getName()) == null &&
-                spaceService.getSpaceByCoordinatesAndMetaverse(coordinates.getX(), coordinates.getY(),
-                coordinates.getZ(), textPanel.getMetaverse().getName()) == null) {
+        if(spaceService.getSpaceByCoordinatesAndMetaverse(coordinates.getX(), coordinates.getY(),
+                coordinates.getZ(), textPanel.getMetaverse().getName()) != null) {
+            return "redirect:" + CTRL_SPACES + CTRL_TEXT_PANELS + CTRL_NEW
+                    + "?error=a space with these coordinates already exists";
+        }
 
+        if(spaceService.getSpaceByNameAndMetaverse(textPanel.getName(),
+                textPanel.getMetaverse().getName()) == null) {
             if(textPanelService.createDirectory(textPanel)) {
                 textPanelService.addNewTextPanel(textPanel);
 
@@ -84,7 +88,8 @@ public class TextPanelController extends MainController {
             }
         }
 
-        return "redirect:" + CTRL_SPACES + CTRL_TEXT_PANELS + CTRL_NEW + "?error";
+        return "redirect:" + CTRL_SPACES + CTRL_TEXT_PANELS + CTRL_NEW
+                + "?error=a text panel with this name already exists";
     }
 
     @GetMapping("/{metaverseUrlName}" + CTRL_TEXT_PANELS + "/{textPanelUrlName}" + CTRL_TEXTS + "/{textName}")

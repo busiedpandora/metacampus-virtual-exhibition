@@ -70,9 +70,15 @@ public class DisplayPanelController extends MainController {
     public String newDisplayPanel(DisplayPanel displayPanel) {
         Coordinate coordinates = displayPanel.getCoordinates();
 
-        if (spaceService.getSpaceByNameAndMetaverse(displayPanel.getName(), displayPanel.getMetaverse().getName()) == null
-                && spaceService.getSpaceByCoordinatesAndMetaverse(coordinates.getX(), coordinates.getY(),
-                coordinates.getZ(), displayPanel.getMetaverse().getName()) == null) {
+        if(spaceService.getSpaceByCoordinatesAndMetaverse(coordinates.getX(), coordinates.getY(),
+                coordinates.getZ(), displayPanel.getMetaverse().getName()) != null) {
+
+            return "redirect:" + CTRL_SPACES + CTRL_DISPLAY_PANELS + CTRL_NEW
+                    + "?error=a space with these coordinates already exists";
+        }
+
+        if (spaceService.getSpaceByNameAndMetaverse(displayPanel.getName(),
+                displayPanel.getMetaverse().getName()) == null) {
 
             if(displayPanelService.createDirectory(displayPanel)) {
                 displayPanelService.addNewDisplayPanel(displayPanel);
@@ -81,7 +87,8 @@ public class DisplayPanelController extends MainController {
             }
         }
 
-        return "redirect:" + CTRL_SPACES + CTRL_DISPLAY_PANELS + CTRL_NEW + "?error";
+        return "redirect:" + CTRL_SPACES + CTRL_DISPLAY_PANELS + CTRL_NEW
+                + "?error=a display panel with this name already exists";
     }
 
     @GetMapping("/{metaverseUrlName}" + CTRL_DISPLAY_PANELS + "/{displayPanelUrlName}" + CTRL_IMAGES + "/{imageName}")

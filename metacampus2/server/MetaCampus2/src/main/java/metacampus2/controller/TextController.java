@@ -58,7 +58,8 @@ public class TextController extends MainController {
             String textFullName = textFile.getOriginalFilename();
             for(TextPanel textPanel : text.getTextPanels()) {
                 if(!textService.createFile(text, textFile, textPanel)) {
-                    return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS + CTRL_NEW + "?error";
+                    return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS + CTRL_NEW
+                            + "?error=error while copying text file into resources folder";
                 }
             }
 
@@ -68,6 +69,6 @@ public class TextController extends MainController {
             return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS;
         }
 
-        return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS + CTRL_NEW + "?error";
+        return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS + CTRL_NEW + "?error=text file is null or empty";
     }
 }

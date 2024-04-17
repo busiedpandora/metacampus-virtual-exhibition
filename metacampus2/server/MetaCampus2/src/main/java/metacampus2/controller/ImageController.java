@@ -61,7 +61,8 @@ public class ImageController extends MainController {
             String imageFullName = imageFile.getOriginalFilename();
             for (DisplayPanel displayPanel: image.getDisplayPanels()) {
                 if(!imageService.createFile(image, imageFile, displayPanel)) {
-                    return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW + "?error";
+                    return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW
+                            + "?error=error while copying image file into resources folder";
                 }
             }
 
@@ -72,6 +73,6 @@ public class ImageController extends MainController {
             return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES;
         }
 
-        return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW + "?error";
+        return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW + "?error=image file is null or empty";
     }
 }
