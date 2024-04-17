@@ -55,7 +55,7 @@ public class TextController extends MainController {
     @PostMapping(CTRL_TEXTS + CTRL_NEW)
     public String newText(Text text, @RequestParam(value = "textFile") MultipartFile textFile) {
         if(textFile != null && !textFile.isEmpty()) {
-            String textFullName = textFile.getOriginalFilename();
+            String textFileName = textFile.getOriginalFilename();
             for(TextPanel textPanel : text.getTextPanels()) {
                 if(!textService.createFile(text, textFile, textPanel)) {
                     return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS + CTRL_NEW
@@ -63,7 +63,7 @@ public class TextController extends MainController {
                 }
             }
 
-            text.setName(textFullName);
+            text.setFileName(textFileName);
             textService.addNewText(text);
 
             return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS;

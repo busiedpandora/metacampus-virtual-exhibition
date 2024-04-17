@@ -36,7 +36,7 @@ class DisplayPanelServiceTest  extends AbstractTest {
 
         DisplayPanel displayPanel = new DisplayPanel();
         Image image = new Image();
-        image.setName("picasso - 1");
+        image.setFileName("picasso - 1");
 
         displayPanelList.add(displayPanel);
         displayPanelList.add(new DisplayPanel());

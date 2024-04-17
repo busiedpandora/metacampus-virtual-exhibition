@@ -32,8 +32,8 @@
                         <tbody>
                         <tr th:each="audio, iterStat : ${audios}">
                             <th scope="row" th:text="${iterStat.count}"></th>
-                            <th th:text="${audio.name}"></th>
-                            <th th:text="${audio.image.name}"></th>
+                            <th th:text="${audio.fileName}"></th>
+                            <th th:text="${audio.image.fileName}"></th>
                         </tr>
                         </tbody>
                     </table>

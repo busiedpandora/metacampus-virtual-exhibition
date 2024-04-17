@@ -96,8 +96,8 @@ public class ResourcesManager : MonoBehaviour
                         var textPanelInstance = Instantiate(textPanelObject, position, Quaternion.identity);
                         textPanelInstance.transform.parent = coordObject.transform;
 
-                        var textName = textPanel.text.name;
-                        resourcesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{MetaverseSelectionManager.metaverseUrlNameSelected}/text-panels/{textPanel.urlName}/texts/{textName}";
+                        var textFileName = textPanel.text.fileName;
+                        resourcesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{MetaverseSelectionManager.metaverseUrlNameSelected}/text-panels/{textPanel.urlName}/texts/{textFileName}";
                         yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
                         responseData = httpRequest.ResponseData;
 
@@ -174,9 +174,9 @@ public class ResourcesManager : MonoBehaviour
                         for (int i = 0; i < imagesCount; i++)
                         {
                             ImageSerializable image = displayPanel.images[i];
-                            string imageName = image.name;
+                            string imageFileName = image.fileName;
 
-                            resourcesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{MetaverseSelectionManager.metaverseUrlNameSelected}/display-panels/{displayPanel.urlName}/images/{imageName}";
+                            resourcesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{MetaverseSelectionManager.metaverseUrlNameSelected}/display-panels/{displayPanel.urlName}/images/{imageFileName}";
                             yield return StartCoroutine(httpRequest.GetDataFromServer(resourcesServerUrl, ""));
                             responseData = httpRequest.ResponseData;
                             if (responseData != null)
@@ -193,7 +193,7 @@ public class ResourcesManager : MonoBehaviour
                                 AudioSerializable audio = image.audio;
                                 if(audio != null)
                                 {
-                                    resourcesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{MetaverseSelectionManager.metaverseUrlNameSelected}/display-panels/{displayPanel.urlName}/images/{imageName}/audios/{audio.name}";
+                                    resourcesServerUrl = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.spacesPath}/{MetaverseSelectionManager.metaverseUrlNameSelected}/display-panels/{displayPanel.urlName}/images/{imageFileName}/audios/{audio.fileName}";
                                     yield return StartCoroutine(httpRequest.GetAudioClipFromServer(resourcesServerUrl));
                                     AudioClip audioClip = httpRequest.AudioClip;
                                     if (audioClip != null)

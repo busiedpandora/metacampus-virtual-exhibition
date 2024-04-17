@@ -33,7 +33,7 @@ class ImageServiceTest extends AbstractTest {
         List<Image> imageList = new ArrayList<>();
 
         Image image = new Image();
-        image.setName("I3A.png");
+        image.setFileName("I3A.png");
 
         imageList.add(image);
         imageList.add(new Image());

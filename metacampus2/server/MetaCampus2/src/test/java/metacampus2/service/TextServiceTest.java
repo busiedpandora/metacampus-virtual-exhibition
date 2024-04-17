@@ -34,25 +34,25 @@ class TextServiceTest extends AbstractTest {
         List<Text> textList = new ArrayList<>();
 
         Text text = new Text();
-        text.setName("TEXT 1");
+        text.setFileName("TEXT 1");
 
         textList.add(new Text());
         textList.add(text);
 
         when(textRepository.findAll()).thenReturn(textList);
 
-        assertEquals(text.getName(), textService.getAllTexts().get(1).getName());
+        assertEquals(text.getFileName(), textService.getAllTexts().get(1).getFileName());
     }
 
     @Test
     void getTextbyName() {
 
         Text text = new Text();
-        text.setName("TEXT 1");
+        text.setFileName("TEXT 1");
 
-        when(textRepository.findByName(Mockito.anyString())).thenReturn(text);
+        when(textRepository.findByFileName(Mockito.anyString())).thenReturn(text);
 
-        assertEquals(text, textService.getTextbyName(text.getName()));
+        assertEquals(text, textService.getTextbyName(text.getFileName()));
 
     }
 }

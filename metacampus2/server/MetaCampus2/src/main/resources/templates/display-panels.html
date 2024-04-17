@@ -44,7 +44,7 @@
                             <th>
                                 <span th:if="${displayPanel.images.isEmpty()}">-</span>
                                 <span th:each="image, imageIter : ${displayPanel.images}">
-                                    <span th:text="${'panel ' + imageIter.count + ': ' + image.name}"></span>
+                                    <span th:text="${'panel ' + imageIter.count + ': ' + image.fileName}"></span>
                                     <br>
                                 </span>
                             </th>

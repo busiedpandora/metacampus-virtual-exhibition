@@ -31,7 +31,7 @@
                         <tbody>
                         <tr th:each="image, iterStat : ${images}">
                             <th scope="row" th:text="${iterStat.count}"></th>
-                            <th th:text="${image.name}"></th>
+                            <th th:text="${image.fileName}"></th>
                         </tr>
                         </tbody>
                     </table>

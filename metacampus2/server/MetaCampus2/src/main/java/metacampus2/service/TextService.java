@@ -58,6 +58,6 @@ public class TextService extends AbstractService implements ITextService {
 
     @Override
     public Text getTextbyName(String name) {
-        return textRepository.findByName(name);
+        return textRepository.findByFileName(name);
     }
 }

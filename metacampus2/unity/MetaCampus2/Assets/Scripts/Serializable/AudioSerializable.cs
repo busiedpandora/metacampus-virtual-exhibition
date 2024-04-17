@@ -4,7 +4,5 @@ using UnityEngine;
 
 public class AudioSerializable
 {
-
-    public string name;
-  
+    public string fileName;
 }

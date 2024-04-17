@@ -58,7 +58,7 @@ public class ImageController extends MainController {
     public String newImage(Image image, @RequestParam(value = "imageFile") MultipartFile imageFile,
                            @RequestParam(value = "imageIndexes") List<Integer> imageIndexes) {
         if(imageFile != null && !imageFile.isEmpty()) {
-            String imageFullName = imageFile.getOriginalFilename();
+            String imageFileName = imageFile.getOriginalFilename();
             for (DisplayPanel displayPanel: image.getDisplayPanels()) {
                 if(!imageService.createFile(image, imageFile, displayPanel)) {
                     return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW
@@ -66,7 +66,7 @@ public class ImageController extends MainController {
                 }
             }
 
-            image.setName(imageFullName);
+            image.setFileName(imageFileName);
             image.setImageIndexes(imageIndexes);
             imageService.addNewImage(image);
 

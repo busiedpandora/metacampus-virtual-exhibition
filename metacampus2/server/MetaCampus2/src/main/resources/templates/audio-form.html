@@ -35,7 +35,7 @@
                                 <select id="images" class="form-select" name="imageToAdd" size="3" required>
                                     <option th:each="image : ${images}"
                                             th:value="${image.id}"
-                                            th:text="${image.name}">
+                                            th:text="${image.fileName}">
                                     </option>
                                 </select>
                             </div>

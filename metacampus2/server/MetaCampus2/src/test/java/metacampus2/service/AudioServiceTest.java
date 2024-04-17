@@ -2,7 +2,7 @@ package metacampus2.service;
 
 import metacampus2.AbstractTest;
 import metacampus2.model.Audio;
-import metacampus2.repository.IAudiosRepository;
+import metacampus2.repository.IAudioRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 class AudioServiceTest extends AbstractTest {
 
     @Mock
-    private IAudiosRepository audiosRepository;
+    private IAudioRepository audiosRepository;
     private AudioService audioService;
 
     @BeforeEach
@@ -34,13 +34,13 @@ class AudioServiceTest extends AbstractTest {
         List<Audio> audioList = new ArrayList<>();
 
         Audio audio = new Audio();
-        audio.setName("registrazione A");
+        audio.setFileName("registrazione A");
         audioList.add(audio);
         audioList.add(new Audio());
 
         when(audiosRepository.findAll()).thenReturn(audioList);
 
-        assertEquals(audio.getName(), audioService.getAllAudios().get(0).getName());
+        assertEquals(audio.getFileName(), audioService.getAllAudios().get(0).getFileName());
     }
 
     @Test

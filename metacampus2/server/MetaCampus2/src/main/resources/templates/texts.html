@@ -31,7 +31,7 @@
                         <tbody>
                         <tr th:each="text, iterStat : ${texts}">
                             <th scope="row" th:text="${iterStat.count}"></th>
-                            <th th:text="${text.name}"></th>
+                            <th th:text="${text.fileName}"></th>
                         </tr>
                         </tbody>
                     </table>

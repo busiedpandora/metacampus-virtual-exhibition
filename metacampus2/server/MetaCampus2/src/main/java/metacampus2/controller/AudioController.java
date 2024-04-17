@@ -53,7 +53,7 @@ public class AudioController extends MainController {
     public String newAudio(Audio audio, @RequestParam("audioFile") MultipartFile audioFile,
                            @RequestParam(value = "imageToAdd") Image image) {
         if(audioFile != null && !audioFile.isEmpty()) {
-            String audioName = audioFile.getOriginalFilename();
+            String audioFileName = audioFile.getOriginalFilename();
             for(DisplayPanel displayPanel : image.getDisplayPanels()) {
                 if(!audioService.createFile(audio, audioFile, image, displayPanel)) {
                     return "redirect:" + CTRL_RESOURCES + CTRL_AUDIOS + CTRL_NEW
@@ -65,7 +65,7 @@ public class AudioController extends MainController {
                 audioService.removeAudio(image.getAudio());
             }
 
-            audio.setName(audioName);
+            audio.setFileName(audioFileName);
             audio.setImage(image);
             audioService.addNewAudio(audio);
 

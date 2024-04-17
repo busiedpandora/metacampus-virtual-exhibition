@@ -3,7 +3,7 @@ package metacampus2.service;
 import metacampus2.model.Audio;
 import metacampus2.model.DisplayPanel;
 import metacampus2.model.Image;
-import metacampus2.repository.IAudiosRepository;
+import metacampus2.repository.IAudioRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +19,10 @@ import java.util.List;
 @Service
 public class AudioService extends AbstractService implements IAudioService {
 
-    private IAudiosRepository audioRepository;
+    private IAudioRepository audioRepository;
 
     @Autowired
-    public AudioService(IAudiosRepository audioRepository) {
+    public AudioService(IAudioRepository audioRepository) {
         this.audioRepository = audioRepository;
     }
 
@@ -34,7 +34,7 @@ public class AudioService extends AbstractService implements IAudioService {
     @Override
     public boolean createFile(Audio audio, MultipartFile audioFile, Image image, DisplayPanel displayPanel) {
         String audioName = audioFile.getOriginalFilename();
-        String imageNameWithoutExtension = image.getName().substring(0, image.getName().lastIndexOf('.'));
+        String imageNameWithoutExtension = image.getFileName().substring(0, image.getFileName().lastIndexOf('.'));
         File imageDirectory = new File(METAVERSES_PATH + displayPanel.getMetaverse().getUrlName() +
                 SEPARATOR + DISPLAY_PANELS_PATH + displayPanel.getUrlName() + SEPARATOR
                 + IMAGES_PATH + imageNameWithoutExtension);
