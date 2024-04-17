@@ -31,13 +31,73 @@
 
                         <div class="row mb-3">
                             <label for="name" class="col-form-label col-2">Name</label>
-                            <div class="col">
+                            <div class="col-6">
                                 <input id="name" class="form-control" type="text" name="name" required>
                             </div>
                         </div>
 
+                        <div class="pt-3">
+                            <div class="mb-3">
+                                <span class="fs-5">Dimensions (in meters)</span>
+                            </div>
+
+                            <div class="d-flex">
+                                <div class="row mb-3">
+                                    <label for="minXDimension" class="col-form-label col">Minimum X coordinate</label>
+                                    <div class="col">
+                                        <input id="minXDimension" class="form-control" type="number" step="1"
+                                               name="minXDimension" required>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3 ms-5">
+                                    <label for="maxXDimension" class="col-form-label col">Maximum X coordinate</label>
+                                    <div class="col">
+                                        <input id="maxXDimension" class="form-control" type="number" step="1"
+                                               name="maxXDimension" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex">
+                                <div class="row mb-3">
+                                    <label for="minYDimension" class="col-form-label col">Minimum Y coordinate</label>
+                                    <div class="col">
+                                        <input id="minYDimension" class="form-control" type="number" step="1"
+                                               name="minYDimension" required>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3 ms-5">
+                                    <label for="maxYDimension" class="col-form-label col">Maximum Y coordinate</label>
+                                    <div class="col">
+                                        <input id="maxYDimension" class="form-control" type="number" step="1"
+                                               name="maxYDimension" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex">
+                                <div class="row mb-3">
+                                    <label for="minZDimension" class="col-form-label col">Minimum Z coordinate</label>
+                                    <div class="col">
+                                        <input id="minZDimension" class="form-control" type="number" step="1"
+                                               name="minZDimension" required>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3 ms-5">
+                                    <label for="maxZDimension" class="col-form-label col">Maximum Z coordinate</label>
+                                    <div class="col">
+                                        <input id="maxZDimension" class="form-control" type="number" step="1"
+                                               name="maxZDimension" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div th:if="${error != null}" class="mb-3">
-                            <span class="error-message">Error occurred while creating a metaverse</span>
+                            <span class="error-message" th:text="${error}">Error occurred while creating a metaverse</span>
                         </div>
 
                         <div class="col-2 mt-5">

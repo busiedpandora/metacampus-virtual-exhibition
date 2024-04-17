@@ -50,9 +50,15 @@ public class MetaverseController extends MainController {
 
     @PostMapping(CTRL_NEW)
     public String newMetaverse(Metaverse metaverse) {
-        if(metaverseService.getMetaverseByName(metaverse.getName()) == null) {
-            metaverseService.addNewMetaverse(metaverse);
+        if(metaverse.getMinXDimension() > metaverse.getMaxXDimension()
+            || metaverse.getMinYDimension() > metaverse.getMaxYDimension()
+            || metaverse.getMinZDimension() > metaverse.getMaxZDimension()) {
 
+            return "redirect:" + CTRL_METAVERSES + CTRL_NEW
+                    + "?error=minimum dimension cannot be greater than maximum dimension";
+        }
+
+        if(metaverseService.getMetaverseByName(metaverse.getName()) == null) {
             if(metaverseService.createDirectory(metaverse)) {
                 metaverseService.addNewMetaverse(metaverse);
 
@@ -60,7 +66,7 @@ public class MetaverseController extends MainController {
             }
         }
 
-        return "redirect:" + CTRL_METAVERSES + CTRL_NEW + "?error";
+        return "redirect:" + CTRL_METAVERSES + CTRL_NEW + "?error=a metaverse with this name already exists";
     }
 
     @GetMapping(CTRL_METAVERSES_LIST)

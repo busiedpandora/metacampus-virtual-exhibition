@@ -34,12 +34,33 @@
                         <tr>
                             <th scope="col" class="col-1">#</th>
                             <th scope="col">Name</th>
+                            <th scope="col">Dimensions (meters)</th>
+                            <th scope="col">Borders (meters)</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="metaverse, iterStat : ${metaverses}">
                             <th scope="row" th:text="${iterStat.count}"></th>
                             <th th:text="${metaverse.name}"></th>
+                            <th>
+                                <span th:text="'x: ' + ${metaverse.maxXDimension - metaverse.minXDimension}"></span>
+                                <br>
+                                <span th:text="'y: ' + ${metaverse.maxYDimension - metaverse.minYDimension}"></span>
+                                <br>
+                                <span th:text="'z: ' + ${metaverse.maxZDimension - metaverse.minZDimension}"></span>
+                            </th>
+                            <th>
+                                <span th:text="'x dimension: from ' + ${metaverse.minXDimension}
+                                    + ' to ' + ${metaverse.maxXDimension}">
+                                </span>
+                                <br>
+                                <span th:text="'y dimension: from ' + ${metaverse.minYDimension}
+                                    + ' to ' + ${metaverse.maxYDimension}">
+                                </span>                                <br>
+                                <span th:text="'z dimension: from ' + ${metaverse.minZDimension}
+                                    + ' to ' + ${metaverse.maxZDimension}">
+                                </span>
+                            </th>
                         </tr>
                         </tbody>
                     </table>
