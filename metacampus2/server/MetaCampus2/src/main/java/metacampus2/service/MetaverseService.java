@@ -34,6 +34,14 @@ public class MetaverseService extends AbstractService implements IMetaverseServi
     }
 
     @Override
+    public boolean renameDirectory(String oldName, Metaverse metaverse) {
+        File metaverseDirectory = new File(METAVERSES_PATH + getUrlName(oldName));
+        File metaverseRenamedDirectory = new File(METAVERSES_PATH + getUrlName(metaverse.getName()));
+
+        return metaverseDirectory.renameTo(metaverseRenamedDirectory);
+    }
+
+    @Override
     public Metaverse getMetaverseByName(String name) {
         return metaverseRepository.findByName(name);
     }
@@ -46,6 +54,11 @@ public class MetaverseService extends AbstractService implements IMetaverseServi
     @Override
     public List<Metaverse> getAllMetaverses() {
         return metaverseRepository.findAll();
+    }
+
+    @Override
+    public Metaverse getMetaverseById(Long id) {
+        return metaverseRepository.findById(id).orElse(null);
     }
 }
 

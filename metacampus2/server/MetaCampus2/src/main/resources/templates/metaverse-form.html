@@ -24,15 +24,16 @@
                 </div>
 
                 <div class="form-container">
-                    <form th:href="@{/metaverses/new}" method="post">
+                    <form th:href="@{/metaverses/new}" method="post" th:object="${metaverse}">
                         <div class="mb-5">
-                            <span class="fs-4 text-body-secondary ">New metaverse:</span>
+                            <span class="fs-4 text-body-secondary" th:text="${title}"></span>
                         </div>
 
                         <div class="row mb-3">
                             <label for="name" class="col-form-label col-2">Name</label>
                             <div class="col-6">
-                                <input id="name" class="form-control" type="text" name="name" required>
+                                <input id="name" class="form-control" type="text" name="name"
+                                       th:value="*{name}" required>
                             </div>
                         </div>
 
@@ -46,7 +47,7 @@
                                     <label for="minXDimension" class="col-form-label col">Minimum X coordinate</label>
                                     <div class="col">
                                         <input id="minXDimension" class="form-control" type="number" step="1"
-                                               name="minXDimension" required>
+                                               name="minXDimension" th:value="*{minXDimension}" required>
                                     </div>
                                 </div>
 
@@ -54,7 +55,7 @@
                                     <label for="maxXDimension" class="col-form-label col">Maximum X coordinate</label>
                                     <div class="col">
                                         <input id="maxXDimension" class="form-control" type="number" step="1"
-                                               name="maxXDimension" required>
+                                               name="maxXDimension" th:value="*{maxXDimension}" required>
                                     </div>
                                 </div>
                             </div>
@@ -64,7 +65,7 @@
                                     <label for="minYDimension" class="col-form-label col">Minimum Y coordinate</label>
                                     <div class="col">
                                         <input id="minYDimension" class="form-control" type="number" step="1"
-                                               name="minYDimension" required>
+                                               name="minYDimension" th:value="*{minYDimension}" required>
                                     </div>
                                 </div>
 
@@ -72,7 +73,7 @@
                                     <label for="maxYDimension" class="col-form-label col">Maximum Y coordinate</label>
                                     <div class="col">
                                         <input id="maxYDimension" class="form-control" type="number" step="1"
-                                               name="maxYDimension" required>
+                                               name="maxYDimension" th:value="*{maxYDimension}" required>
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +83,7 @@
                                     <label for="minZDimension" class="col-form-label col">Minimum Z coordinate</label>
                                     <div class="col">
                                         <input id="minZDimension" class="form-control" type="number" step="1"
-                                               name="minZDimension" required>
+                                               name="minZDimension" th:value="*{minZDimension}" required>
                                     </div>
                                 </div>
 
@@ -90,7 +91,7 @@
                                     <label for="maxZDimension" class="col-form-label col">Maximum Z coordinate</label>
                                     <div class="col">
                                         <input id="maxZDimension" class="form-control" type="number" step="1"
-                                               name="maxZDimension" required>
+                                               name="maxZDimension" th:value="*{maxZDimension}" required>
                                     </div>
                                 </div>
                             </div>

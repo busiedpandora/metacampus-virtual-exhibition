@@ -12,11 +12,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping(MainController.CTRL_METAVERSES)
 public class MetaverseController extends MainController {
     protected static final String CTRL_METAVERSES_LIST = "/metaversesList";
+    protected static final String MODEL_METAVERSE = "metaverse";
     private static final String VIEW_METAVERSES = "metaverses";
     private static final String VIEW_METAVERSE_FORM = "metaverse-form";
 
@@ -38,15 +40,36 @@ public class MetaverseController extends MainController {
     }
 
     @GetMapping( CTRL_NEW)
-    public String metaverseForm(Model model,
+    public String newMetaverseForm(Model model,
                                 @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.METAVERSES);
+
+        Metaverse metaverse = new Metaverse();
+        model.addAttribute(MODEL_METAVERSE, metaverse);
+
+        model.addAttribute(MODEL_TITLE, "New metaverse:");
+        model.addAttribute(MODEL_FORM_HREF, CTRL_METAVERSES + CTRL_NEW);
 
         model.addAttribute(MODEL_ERROR, error);
 
         return VIEW_METAVERSE_FORM;
     }
 
+    @GetMapping("/{id}" + CTRL_EDIT)
+    public String editMetaverseForm(Model model, @PathVariable("id") Long id,
+                                    @RequestParam(value = "error", required = false) String error) {
+        model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.METAVERSES);
+
+        Metaverse metaverse = metaverseService.getMetaverseById(id);
+        model.addAttribute(MODEL_METAVERSE, metaverse);
+
+        model.addAttribute(MODEL_TITLE, "Edit metaverse:");
+        model.addAttribute(MODEL_FORM_HREF, CTRL_METAVERSES + "/" + id + CTRL_EDIT);
+
+        model.addAttribute(MODEL_ERROR, error);
+
+        return VIEW_METAVERSE_FORM;
+    }
 
     @PostMapping(CTRL_NEW)
     public String newMetaverse(Metaverse metaverse) {
@@ -64,6 +87,35 @@ public class MetaverseController extends MainController {
 
                 return "redirect:" + CTRL_METAVERSES;
             }
+        }
+
+        return "redirect:" + CTRL_METAVERSES + CTRL_NEW + "?error=a metaverse with this name already exists";
+    }
+
+    @PostMapping("/{id}" + CTRL_EDIT)
+    public String editMetaverse(@PathVariable("id") Long id, Metaverse metaverse) {
+        if(metaverse.getMinXDimension() > metaverse.getMaxXDimension()
+                || metaverse.getMinYDimension() > metaverse.getMaxYDimension()
+                || metaverse.getMinZDimension() > metaverse.getMaxZDimension()) {
+
+            return "redirect:" + CTRL_METAVERSES + "/" + id + CTRL_EDIT
+                    + "?error=minimum dimension cannot be greater than maximum dimension";
+        }
+
+        Metaverse metaverseByName = metaverseService.getMetaverseByName(metaverse.getName());
+
+        if(metaverseByName == null) {
+            Metaverse metaverseById = metaverseService.getMetaverseById(id);
+            if(metaverseService.renameDirectory(metaverseById.getName(), metaverse)) {
+                metaverseService.addNewMetaverse(metaverse);
+
+                return "redirect:" + CTRL_METAVERSES;
+            }
+        }
+        else if(Objects.equals(metaverseByName.getId(), id)) {
+            metaverseService.addNewMetaverse(metaverse);
+
+            return "redirect:" + CTRL_METAVERSES;
         }
 
         return "redirect:" + CTRL_METAVERSES + CTRL_NEW + "?error=a metaverse with this name already exists";
