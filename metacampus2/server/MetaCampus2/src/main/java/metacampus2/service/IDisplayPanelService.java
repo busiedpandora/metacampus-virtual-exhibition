@@ -11,7 +11,8 @@ public interface IDisplayPanelService {
     List<DisplayPanel> getAllDisplayPanels();
     List<DisplayPanel> getAllDisplayPanelsFromMetaverse(String metaverseName);
     List<DisplayPanel> getAllDisplayPanelsFromMetaverseByUrlName(String metaverseUrlName);
-    String getImageFile(String metaverseUrlName, String displayPanelUrlName, String imageName);
-    byte[] getAudioFile(String metaverseUrlName, String displayPanelUrlName, String imageName, String audioName);
+    String getImageFile(String metaverseUrlName, String displayPanelUrlName, String imageTitle, String imageFileName);
+    byte[] getAudioFile(String metaverseUrlName, String displayPanelUrlName, String imageTitle, String audioTitle,
+                        String audioFileName);
     DisplayPanel getDisplayPanelById(Long id);
 }

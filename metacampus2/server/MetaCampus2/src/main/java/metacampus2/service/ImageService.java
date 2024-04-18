@@ -35,11 +35,10 @@ public class ImageService extends AbstractService implements IImageService {
     @Override
     public boolean createFile(Image image, MultipartFile imageFile, DisplayPanel displayPanel) {
         String imageFullName = imageFile.getOriginalFilename();
-        String imageNameWithoutExtension = imageFullName.substring(0, imageFullName.lastIndexOf('.'));
 
         File imageDirectory = new File(METAVERSES_PATH + displayPanel.getMetaverse().getUrlName() +
                 SEPARATOR + DISPLAY_PANELS_PATH + displayPanel.getUrlName() + SEPARATOR
-                + IMAGES_PATH + imageNameWithoutExtension);
+                + IMAGES_PATH + image.getTitle());
 
         if(!imageDirectory.exists()) {
             if(!imageDirectory.mkdirs()) {

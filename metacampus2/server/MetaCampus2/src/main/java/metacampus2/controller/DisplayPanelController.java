@@ -153,24 +153,27 @@ public class DisplayPanelController extends MainController {
                 + "?error=a display panel with this name already exists";
     }
 
-    @GetMapping("/{metaverseUrlName}" + CTRL_DISPLAY_PANELS + "/{displayPanelUrlName}" + CTRL_IMAGES + "/{imageName}")
+    @GetMapping("/{metaverseUrlName}" + CTRL_DISPLAY_PANELS + "/{displayPanelUrlName}"
+            + CTRL_IMAGES + "/{imageTitle}" + "/{imageFileName}")
     @ResponseBody
     public String getImage(@PathVariable("metaverseUrlName") String metaverseUrlName,
                            @PathVariable("displayPanelUrlName") String displayPanelUrlName,
-                           @PathVariable("imageName") String imageName) {
+                           @PathVariable("imageTitle") String imageTitle,
+                           @PathVariable("imageFileName") String imageFileName) {
 
-        return displayPanelService.getImageFile(metaverseUrlName, displayPanelUrlName, imageName);
+        return displayPanelService.getImageFile(metaverseUrlName, displayPanelUrlName, imageTitle, imageFileName);
     }
 
     @GetMapping("/{metaverseUrlName}" + CTRL_DISPLAY_PANELS + "/{displayPanelUrlName}"
-            + CTRL_IMAGES + "/{imageName}" + CTRL_AUDIOS + "/{audioName}")
+            + CTRL_IMAGES + "/{imageTitle}" + CTRL_AUDIOS + "/{audioTitle}" + "/{audioFileName}")
     public ResponseEntity<byte[]> getAudio(@PathVariable("metaverseUrlName") String metaverseUrlName,
                                            @PathVariable("displayPanelUrlName") String displayPanelUrlName,
-                                           @PathVariable("imageName") String imageName,
-                                           @PathVariable("audioName") String audioName) {
+                                           @PathVariable("imageTitle") String imageTitle,
+                                           @PathVariable("audioTitle") String audioTitle,
+                                           @PathVariable("audioFileName") String audioFileName) {
 
         byte[] audioData = displayPanelService.getAudioFile(metaverseUrlName, displayPanelUrlName,
-                imageName, audioName);
+                imageTitle, audioTitle, audioFileName);
 
         if(audioData != null) {
             return ResponseEntity.ok()

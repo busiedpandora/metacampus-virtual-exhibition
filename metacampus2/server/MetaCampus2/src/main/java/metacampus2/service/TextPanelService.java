@@ -68,15 +68,15 @@ public class TextPanelService extends AbstractService implements ITextPanelServi
     }
 
     @Override
-    public String getTextFile(String metaverseUrlName, String textPanelUrlName, String textName) {
+    public String getTextFile(String metaverseUrlName, String textPanelUrlName, String textTitle, String textFileName) {
         try {
             File textDirectory = new File(METAVERSES_PATH + metaverseUrlName +
-                    SEPARATOR + TEXT_PANELS_PATH + textPanelUrlName + SEPARATOR + TEXT_PATH);
+                    SEPARATOR + TEXT_PANELS_PATH + textPanelUrlName + SEPARATOR + TEXT_PATH + textTitle);
             if(!textDirectory.exists()) {
                 return null;
             }
 
-            Path textPath = Path.of(textDirectory + SEPARATOR + textName);
+            Path textPath = Path.of(textDirectory + SEPARATOR + textFileName);
             if(!Files.exists(textPath)) {
                 return null;
             }

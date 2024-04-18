@@ -37,16 +37,15 @@ public class AudioService extends AbstractService implements IAudioService {
     @Override
     public boolean createFile(Audio audio, MultipartFile audioFile, Image image, DisplayPanel displayPanel) {
         String audioName = audioFile.getOriginalFilename();
-        String imageNameWithoutExtension = image.getFileName().substring(0, image.getFileName().lastIndexOf('.'));
         File imageDirectory = new File(METAVERSES_PATH + displayPanel.getMetaverse().getUrlName() +
                 SEPARATOR + DISPLAY_PANELS_PATH + displayPanel.getUrlName() + SEPARATOR
-                + IMAGES_PATH + imageNameWithoutExtension);
+                + IMAGES_PATH + image.getTitle());
 
         if(!imageDirectory.exists()) {
             return false;
         }
 
-        File audioDirectory = new File(imageDirectory.getPath() + SEPARATOR + AUDIO_PATH);
+        File audioDirectory = new File(imageDirectory.getPath() + SEPARATOR + AUDIO_PATH + audio.getTitle());
 
         if(!audioDirectory.exists()) {
             if(!audioDirectory.mkdirs()) {

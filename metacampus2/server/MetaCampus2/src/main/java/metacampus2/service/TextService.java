@@ -35,7 +35,7 @@ public class TextService extends AbstractService implements ITextService {
     @Override
     public boolean createFile(Text text, MultipartFile textFile, TextPanel textPanel) {
         File textDirectory = new File(METAVERSES_PATH + textPanel.getMetaverse().getUrlName() +
-                SEPARATOR + TEXT_PANELS_PATH + textPanel.getUrlName() + SEPARATOR + TEXT_PATH);
+                SEPARATOR + TEXT_PANELS_PATH + textPanel.getUrlName() + SEPARATOR + TEXT_PATH + text.getTitle());
 
         if(!textDirectory.exists()) {
             if(!textDirectory.mkdirs()) {

@@ -149,12 +149,14 @@ public class TextPanelController extends MainController {
                 + "?error=a text panel with this name already exists";
     }
 
-    @GetMapping("/{metaverseUrlName}" + CTRL_TEXT_PANELS + "/{textPanelUrlName}" + CTRL_TEXTS + "/{textName}")
+    @GetMapping("/{metaverseUrlName}" + CTRL_TEXT_PANELS + "/{textPanelUrlName}"
+            + CTRL_TEXTS + "/{textTitle}" + "/{textFileName}")
     @ResponseBody
     public String getText(@PathVariable("metaverseUrlName") String metaverseUrlName,
                           @PathVariable("textPanelUrlName") String textPanelUrlName,
-                          @PathVariable("textName") String textName) {
+                          @PathVariable("textTitle") String textTitle,
+                          @PathVariable("textFileName") String textName) {
 
-        return textPanelService.getTextFile(metaverseUrlName, textPanelUrlName, textName);
+        return textPanelService.getTextFile(metaverseUrlName, textPanelUrlName, textTitle, textName);
     }
 }

@@ -75,17 +75,18 @@ public class DisplayPanelService extends AbstractService implements IDisplayPane
     }
 
     @Override
-    public String getImageFile(String metaverseUrlName, String displayPanelUrlName, String imageName) {
+    public String getImageFile(String metaverseUrlName, String displayPanelUrlName, String imageTitle,
+                               String imageFileName) {
         try {
-            String imageNameWithoutExtension = imageName.substring(0, imageName.lastIndexOf('.'));
+            //String imageNameWithoutExtension = imageFileName.substring(0, imageFileName.lastIndexOf('.'));
             File imagesDirectory = new File(METAVERSES_PATH + metaverseUrlName +
                     SEPARATOR + DISPLAY_PANELS_PATH + displayPanelUrlName + SEPARATOR +
-                    IMAGES_PATH + imageNameWithoutExtension);
+                    IMAGES_PATH + imageTitle);
             if (!imagesDirectory.exists()) {
                 return null;
             }
 
-            Path imagePath = Path.of(imagesDirectory.getPath() + SEPARATOR + imageName);
+            Path imagePath = Path.of(imagesDirectory.getPath() + SEPARATOR + imageFileName);
             if (!Files.exists(imagePath)) {
                 return null;
             }
@@ -98,19 +99,18 @@ public class DisplayPanelService extends AbstractService implements IDisplayPane
     }
 
     @Override
-    public byte[] getAudioFile(String metaverseUrlName, String displayPanelUrlName, String imageName,
-                               String audioName) {
+    public byte[] getAudioFile(String metaverseUrlName, String displayPanelUrlName, String imageTitle,
+                               String audioTitle, String audioFileName) {
 
         try {
-            String imageNameWithoutExtension = imageName.substring(0, imageName.lastIndexOf('.'));
             File audioDirectory = new File(METAVERSES_PATH + metaverseUrlName +
                     SEPARATOR + DISPLAY_PANELS_PATH + displayPanelUrlName + SEPARATOR + IMAGES_PATH +
-                    imageNameWithoutExtension + SEPARATOR + AUDIO_PATH);
+                    imageTitle + SEPARATOR + AUDIO_PATH + audioTitle);
             if (!audioDirectory.exists()) {
                 return null;
             }
 
-            Path audioPath = Path.of(audioDirectory.getPath() + SEPARATOR + audioName);
+            Path audioPath = Path.of(audioDirectory.getPath() + SEPARATOR + audioFileName);
 
             if (!Files.exists(audioPath)) {
                 return null;

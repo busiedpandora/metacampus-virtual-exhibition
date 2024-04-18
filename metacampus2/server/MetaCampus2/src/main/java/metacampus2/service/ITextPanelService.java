@@ -11,6 +11,6 @@ public interface ITextPanelService {
     List<TextPanel> getAllTextPanels();
     List<TextPanel> getAllTextPanelsFromMetaverse(String metaverseName);
     List<TextPanel> getAllTextPanelsFromMetaverseByUrlName(String metaverseUrlName);
-    String getTextFile(String metaverseUrlName, String textPanelUrlName, String textName);
+    String getTextFile(String metaverseUrlName, String textPanelUrlName, String textTitle, String textFileName);
     TextPanel getTextPanelById(Long id);
 }
