@@ -52,7 +52,13 @@
                                     <option th:each="metaverse : ${metaverses}"
                                             th:value="${metaverse.id}" th:text="${metaverse.name}"
                                             th:selected="${displayPanel.metaverse != null
-                                            && metaverse.id == displayPanel.metaverse.id}">
+                                            && metaverse.id == displayPanel.metaverse.id}"
+                                            th:attr="minXDimension=${metaverse.minXDimension},
+                                                minYDimension=${metaverse.minYDimension},
+                                                minZDimension=${metaverse.minZDimension},
+                                                maxXDimension=${metaverse.maxXDimension},
+                                                maxYDimension=${metaverse.maxYDimension},
+                                                maxZDimension=${metaverse.maxZDimension}">
                                     </option>
                                 </select>
                             </div>
@@ -101,6 +107,27 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('metaverse').addEventListener('change', function() {
+            let select = this;
+            let selectedOptionIndex = select.selectedIndex;
+            let selectedOption = select.options[selectedOptionIndex];
+
+            let xInput = document.getElementById('x');
+            let yInput = document.getElementById('y');
+            let zInput = document.getElementById('z');
+
+            xInput.setAttribute('min', selectedOption.getAttribute('minXDimension'));
+            xInput.setAttribute('max', selectedOption.getAttribute('maxXDimension'));
+            yInput.setAttribute('min', selectedOption.getAttribute('minYDimension'));
+            yInput.setAttribute('max', selectedOption.getAttribute('maxYDimension'));
+            zInput.setAttribute('min', selectedOption.getAttribute('minZDimension'));
+            zInput.setAttribute('max', selectedOption.getAttribute('maxZDimension'));
+        })
+
+        document.getElementById('metaverse').dispatchEvent(new Event('change'));
+    </script>
 </main>
 </body>
 </html>
