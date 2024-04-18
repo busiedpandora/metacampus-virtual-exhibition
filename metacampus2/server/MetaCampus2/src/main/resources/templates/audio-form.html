@@ -38,12 +38,12 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="images" class="col-form-label col-2">Images</label>
+                            <label for="images" class="col-form-label col-2">Image</label>
                             <div class="col-6">
                                 <select id="images" class="form-select" name="imageToAdd" size="3" required>
                                     <option th:each="image : ${images}"
                                             th:value="${image.id}"
-                                            th:text="${image.fileName}">
+                                            th:text="${image.title} + ' - ' + ${image.fileName}">
                                     </option>
                                 </select>
                             </div>
