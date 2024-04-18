@@ -29,6 +29,7 @@
                                 <th scope="col">Metaverse</th>
                                 <th scope="col">Coordinates</th>
                                 <th scope="col">Text</th>
+                                <th scope="col">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -40,6 +41,12 @@
                                     + ', y: ' + ${textPanel.coordinates.y}
                                     + ', z: ' + ${textPanel.coordinates.z}"></td>
                                 <th th:text="${textPanel.text != null ? textPanel.text.title : '-'}"></th>
+                                <th>
+                                    <a role="button" class="btn btn-link"
+                                            th:href="@{'/spaces/text-panels/' + ${textPanel.id} + '/edit'}">
+                                        <img th:src="@{/icons/gear.svg}" alt="edit icon" class="me-1">Edit
+                                    </a>
+                                </th>
                             </tr>
                             </tbody>
                         </table>

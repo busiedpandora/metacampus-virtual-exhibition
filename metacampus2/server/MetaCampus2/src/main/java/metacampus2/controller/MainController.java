@@ -18,11 +18,14 @@ public class MainController {
 
 
     protected static final String CTRL_NEW = "/new";
+    protected static final String CTRL_EDIT = "/edit";
     protected static final String MODEL_MENU_CATEGORY = "menuCategory";
     protected static final String MODEL_MENU_ENTITY = "menuEntity";
     protected static final String MODEL_PROJECT_NAME = "projectName";
     protected static final String MODEL_ERROR = "error";
     protected static final String MODEL_METAVERSES = "metaverses";
+    protected static final String MODEL_TITLE = "title";
+    protected static final String MODEL_FORM_HREF = "href";
 
 
     @Value("${project.name}")

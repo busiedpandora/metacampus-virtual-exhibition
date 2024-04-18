@@ -30,6 +30,7 @@
                             <th scope="col">Metaverse</th>
                             <th scope="col">Coordinates</th>
                             <th scope="col" class="col-3">Images</th>
+                            <th scope="col">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -47,6 +48,12 @@
                                     <span th:text="${'panel ' + imageIter.count + ': ' + image.title}"></span>
                                     <br>
                                 </span>
+                            </th>
+                            <th>
+                                <a role="button" class="btn btn-link"
+                                   th:href="@{'/spaces/display-panels/' + ${displayPanel.id} + '/edit'}">
+                                    <img th:src="@{/icons/gear.svg}" alt="edit icon" class="me-1">Edit
+                                </a>
                             </th>
                         </tr>
                         </tbody>

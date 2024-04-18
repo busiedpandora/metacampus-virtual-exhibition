@@ -16,15 +16,18 @@
                 <div th:insert="spaces-navigation-menu"></div>
 
                 <div class="form-container">
-                    <form th:href="@{/spaces/display-panels/new}" method="post">
+                    <form th:href="@{${href}}" method="post" th:object="${displayPanel}">
                         <div class="mb-5">
-                            <span class="fs-4 text-body-secondary ">New display panel exhibition:</span>
+                            <span class="fs-4 text-body-secondary " th:text="${title}"></span>
                         </div>
+
+                        <input type="hidden" th:field="*{images}">
 
                         <div class="row mb-3">
                             <label for="name" class="col-form-label col-2">Name</label>
                             <div class="col-4">
-                                <input id="name" class="form-control" type="text" name="name" required>
+                                <input id="name" class="form-control" type="text" name="name"
+                                       th:value="*{name}" required>
                             </div>
                         </div>
 
@@ -34,7 +37,9 @@
                                 <select id="type" class="form-select" name="type" required>
                                     <option th:each="type : ${displayPanelTypes}"
                                             th:value="${type}"
-                                            th:text="${type + ' - ' + type.description}">
+                                            th:text="${type + ' - ' + type.description}"
+                                            th:selected="${displayPanel.type != null
+                                            && type == displayPanel.type}">
                                     </option>
                                 </select>
                             </div>
@@ -45,20 +50,51 @@
                             <div class="col-4">
                                 <select id="metaverse" class="form-select" name="metaverse" required>
                                     <option th:each="metaverse : ${metaverses}"
-                                            th:value="${metaverse.id}" th:text="${metaverse.name}">
+                                            th:value="${metaverse.id}" th:text="${metaverse.name}"
+                                            th:selected="${displayPanel.metaverse != null
+                                            && metaverse.id == displayPanel.metaverse.id}">
                                     </option>
                                 </select>
                             </div>
                         </div>
 
-                        <div th:insert="coordinates-form"></div>
+                        <div class="border border-top my-4"></div>
+
+                        <div class="mb-3">
+                            <span class="fs-5">Coordinates (in meters)</span>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="x" class="col-form-label col-2">x</label>
+                            <div class="col-2">
+                                <input id="x" class="form-control" type="number" step="1"
+                                       name="coordinates.x"
+                                       th:value="*{coordinates.x}" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="y" class="col-form-label col-2">y</label>
+                            <div class="col-2">
+                                <input id="y" class="form-control" type="number" step="1"
+                                       name="coordinates.y" th:value="*{coordinates.y}" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="z" class="col-form-label col-2">z</label>
+                            <div class="col-2">
+                                <input id="z" class="form-control" type="number" step="1"
+                                       name="coordinates.z" th:value="*{coordinates.z}" required>
+                            </div>
+                        </div>
 
                         <div th:if="${error != null}" class="mb-3">
                             <span class="error-message" th:text="${error}">Error occurred while creating a display panel exhibition</span>
                         </div>
 
                         <div class="col-2 mt-5">
-                            <button type="submit" class="btn btn-primary">Create</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
                 </div>

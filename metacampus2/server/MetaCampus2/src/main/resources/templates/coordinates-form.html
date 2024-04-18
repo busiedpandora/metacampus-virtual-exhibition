@@ -8,7 +8,7 @@
     <label for="x" class="col-form-label col-2">x</label>
     <div class="col-2">
         <input id="x" class="form-control" type="number" step="1"
-               name="coordinates.x" required>
+               name="coordinates.x" th:value="*{coordinates.x}" required>
     </div>
 </div>
 
@@ -16,7 +16,7 @@
     <label for="y" class="col-form-label col-2">y</label>
     <div class="col-2">
         <input id="y" class="form-control" type="number" step="1"
-               name="coordinates.y" required>
+               name="coordinates.y" th:value="*{coordinates.y}" required>
     </div>
 </div>
 
@@ -24,6 +24,6 @@
     <label for="z" class="col-form-label col-2">z</label>
     <div class="col-2">
         <input id="z" class="form-control" type="number" step="1"
-               name="coordinates.z" required>
+               name="coordinates.z" th:value="*{coordinates.z}" required>
     </div>
 </div>

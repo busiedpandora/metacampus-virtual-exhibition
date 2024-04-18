@@ -25,4 +25,9 @@ public class SpaceService implements ISpaceService {
     public Space getSpaceByNameAndMetaverse(String name, String metaverseName) {
         return spaceRepository.findByNameAndMetaverseName(name, metaverseName);
     }
+
+    @Override
+    public Space getSpaceById(Long id) {
+        return spaceRepository.findById(id).orElse(null);
+    }
 }

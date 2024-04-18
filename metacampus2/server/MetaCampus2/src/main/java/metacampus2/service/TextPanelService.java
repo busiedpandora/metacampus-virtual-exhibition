@@ -39,6 +39,20 @@ public class TextPanelService extends AbstractService implements ITextPanelServi
     }
 
     @Override
+    public boolean renameDirectory(String oldName, TextPanel textPanel) {
+        File textPanelDirectory = new File(METAVERSES_PATH
+                + textPanel.getMetaverse().getUrlName() + SEPARATOR
+                + TEXT_PANELS_PATH + getUrlName(oldName));
+
+        File textPanelRenamedDirectory = new File(METAVERSES_PATH
+                + textPanel.getMetaverse().getUrlName() + SEPARATOR
+                + TEXT_PANELS_PATH + getUrlName(textPanel.getName()));
+
+        return textPanelDirectory.renameTo(textPanelRenamedDirectory);
+    }
+
+
+    @Override
     public List<TextPanel> getAllTextPanels() {
         return textPanelRepository.findAll();
     }
@@ -72,5 +86,10 @@ public class TextPanelService extends AbstractService implements ITextPanelServi
         } catch (IOException e) {
             return null;
         }
+    }
+
+    @Override
+    public TextPanel getTextPanelById(Long id) {
+        return textPanelRepository.findById(id).orElse(null);
     }
 }

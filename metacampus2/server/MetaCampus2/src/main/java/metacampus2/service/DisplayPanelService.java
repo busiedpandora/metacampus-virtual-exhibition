@@ -1,6 +1,7 @@
 package metacampus2.service;
 
 import metacampus2.model.DisplayPanel;
+import metacampus2.model.Image;
 import metacampus2.repository.IDisplayPanelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,12 @@ public class DisplayPanelService extends AbstractService implements IDisplayPane
     public void addNewDisplayPanel(DisplayPanel displayPanel) {
         displayPanel.setUrlName(getUrlName(displayPanel.getName()));
 
+        List<Image> images = displayPanel.getImages();
+        if(images != null && images.size() > displayPanel.getType().getCapacity()) {
+            images = images.subList(0, displayPanel.getType().getCapacity());
+            displayPanel.setImages(images);
+        }
+
         displayPanelRepository.save(displayPanel);
     }
 
@@ -37,6 +44,19 @@ public class DisplayPanelService extends AbstractService implements IDisplayPane
                 + DISPLAY_PANELS_PATH + getUrlName(displayPanel.getName()));
 
         return !displayPanelDirectory.exists() && displayPanelDirectory.mkdirs();
+    }
+
+    @Override
+    public boolean renameDirectory(String oldName, DisplayPanel displayPanel) {
+        File displayPanelDirectory = new File(METAVERSES_PATH
+                + displayPanel.getMetaverse().getUrlName() + SEPARATOR
+                + DISPLAY_PANELS_PATH + getUrlName(oldName));
+
+        File displayPanelRenamedDirectory = new File(METAVERSES_PATH
+                + displayPanel.getMetaverse().getUrlName() + SEPARATOR
+                + DISPLAY_PANELS_PATH + getUrlName(displayPanel.getName()));
+
+        return displayPanelDirectory.renameTo(displayPanelRenamedDirectory);
     }
 
     @Override
@@ -101,5 +121,10 @@ public class DisplayPanelService extends AbstractService implements IDisplayPane
         } catch (IOException e) {
             return null;
         }
+    }
+
+    @Override
+    public DisplayPanel getDisplayPanelById(Long id) {
+        return displayPanelRepository.findById(id).orElse(null);
     }
 }

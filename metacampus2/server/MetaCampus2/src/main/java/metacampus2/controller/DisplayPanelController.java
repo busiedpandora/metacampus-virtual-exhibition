@@ -12,11 +12,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping(MainController.CTRL_SPACES)
 public class DisplayPanelController extends MainController {
     protected static final String MODEL_DISPLAY_PANELS = "displayPanels";
+    protected static final String MODEL_DISPLAY_PANEL = "displayPanel";
     protected static final String MODEL_DISPLAY_PANEL_TYPES = "displayPanelTypes";
     protected static final String VIEW_DISPLAY_PANELS = "display-panels";
     protected static final String VIEW_DISPLAY_PANEL_FORM = "display-panel-form";
@@ -45,13 +47,40 @@ public class DisplayPanelController extends MainController {
     }
 
     @GetMapping(CTRL_DISPLAY_PANELS + CTRL_NEW)
-    public String displayPanelForm(Model model,
+    public String newDisplayPanelForm(Model model,
                                    @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.SPACES);
         model.addAttribute(MODEL_MENU_ENTITY, MenuEntity.DISPLAY_PANEL);
 
+        DisplayPanel displayPanel = new DisplayPanel();
+        displayPanel.setCoordinates(new Coordinate());
+        model.addAttribute(MODEL_DISPLAY_PANEL, displayPanel);
+
+        model.addAttribute(MODEL_TITLE, "New display panel:");
+        model.addAttribute(MODEL_FORM_HREF, "/spaces/display-panels/new");
+
         model.addAttribute(MODEL_DISPLAY_PANEL_TYPES, DisplayPanelType.getAllDisplayPanelTypes());
         model.addAttribute(MODEL_METAVERSES, metaverseService.getAllMetaverses());
+
+        model.addAttribute(MODEL_ERROR, error);
+
+        return VIEW_DISPLAY_PANEL_FORM;
+    }
+
+    @GetMapping(CTRL_DISPLAY_PANELS + "/{id}" + CTRL_EDIT)
+    public String editDisplayPanelForm(Model model, @PathVariable("id") Long id,
+                                      @RequestParam(value = "error", required = false) String error) {
+        model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.SPACES);
+        model.addAttribute(MODEL_MENU_ENTITY, MenuEntity.DISPLAY_PANEL);
+
+        DisplayPanel displayPanel = displayPanelService.getDisplayPanelById(id);
+        model.addAttribute(MODEL_DISPLAY_PANEL, displayPanel);
+
+        model.addAttribute(MODEL_TITLE, "Edit display panel:");
+        model.addAttribute(MODEL_FORM_HREF, "/spaces/display-panels/" + id + "/edit" );
+
+        model.addAttribute(MODEL_DISPLAY_PANEL_TYPES, DisplayPanelType.getAllDisplayPanelTypes());
+        model.addAttribute(MODEL_METAVERSES, List.of(displayPanel.getMetaverse()));
 
         model.addAttribute(MODEL_ERROR, error);
 
@@ -86,6 +115,39 @@ public class DisplayPanelController extends MainController {
                 return "redirect:" + CTRL_SPACES + CTRL_DISPLAY_PANELS;
             }
         }
+
+        return "redirect:" + CTRL_SPACES + CTRL_DISPLAY_PANELS + CTRL_NEW
+                + "?error=a display panel with this name already exists";
+    }
+
+    @PostMapping(CTRL_DISPLAY_PANELS + "/{id}" + CTRL_EDIT)
+    public String editDisplayPanel(@PathVariable("id") Long id, DisplayPanel displayPanel) {
+        Coordinate coordinates = displayPanel.getCoordinates();
+
+        Space spaceByCoords = spaceService.getSpaceByCoordinatesAndMetaverse(coordinates.getX(), coordinates.getY(),
+                coordinates.getZ(), displayPanel.getMetaverse().getName());
+        if(spaceByCoords != null && !Objects.equals(spaceByCoords.getId(), id)) {
+            return "redirect:" + CTRL_SPACES + CTRL_DISPLAY_PANELS + "/" + id + CTRL_EDIT
+                    + "?error=a space with these coordinates already exists";
+        }
+
+        Space spaceByName = spaceService.getSpaceByNameAndMetaverse(displayPanel.getName(),
+                displayPanel.getMetaverse().getName());
+        if(spaceByName == null) {
+            Space spaceById = spaceService.getSpaceById(id);
+
+            if(displayPanelService.renameDirectory(spaceById.getName(), displayPanel)) {
+                displayPanelService.addNewDisplayPanel(displayPanel);
+
+                return "redirect:" + CTRL_SPACES + CTRL_DISPLAY_PANELS;
+            }
+        }
+        else if(Objects.equals(spaceByName.getId(), id)) {
+            displayPanelService.addNewDisplayPanel(displayPanel);
+
+            return "redirect:" + CTRL_SPACES + CTRL_DISPLAY_PANELS;
+        }
+
 
         return "redirect:" + CTRL_SPACES + CTRL_DISPLAY_PANELS + CTRL_NEW
                 + "?error=a display panel with this name already exists";
