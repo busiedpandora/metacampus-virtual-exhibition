@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
     <title>Navigation menu</title>
@@ -63,8 +63,15 @@
                         Metaverses
                     </a>
                 </div>
+                <div class="col">
+                    <a th:href="@{/users/logout}"
+                    >Logout</a>
+                </div>
             </div>
         </div>
     </nav>
+<main>
+    <div class="col" th:replace="master :: aside"></div>
+</main>
 </body>
 </html>

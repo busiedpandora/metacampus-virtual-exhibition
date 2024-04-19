@@ -35,7 +35,7 @@ public class EntitiesInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Yaml yaml = new Yaml();
+        /*Yaml yaml = new Yaml();
 
         InputStream inputStream = this.getClass()
                 .getClassLoader()
@@ -63,7 +63,7 @@ public class EntitiesInitializer implements CommandLineRunner {
                     }
                 }
             }
-        }
+        }*/
     }
 
     protected void createMetaverse(Map<String, Object> m) {

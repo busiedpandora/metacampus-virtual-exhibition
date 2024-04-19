@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{master :: layout(~{::title},~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrazione</title>
+</head>
+
+<body>
+<main>
+    <section>
+        <h1 class="d-flex justify-content-center">Register a new account</h1>
+        <div th:switch="${users}" class="d-flex justify-content-center">
+            <div th:case="*">
+                <form action="#" th:action="@{/users/register}" th:object="${user}" method="post"
+                      name="formRegistration">
+                    <div class="col-12">
+                        <label>First Name
+                            <div class="input-group">
+                                <input type="text" class="form-control" th:field="*{nome}" id="firstName"
+                                       placeholder="First Name">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="col-12">
+                        <label>Last Name
+                            <div class="input-group">
+                                <input type="text" class="form-control" th:field="*{cognome}" id="lastName"
+                                       placeholder="Last Name">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="col-12">
+                        <label>Username
+                            <div class="input-group">
+                                <input type="text" class="form-control" th:field="*{nomeUtente}" id="username"
+                                       placeholder="Username">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Role</label>
+                        <select class="form-control" th:field="*{role}">
+                            <option th:each="role : ${T(metacampus2.model.Role).values()}"
+                                    th:text="${role}" th:value="${role}">
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Type is required.
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label>Password
+                            <div class="input-group">
+                                <input type="password" class="form-control" th:field="*{password}" id="password"
+                                       placeholder="Password">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="col-12">
+                        <label>Confirm password
+                            <div class="input-group">
+                                <input type="password" id="confirmPassword" class="form-control"
+                                       placeholder="Confirm Password">
+                            </div>
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <script th:src="@{/js/formRegister.js}"></script>
+</main>
+</body>
+</html>

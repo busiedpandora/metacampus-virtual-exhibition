@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       th:replace="~{master :: layout(~{::title},~{::main})}">
 <head>
     <meta charset="UTF-8">
@@ -16,9 +16,11 @@
                 <div th:insert="resources-navigation-menu"></div>
 
                 <div class="table-container">
-                    <a class="btn btn-outline-primary" role="button" th:href="@{/resources/audios/new}">
-                        Create audio
-                    </a>
+                    <div sec:authorize="hasRole('Role.CREATOR.name()')">
+                        <a class="btn btn-outline-primary" role="button" th:href="@{/resources/audios/new}">
+                            Create audio
+                        </a>
+                    </div>
 
                     <table class="table table-striped caption-top entities-table">
                         <caption class="fs-5">Audios:</caption>

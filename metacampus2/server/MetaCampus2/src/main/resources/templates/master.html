@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       th:fragment="layout(documentTitle, content)">
 
 <head>
@@ -20,6 +20,15 @@
 
 <main th:replace="${content}">
     <h1>Main content</h1>
+    <aside th:fragment="aside">
+        <h2>User</h2>
+        <div sec:authorize="isAuthenticated()">
+            <div sec:authentication="name"></div>
+        </div>
+        <div sec:authorize="!isAuthenticated()">
+            <p>No users are logged in..</p>
+        </div>
+    </aside>
 </main>
 
 <!--<footer th:replace="footer :: footer">

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{master :: layout(~{::title},~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<main>
+    <section>
+        <h1 class="d-flex justify-content-center" >Login</h1>
+        <div class="d-flex justify-content-center">
+            <form method="post" class="row g-3 needs-validation" novalidate>
+                <div class="col-12">
+                    <label>Username</label>
+                    <div class="input-group has-validation">
+                        <input type="text" name="username" class="form-control" placeholder="Username" required>
+                        <div class="invalid-feedback">
+                            Username is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <label>Password</label>
+                    <div class="input-group has-validation">
+                        <input type="password" name="password" class="form-control" placeholder="Password" required>
+                        <div class="invalid-feedback">
+                            Password is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="row-2">
+                    <button type="submit" value="Submit" class="btn btn-secondary">
+                    <a th:href="@{/spaces/display-panels}">Login</a>
+                    </button>
+                    <button type="submit" value="Submit" class="btn btn-secondary">
+                        <a th:href="@{/users/register}">Register</a>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+</body>
+</html>

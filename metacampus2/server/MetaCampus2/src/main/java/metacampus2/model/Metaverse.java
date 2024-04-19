@@ -2,6 +2,7 @@ package metacampus2.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,4 +28,11 @@ public class Metaverse {
     @OneToMany(mappedBy = "metaverse")
     @JsonBackReference
     private List<Space> spaces;
+
+    @ManyToMany
+    @JoinTable(name = "metaverses_users",
+            joinColumns = @JoinColumn(name = "metaverse_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JsonManagedReference
+    private List<User> users;
 }
