@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping(MainController.CTRL_RESOURCES)
 public class TextController extends MainController {
     protected static final String MODEL_TEXTS = "texts";
+    protected static final String MODEL_TEXT = "text";
     protected static final String VIEW_TEXTS = "texts";
     protected static final String VIEW_TEXT_FORM = "text-form";
 
@@ -45,6 +46,9 @@ public class TextController extends MainController {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.RESOURCES);
         model.addAttribute(MODEL_MENU_ENTITY, MenuEntity.TEXT);
 
+        Text text = new Text();
+        model.addAttribute(MODEL_TEXT, text);
+
         model.addAttribute(TextPanelController.MODEL_TEXT_PANELS, textPanelService.getAllTextPanels());
 
         model.addAttribute(MODEL_ERROR, error);
@@ -55,6 +59,11 @@ public class TextController extends MainController {
     @PostMapping(CTRL_TEXTS + CTRL_NEW)
     public String newText(Text text, @RequestParam(value = "textFile") MultipartFile textFile) {
         if(textFile != null && !textFile.isEmpty()) {
+            if(textService.getTextByTitle(text.getTitle()) != null) {
+                return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS + CTRL_NEW
+                        + "?error=a text with this title already exists";
+            }
+
             String textFileName = textFile.getOriginalFilename();
             for(TextPanel textPanel : text.getTextPanels()) {
                 if(!textService.createFile(text, textFile, textPanel)) {

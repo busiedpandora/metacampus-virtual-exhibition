@@ -11,4 +11,5 @@ public interface IAudioService {
     boolean createFile(Audio audio, MultipartFile audioFile, Image image, DisplayPanel displayPanel);
     List<Audio> getAllAudios();
     void removeAudio(Audio audio);
+    Audio getAudioByTitle(String title);
 }

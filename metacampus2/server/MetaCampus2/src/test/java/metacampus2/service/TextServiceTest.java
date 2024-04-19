@@ -52,7 +52,7 @@ class TextServiceTest extends AbstractTest {
 
         when(textRepository.findByFileName(Mockito.anyString())).thenReturn(text);
 
-        assertEquals(text, textService.getTextbyName(text.getFileName()));
+        assertEquals(text, textService.getTextByFileName(text.getFileName()));
 
     }
 }

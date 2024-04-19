@@ -16,7 +16,7 @@
                 <div th:insert="resources-navigation-menu"></div>
 
                 <div class="form-container">
-                    <form th:href="@{/resources/texts/new}" method="post" enctype="multipart/form-data">
+                    <form th:href="@{/resources/texts/new}" method="post" enctype="multipart/form-data" th:object="${text}">
                         <div class="mb-5">
                             <span class="fs-4 text-body-secondary ">New text:</span>
                         </div>
@@ -25,7 +25,7 @@
                             <label for="title" class="col-form-label col-2">Title</label>
                             <div class="col-6">
                                 <input id="title" class="form-control" type="text" name="title" autocomplete="off"
-                                       required>
+                                       th:value="*{title}" required>
                             </div>
                         </div>
 
@@ -43,7 +43,9 @@
                                 <select id="textPanels" class="form-select" name="textPanels" multiple size="3" required>
                                     <option th:each="textPanel : ${textPanels}"
                                             th:value="${textPanel.id}"
-                                            th:text="${textPanel.name + ' - ' + textPanel.metaverse.name}">
+                                            th:text="${textPanel.name + ' - ' + textPanel.metaverse.name}"
+                                            th:selected="${text.textPanels != null
+                                            && text.textPanels.contains(textPanel)}">
                                     </option>
                                 </select>
                             </div>

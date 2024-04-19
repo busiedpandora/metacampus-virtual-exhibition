@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IAudioRepository extends JpaRepository<Audio, Long> {
+    Audio findByTitle(String title);
 }

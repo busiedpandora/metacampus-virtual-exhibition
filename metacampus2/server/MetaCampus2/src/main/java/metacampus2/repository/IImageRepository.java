@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IImageRepository extends JpaRepository<Image, Long> {
-
+    Image findByTitle(String title);
 }

@@ -60,7 +60,12 @@ public class TextService extends AbstractService implements ITextService {
     }
 
     @Override
-    public Text getTextbyName(String name) {
-        return textRepository.findByFileName(name);
+    public Text getTextByTitle(String title) {
+        return textRepository.findByTitle(title);
+    }
+
+    @Override
+    public Text getTextByFileName(String fileName) {
+        return textRepository.findByFileName(fileName);
     }
 }

@@ -10,4 +10,5 @@ public interface IImageService {
     void addNewImage(Image image);
     boolean createFile(Image image, MultipartFile imageFile, DisplayPanel displayPanel);
     List<Image> getAllImages();
+    Image getImageByTitle(String title);
 }

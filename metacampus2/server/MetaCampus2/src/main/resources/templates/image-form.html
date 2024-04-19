@@ -16,7 +16,7 @@
                 <div th:insert="resources-navigation-menu"></div>
 
                 <div class="form-container">
-                    <form th:href="@{/resources/images/new}" method="post" enctype="multipart/form-data">
+                    <form th:href="@{/resources/images/new}" method="post" enctype="multipart/form-data" th:object="${image}">
                         <div class="mb-5">
                             <span class="fs-4 text-body-secondary ">New image:</span>
                         </div>
@@ -25,7 +25,7 @@
                             <label for="title" class="col-form-label col-2">Title</label>
                             <div class="col-6">
                                 <input id="title" class="form-control" type="text" name="title" autocomplete="off"
-                                       required>
+                                       th:value="*{title}" required>
                             </div>
                         </div>
 
@@ -48,7 +48,9 @@
                                                 th:if="${i < displayPanel.type.capacity}"
                                                 th:text="'panel ' + ${(i / 2) + 1} + ' - ' + ${i % 2 == 0 ? 'front' : 'back'}"
                                                 th:value="${displayPanel.id}"
-                                                th:attr="imageIndex=${i}">
+                                                th:attr="imageIndex=${i}"
+                                                th:selected="${image.displayPanels != null
+                                                && image.displayPanels.contains(displayPanel)}">
                                         </option>
                                     </optgroup>
                                 </select>

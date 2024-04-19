@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ITextRepository extends JpaRepository<Text, Long> {
+    Text findByTitle(String title);
     Text findByFileName(String fileName);
 }

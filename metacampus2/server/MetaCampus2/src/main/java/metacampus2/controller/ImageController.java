@@ -18,6 +18,7 @@ import java.util.List;
 @RequestMapping(MainController.CTRL_RESOURCES)
 public class ImageController extends MainController {
     protected static final String MODEL_IMAGES = "images";
+    protected static final String MODEL_IMAGE = "image";
     protected static final String VIEW_IMAGES = "images";
     protected static final String VIEW_IMAGE_FORM = "image-form";
 
@@ -47,6 +48,9 @@ public class ImageController extends MainController {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.RESOURCES);
         model.addAttribute(MODEL_MENU_ENTITY, MenuEntity.IMAGE);
 
+        Image image = new Image();
+        model.addAttribute(MODEL_IMAGE, image);
+
         model.addAttribute(DisplayPanelController.MODEL_DISPLAY_PANELS, displayPanelService.getAllDisplayPanels());
 
         model.addAttribute(MODEL_ERROR, error);
@@ -58,6 +62,10 @@ public class ImageController extends MainController {
     public String newImage(Image image, @RequestParam(value = "imageFile") MultipartFile imageFile,
                            @RequestParam(value = "imageIndexes") List<Integer> imageIndexes) {
         if(imageFile != null && !imageFile.isEmpty()) {
+            if(imageService.getImageByTitle(image.getTitle()) != null) {
+                return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW + "?error=an image with this title already exists";
+            }
+
             String imageFileName = imageFile.getOriginalFilename();
             for (DisplayPanel displayPanel: image.getDisplayPanels()) {
                 if(!imageService.createFile(image, imageFile, displayPanel)) {

@@ -61,4 +61,9 @@ public class ImageService extends AbstractService implements IImageService {
     public List<Image> getAllImages() {
         return imageRepository.findAll();
     }
+
+    @Override
+    public Image getImageByTitle(String title) {
+        return imageRepository.findByTitle(title);
+    }
 }

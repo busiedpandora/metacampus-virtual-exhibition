@@ -10,5 +10,6 @@ public interface ITextService {
     void addNewText(Text text);
     boolean createFile(Text text, MultipartFile textFile, TextPanel textPanel);
     List<Text> getAllTexts();
-    Text getTextbyName(String name);
+    Text getTextByTitle(String title);
+    Text getTextByFileName(String fileName);
 }

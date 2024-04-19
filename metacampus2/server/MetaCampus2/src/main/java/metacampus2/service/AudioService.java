@@ -73,4 +73,9 @@ public class AudioService extends AbstractService implements IAudioService {
     public void removeAudio(Audio audio) {
         audioRepository.delete(audio);
     }
+
+    @Override
+    public Audio getAudioByTitle(String title) {
+        return audioRepository.findByTitle(title);
+    }
 }
