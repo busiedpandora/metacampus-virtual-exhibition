@@ -9,7 +9,9 @@ import java.util.List;
 public interface IAudioService {
     void addNewAudio(Audio audio);
     boolean createFile(Audio audio, MultipartFile audioFile, Image image, DisplayPanel displayPanel);
+    boolean renameFile(String oldName, Audio audio, Image image, DisplayPanel displayPanel);
     List<Audio> getAllAudios();
     void removeAudio(Audio audio);
     Audio getAudioByTitle(String title);
+    Audio getAudioById(Long id);
 }

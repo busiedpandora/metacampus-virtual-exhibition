@@ -65,6 +65,21 @@ public class AudioService extends AbstractService implements IAudioService {
     }
 
     @Override
+    public boolean renameFile(String oldName, Audio audio, Image image, DisplayPanel displayPanel) {
+        File audioDirectory = new File(METAVERSES_PATH
+                + displayPanel.getMetaverse().getUrlName() + SEPARATOR
+                + DISPLAY_PANELS_PATH + displayPanel.getUrlName() + SEPARATOR + IMAGES_PATH + image.getTitle()
+                + SEPARATOR + AUDIO_PATH + oldName);
+
+        File audioRenamedDirectory = new File(METAVERSES_PATH
+                + displayPanel.getMetaverse().getUrlName() + SEPARATOR
+                + DISPLAY_PANELS_PATH + displayPanel.getUrlName() + SEPARATOR + IMAGES_PATH + image.getTitle()
+                + SEPARATOR + AUDIO_PATH + audio.getTitle());
+
+        return audioDirectory.renameTo(audioRenamedDirectory);
+    }
+
+    @Override
     public List<Audio> getAllAudios() {
         return audioRepository.findAll();
     }
@@ -77,5 +92,10 @@ public class AudioService extends AbstractService implements IAudioService {
     @Override
     public Audio getAudioByTitle(String title) {
         return audioRepository.findByTitle(title);
+    }
+
+    @Override
+    public Audio getAudioById(Long id) {
+        return audioRepository.findById(id).orElse(null);
     }
 }

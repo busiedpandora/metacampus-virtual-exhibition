@@ -26,6 +26,7 @@ public class MainController {
     protected static final String MODEL_METAVERSES = "metaverses";
     protected static final String MODEL_TITLE = "title";
     protected static final String MODEL_FORM_HREF = "href";
+    protected static final String MODEL_ON_EDIT = "onEdit";
 
 
     @Value("${project.name}")

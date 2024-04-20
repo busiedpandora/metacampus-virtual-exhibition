@@ -58,6 +58,19 @@ public class ImageService extends AbstractService implements IImageService {
     }
 
     @Override
+    public boolean renameFile(String oldName, Image image, DisplayPanel displayPanel) {
+        File imageDirectory = new File(METAVERSES_PATH
+                + displayPanel.getMetaverse().getUrlName() + SEPARATOR
+                + DISPLAY_PANELS_PATH + displayPanel.getUrlName() + SEPARATOR + IMAGES_PATH + oldName);
+
+        File imageRenamedDirectory = new File(METAVERSES_PATH
+                + displayPanel.getMetaverse().getUrlName() + SEPARATOR
+                + DISPLAY_PANELS_PATH + displayPanel.getUrlName() + SEPARATOR + IMAGES_PATH + image.getTitle());
+
+        return imageDirectory.renameTo(imageRenamedDirectory);
+    }
+
+    @Override
     public List<Image> getAllImages() {
         return imageRepository.findAll();
     }
@@ -65,5 +78,10 @@ public class ImageService extends AbstractService implements IImageService {
     @Override
     public Image getImageByTitle(String title) {
         return imageRepository.findByTitle(title);
+    }
+
+    @Override
+    public Image getImageById(Long id) {
+        return imageRepository.findById(id).orElse(null);
     }
 }

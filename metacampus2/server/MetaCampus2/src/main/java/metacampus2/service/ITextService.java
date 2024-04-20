@@ -9,7 +9,9 @@ import java.util.List;
 public interface ITextService {
     void addNewText(Text text);
     boolean createFile(Text text, MultipartFile textFile, TextPanel textPanel);
+    boolean renameFile(String oldName, Text text, TextPanel textPanel);
     List<Text> getAllTexts();
     Text getTextByTitle(String title);
     Text getTextByFileName(String fileName);
+    Text getTextById(Long id);
 }

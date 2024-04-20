@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping(MainController.CTRL_RESOURCES)
@@ -43,15 +44,37 @@ public class ImageController extends MainController {
     }
 
     @GetMapping(CTRL_IMAGES + CTRL_NEW)
-    public String imageForm(Model model,
+    public String newImageForm(Model model,
                            @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.RESOURCES);
         model.addAttribute(MODEL_MENU_ENTITY, MenuEntity.IMAGE);
 
         Image image = new Image();
         model.addAttribute(MODEL_IMAGE, image);
+        model.addAttribute(MODEL_ON_EDIT, false);
+
+        model.addAttribute(MODEL_TITLE, "New image:");
+        model.addAttribute(MODEL_FORM_HREF, "/resources/images/new");
 
         model.addAttribute(DisplayPanelController.MODEL_DISPLAY_PANELS, displayPanelService.getAllDisplayPanels());
+
+        model.addAttribute(MODEL_ERROR, error);
+
+        return VIEW_IMAGE_FORM;
+    }
+
+    @GetMapping(CTRL_IMAGES + "/{id}" + CTRL_EDIT)
+    public String editImageForm(Model model, @PathVariable("id") Long id,
+                            @RequestParam(value = "error", required = false) String error) {
+        model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.RESOURCES);
+        model.addAttribute(MODEL_MENU_ENTITY, MenuEntity.IMAGE);
+
+        Image image = imageService.getImageById(id);
+        model.addAttribute(MODEL_IMAGE, image);
+        model.addAttribute(MODEL_ON_EDIT, true);
+
+        model.addAttribute(MODEL_TITLE, "Edit image:");
+        model.addAttribute(MODEL_FORM_HREF, "/resources/images/" + id + "/edit");
 
         model.addAttribute(MODEL_ERROR, error);
 
@@ -82,5 +105,26 @@ public class ImageController extends MainController {
         }
 
         return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + CTRL_NEW + "?error=image file is null or empty";
+    }
+
+    @PostMapping(CTRL_IMAGES + "/{id}" + CTRL_EDIT)
+    public String editImage(@PathVariable("id") Long id, Image image) {
+        Image imageByTitle = imageService.getImageByTitle(image.getTitle());
+        if(imageByTitle == null || Objects.equals(imageByTitle.getId(), id)) {
+            Image imageById = imageService.getImageById(id);
+            for (DisplayPanel displayPanel: image.getDisplayPanels()) {
+                if(!imageService.renameFile(imageById.getTitle(), image, displayPanel)) {
+                    return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + "/" + id + CTRL_EDIT
+                            + "?error=error occured while renaming the image file";
+                }
+            }
+
+            imageService.addNewImage(image);
+
+            return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES;
+        }
+
+        return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + "/{id}" + CTRL_EDIT
+                + "?error=an image with this title already exists";
     }
 }

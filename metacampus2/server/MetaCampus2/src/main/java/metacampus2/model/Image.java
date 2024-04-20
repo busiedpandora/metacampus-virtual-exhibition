@@ -28,6 +28,10 @@ public class Image extends Resource {
 
     @PrePersist
     public void prePersist() {
+        if(imageIndexes == null) {
+            return;
+        }
+
         if(displayPanels == null) {
             displayPanels = new ArrayList<>();
         }

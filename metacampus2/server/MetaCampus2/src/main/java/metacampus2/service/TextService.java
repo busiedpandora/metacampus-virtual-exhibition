@@ -55,6 +55,19 @@ public class TextService extends AbstractService implements ITextService {
     }
 
     @Override
+    public boolean renameFile(String oldName, Text text, TextPanel textPanel) {
+        File textDirectory = new File(METAVERSES_PATH
+                + textPanel.getMetaverse().getUrlName() + SEPARATOR
+                + TEXT_PANELS_PATH + textPanel.getUrlName() + SEPARATOR + TEXT_PATH + oldName);
+
+        File textRenamedDirectory = new File(METAVERSES_PATH
+                + textPanel.getMetaverse().getUrlName() + SEPARATOR
+                + TEXT_PANELS_PATH + textPanel.getUrlName() + SEPARATOR + TEXT_PATH + text.getTitle());
+
+        return textDirectory.renameTo(textRenamedDirectory);
+    }
+
+    @Override
     public List<Text> getAllTexts() {
         return textRepository.findAll();
     }
@@ -67,5 +80,10 @@ public class TextService extends AbstractService implements ITextService {
     @Override
     public Text getTextByFileName(String fileName) {
         return textRepository.findByFileName(fileName);
+    }
+
+    @Override
+    public Text getTextById(Long id) {
+        return textRepository.findById(id).orElse(null);
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Objects;
+
 @Controller
 @RequestMapping(MainController.CTRL_RESOURCES)
 public class AudioController extends MainController {
@@ -38,15 +40,38 @@ public class AudioController extends MainController {
     }
 
     @GetMapping(CTRL_AUDIOS + CTRL_NEW)
-    public String audioForm(Model model, @RequestParam(value = "error", required = false) String error){
+    public String newAudioForm(Model model, @RequestParam(value = "error", required = false) String error){
 
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.RESOURCES);
         model.addAttribute(MODEL_MENU_ENTITY, MenuEntity.AUDIO);
 
         Audio audio = new Audio();
         model.addAttribute(MODEL_AUDIO, audio);
+        model.addAttribute(MODEL_ON_EDIT, false);
+
+        model.addAttribute(MODEL_TITLE, "New audio:");
+        model.addAttribute(MODEL_FORM_HREF, "/resources/audios/new");
 
         model.addAttribute(ImageController.MODEL_IMAGES, imageService.getAllImages());
+
+        model.addAttribute(MODEL_ERROR, error);
+
+        return VIEW_AUDIO_FORM;
+    }
+
+    @GetMapping(CTRL_AUDIOS + "/{id}" + CTRL_EDIT)
+    public String editAudioForm(Model model, @PathVariable("id") Long id,
+                                @RequestParam(value = "error", required = false) String error){
+
+        model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.RESOURCES);
+        model.addAttribute(MODEL_MENU_ENTITY, MenuEntity.AUDIO);
+
+        Audio audio = audioService.getAudioById(id);
+        model.addAttribute(MODEL_AUDIO, audio);
+        model.addAttribute(MODEL_ON_EDIT, true);
+
+        model.addAttribute(MODEL_TITLE, "Edit audio:");
+        model.addAttribute(MODEL_FORM_HREF, "/resources/audios/" + id + "/edit");
 
         model.addAttribute(MODEL_ERROR, error);
 
@@ -81,5 +106,27 @@ public class AudioController extends MainController {
         }
 
         return "redirect:" + CTRL_RESOURCES + CTRL_AUDIOS + CTRL_NEW + "?error=audio file is null or empty";
+    }
+
+    @PostMapping(CTRL_AUDIOS + "/{id}" + CTRL_EDIT)
+    public String editAudio(@PathVariable("id") Long id, Audio audio) {
+        Audio audioByTitle = audioService.getAudioByTitle(audio.getTitle());
+        if(audioByTitle == null || Objects.equals(audioByTitle.getId(), id)) {
+            Image image = audio.getImage();
+            Audio audioById = audioService.getAudioById(id);
+            for(DisplayPanel displayPanel : image.getDisplayPanels()) {
+                if(!audioService.renameFile(audioById.getTitle(), audio, image, displayPanel)) {
+                    return "redirect:" + CTRL_RESOURCES + CTRL_AUDIOS + "/" + id + CTRL_EDIT
+                            + "?error=error occured while renaming the audio file";
+                }
+            }
+
+            audioService.addNewAudio(audio);
+
+            return "redirect:" + CTRL_RESOURCES + CTRL_AUDIOS;
+        }
+
+        return "redirect:" + CTRL_RESOURCES + CTRL_AUDIOS + "/" + id + CTRL_EDIT
+                + "?error=an audio with this title already exists";
     }
 }

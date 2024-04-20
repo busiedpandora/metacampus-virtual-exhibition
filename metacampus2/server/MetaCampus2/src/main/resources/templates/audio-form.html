@@ -16,36 +16,45 @@
                 <div th:insert="resources-navigation-menu"></div>
 
                 <div class="form-container">
-                    <form th:href="@{/resources/audios/new}" method="post"  enctype="multipart/form-data">
+                    <form th:href="@{${href}}" method="post"  enctype="multipart/form-data" th:object="${audio}">
                         <div class="mb-5">
-                            <span class="fs-4 text-body-secondary ">New audio:</span>
+                            <span class="fs-4 text-body-secondary" th:text="${title}"></span>
+                        </div>
+
+                        <div th:if="${onEdit}">
+                            <input type="hidden" th:field="*{image}">
+                            <input type="hidden" th:field="*{fileName}">
                         </div>
 
                         <div class="row mb-3">
                             <label for="title" class="col-form-label col-2">Title</label>
                             <div class="col-6">
                                 <input id="title" class="form-control" type="text" name="title" autocomplete="off"
-                                       required>
+                                       th:value="*{title}" required>
                             </div>
                         </div>
 
-                        <div class="row mb-3">
-                            <label for="audioFile" class="col-form-label col-2">Audio file</label>
-                            <div class="col-6">
-                                <input id="audioFile" class="form-control" type="file" name="audioFile"
-                                       accept=".wav" required>
+                        <div th:if="${!onEdit}">
+                            <div class="row mb-3">
+                                <label for="audioFile" class="col-form-label col-2">Audio file</label>
+                                <div class="col-6">
+                                    <input id="audioFile" class="form-control" type="file" name="audioFile"
+                                           accept=".wav" required>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="row mb-3">
-                            <label for="images" class="col-form-label col-2">Image</label>
-                            <div class="col-6">
-                                <select id="images" class="form-select" name="imageToAdd" size="3" required>
-                                    <option th:each="image : ${images}"
-                                            th:value="${image.id}"
-                                            th:text="${image.title} + ' - ' + ${image.fileName}">
-                                    </option>
-                                </select>
+                        <div th:if="${!onEdit}">
+                            <div class="row mb-3">
+                                <label for="images" class="col-form-label col-2">Image</label>
+                                <div class="col-6">
+                                    <select id="images" class="form-select" name="imageToAdd" size="3" required>
+                                        <option th:each="image : ${images}"
+                                                th:value="${image.id}"
+                                                th:text="${image.title} + ' - ' + ${image.fileName}">
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
 
@@ -54,7 +63,7 @@
                         </div>
 
                         <div class="col-2 mt-5">
-                            <button type="submit" class="btn btn-primary">Create</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
                 </div>

@@ -6,11 +6,10 @@ import metacampus2.service.ITextService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Objects;
 
 @Controller
 @RequestMapping(MainController.CTRL_RESOURCES)
@@ -41,15 +40,37 @@ public class TextController extends MainController {
     }
 
     @GetMapping(CTRL_TEXTS + CTRL_NEW)
-    public String textForm(Model model,
+    public String newTextForm(Model model,
                                 @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.RESOURCES);
         model.addAttribute(MODEL_MENU_ENTITY, MenuEntity.TEXT);
 
         Text text = new Text();
         model.addAttribute(MODEL_TEXT, text);
+        model.addAttribute(MODEL_ON_EDIT, false);
+
+        model.addAttribute(MODEL_TITLE, "New text:");
+        model.addAttribute(MODEL_FORM_HREF, "/resources/texts/new");
 
         model.addAttribute(TextPanelController.MODEL_TEXT_PANELS, textPanelService.getAllTextPanels());
+
+        model.addAttribute(MODEL_ERROR, error);
+
+        return VIEW_TEXT_FORM;
+    }
+
+    @GetMapping(CTRL_TEXTS + "/{id}" + CTRL_EDIT)
+    public String editTextForm(Model model, @PathVariable("id") Long id,
+                               @RequestParam(value = "error", required = false) String error) {
+        model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.RESOURCES);
+        model.addAttribute(MODEL_MENU_ENTITY, MenuEntity.TEXT);
+
+        Text text = textService.getTextById(id);
+        model.addAttribute(MODEL_TEXT, text);
+        model.addAttribute(MODEL_ON_EDIT, true);
+
+        model.addAttribute(MODEL_TITLE, "Edit text:");
+        model.addAttribute(MODEL_FORM_HREF, "/resources/texts/" + id + "/edit");
 
         model.addAttribute(MODEL_ERROR, error);
 
@@ -79,5 +100,26 @@ public class TextController extends MainController {
         }
 
         return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS + CTRL_NEW + "?error=text file is null or empty";
+    }
+
+    @PostMapping(CTRL_TEXTS + "/{id}" + CTRL_EDIT)
+    public String editText(@PathVariable("id") Long id, Text text) {
+        Text textByTitle = textService.getTextByTitle(text.getTitle());
+        if(textByTitle == null || Objects.equals(textByTitle.getId(), id)) {
+            Text textById = textService.getTextById(id);
+            for(TextPanel textPanel : text.getTextPanels()) {
+                if(!textService.renameFile(textById.getTitle(), text, textPanel)) {
+                    return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS + "/" + id + CTRL_EDIT
+                            + "?error=error occured while renaming the text file";
+                }
+            }
+
+            textService.addNewText(text);
+
+            return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS;
+        }
+
+        return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS + "/" + id + CTRL_EDIT
+                + "?error=a text with this title already exists";
     }
 }
