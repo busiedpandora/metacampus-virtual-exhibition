@@ -43,7 +43,7 @@ public class AudioManager : MonoBehaviour
     public void RestartAudio()
     {
         if(imageAudioSource != null)
-        { 
+        {
             imageAudioSource.Stop();  
             imageAudioSource.Play();
             isPaused = false;
@@ -54,7 +54,7 @@ public class AudioManager : MonoBehaviour
             }
 
             isWaitingToReplay = true;
-            waitToReplayCoroutine = StartCoroutine(WaitToReplayAudio(GetAudioClipDuration() + 10.0f));
+            waitToReplayCoroutine = StartCoroutine(WaitToReplayAudio(GetAudioClipDuration() + 5.0f));
         }
     }
 
@@ -85,7 +85,7 @@ public class AudioManager : MonoBehaviour
                 }
 
                 isWaitingToReplay = true;
-                waitToReplayCoroutine = StartCoroutine(WaitToReplayAudio(GetAudioClipDuration() + 10.0f));
+                waitToReplayCoroutine = StartCoroutine(WaitToReplayAudio(GetAudioClipDuration() + 5.0f));
             }
         }
     }
@@ -119,5 +119,17 @@ public class AudioManager : MonoBehaviour
 
         isWaitingToReplay = false;
         waitToReplayCoroutine = null;
+    }
+
+    public void OnCameraExit()
+    {
+        imageAudioSource.Stop();
+
+        if (waitToReplayCoroutine != null)
+        {
+            StopCoroutine(waitToReplayCoroutine);
+        }
+
+        isWaitingToReplay = false;
     }
 }

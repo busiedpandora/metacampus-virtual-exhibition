@@ -39,7 +39,8 @@ public class ColliderManager : MonoBehaviour
             imageButtons.SetActive(false);
 
             audioManager.IsCameraClose = false;
-            audioManager.StopAudio();
+            //audioManager.StopAudio();
+            audioManager.OnCameraExit();
         }
     }
 }
