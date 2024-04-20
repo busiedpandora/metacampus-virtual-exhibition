@@ -1,13 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Newtonsoft.Json;
-using System.Drawing;
-using MixedReality.Toolkit;
 using TMPro;
 using System;
-using UnityEngine.UI;
 using MixedReality.Toolkit.UX;
 using UnityEngine.SceneManagement;
 
