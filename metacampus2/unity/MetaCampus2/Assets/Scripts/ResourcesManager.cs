@@ -112,6 +112,12 @@ public class ResourcesManager : MonoBehaviour
 
                             frontText.GetComponent<TextMeshPro>().text = text;
                             backText.GetComponent<TextMeshPro>().text = text;
+
+                            var frontTextTitleBar = textPanelInstance.transform.Find("Panel/FrontTextTitleBar/Title").gameObject;
+                            var backTextTitleBar = textPanelInstance.transform.Find("Panel/BackTextTitleBar/Title").gameObject;
+
+                            frontTextTitleBar.GetComponent<TextMeshPro>().text = textTitle;
+                            backTextTitleBar.GetComponent<TextMeshPro>().text = textTitle;
                         }
                     }
                 }
@@ -192,6 +198,9 @@ public class ResourcesManager : MonoBehaviour
                                 var imageIstance = panelInstance.transform.Find($"DisplayPanel{(i / 2) + 1}/Board/Canvas/Image{(i % 2) + 1}").gameObject;
                                 imageIstance.GetComponent<RawImage>().texture = texture;
 
+                                var imageTitleBar = panelInstance.transform.Find($"DisplayPanel{(i / 2) + 1}/Image{(i % 2) + 1}TitleBar/Title").gameObject;
+                                imageTitleBar.GetComponent<TextMeshPro>().text = imageTitle;
+
                                 AudioSerializable audio = image.audio;
                                 if(audio != null)
                                 {
@@ -203,6 +212,9 @@ public class ResourcesManager : MonoBehaviour
                                         AudioSource audioSource = imageIstance.GetComponent<AudioSource>();
                                         audioSource.clip = audioClip;
                                     }
+
+                                    var audioTitleBar = panelInstance.transform.Find($"DisplayPanel{(i / 2) + 1}/Board/Image{(i % 2) + 1}Buttons/Image{(i % 2) + 1}AudioTitleBar/Title").gameObject;
+                                    audioTitleBar.GetComponent<TextMeshPro>().text = audio.title;
                                 }
                             }
                         }
