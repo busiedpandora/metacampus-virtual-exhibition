@@ -153,6 +153,18 @@ public class DisplayPanelController extends MainController {
                 + "?error=a display panel with this name already exists";
     }
 
+    @GetMapping(CTRL_DISPLAY_PANELS + "/{id}" + CTRL_DELETE)
+    public String deleteDisplayPanel(@PathVariable("id") Long id) {
+        DisplayPanel displayPanel = displayPanelService.getDisplayPanelById(id);
+
+        if(displayPanel != null) {
+            displayPanelService.deleteDirectory(displayPanel);
+            displayPanelService.deleteDisplayPanel(displayPanel);
+        }
+
+        return "redirect:" + CTRL_SPACES + CTRL_DISPLAY_PANELS;
+    }
+
     @GetMapping("/{metaverseUrlName}" + CTRL_DISPLAY_PANELS + "/{displayPanelUrlName}"
             + CTRL_IMAGES + "/{imageTitle}" + "/{imageFileName}")
     @ResponseBody

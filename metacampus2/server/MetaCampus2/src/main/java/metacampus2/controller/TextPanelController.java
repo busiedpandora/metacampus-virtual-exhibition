@@ -149,6 +149,18 @@ public class TextPanelController extends MainController {
                 + "?error=a text panel with this name already exists";
     }
 
+    @GetMapping(CTRL_TEXT_PANELS + "/{id}" + CTRL_DELETE)
+    public String deleteTextPanel(@PathVariable("id") Long id) {
+        TextPanel textPanel = textPanelService.getTextPanelById(id);
+
+        if(textPanel != null) {
+            textPanelService.deleteDirectory(textPanel);
+            textPanelService.deleteTextPanel(textPanel);
+        }
+
+        return "redirect:" + CTRL_SPACES + CTRL_TEXT_PANELS;
+    }
+
     @GetMapping("/{metaverseUrlName}" + CTRL_TEXT_PANELS + "/{textPanelUrlName}"
             + CTRL_TEXTS + "/{textTitle}" + "/{textFileName}")
     @ResponseBody

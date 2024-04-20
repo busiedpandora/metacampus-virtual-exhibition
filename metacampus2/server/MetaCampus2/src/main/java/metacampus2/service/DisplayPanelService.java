@@ -3,6 +3,7 @@ package metacampus2.service;
 import metacampus2.model.DisplayPanel;
 import metacampus2.model.Image;
 import metacampus2.repository.IDisplayPanelRepository;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,11 @@ public class DisplayPanelService extends AbstractService implements IDisplayPane
     }
 
     @Override
+    public void deleteDisplayPanel(DisplayPanel displayPanel) {
+        displayPanelRepository.delete(displayPanel);
+    }
+
+    @Override
     public boolean createDirectory(DisplayPanel displayPanel) {
         File displayPanelDirectory = new File(METAVERSES_PATH
                 + displayPanel.getMetaverse().getUrlName() + SEPARATOR
@@ -57,6 +63,19 @@ public class DisplayPanelService extends AbstractService implements IDisplayPane
                 + DISPLAY_PANELS_PATH + getUrlName(displayPanel.getName()));
 
         return displayPanelDirectory.renameTo(displayPanelRenamedDirectory);
+    }
+
+    @Override
+    public void deleteDirectory(DisplayPanel displayPanel) {
+        File displayPanelDirectory = new File(METAVERSES_PATH
+                + displayPanel.getMetaverse().getUrlName() + SEPARATOR
+                + DISPLAY_PANELS_PATH + displayPanel.getUrlName());
+
+        try {
+            FileUtils.deleteDirectory(displayPanelDirectory);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

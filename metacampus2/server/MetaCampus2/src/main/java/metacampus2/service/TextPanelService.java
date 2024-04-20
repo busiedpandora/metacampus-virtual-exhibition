@@ -2,6 +2,7 @@ package metacampus2.service;
 
 import metacampus2.model.TextPanel;
 import metacampus2.repository.ITextPanelRepository;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,11 @@ public class TextPanelService extends AbstractService implements ITextPanelServi
     }
 
     @Override
+    public void deleteTextPanel(TextPanel textPanel) {
+        textPanelRepository.delete(textPanel);
+    }
+
+    @Override
     public boolean createDirectory(TextPanel textPanel) {
         File textPanelPanelDirectory = new File(METAVERSES_PATH
                 + textPanel.getMetaverse().getUrlName() + SEPARATOR
@@ -49,6 +55,19 @@ public class TextPanelService extends AbstractService implements ITextPanelServi
                 + TEXT_PANELS_PATH + getUrlName(textPanel.getName()));
 
         return textPanelDirectory.renameTo(textPanelRenamedDirectory);
+    }
+
+    @Override
+    public void deleteDirectory(TextPanel textPanel) {
+        File textPanelDirectory = new File(METAVERSES_PATH
+                + textPanel.getMetaverse().getUrlName() + SEPARATOR
+                + TEXT_PANELS_PATH + textPanel.getUrlName());
+
+        try {
+            FileUtils.deleteDirectory(textPanelDirectory);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

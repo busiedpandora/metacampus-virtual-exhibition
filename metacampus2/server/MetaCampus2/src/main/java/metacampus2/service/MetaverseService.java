@@ -2,10 +2,12 @@ package metacampus2.service;
 
 import metacampus2.model.Metaverse;
 import metacampus2.repository.IMetaverseRepository;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -27,6 +29,11 @@ public class MetaverseService extends AbstractService implements IMetaverseServi
     }
 
     @Override
+    public void deleteMetaverse(Metaverse metaverse) {
+        metaverseRepository.delete(metaverse);
+    }
+
+    @Override
     public boolean createDirectory(Metaverse metaverse) {
         File metaverseDirectory = new File(METAVERSES_PATH + getUrlName(metaverse.getName()));
 
@@ -39,6 +46,16 @@ public class MetaverseService extends AbstractService implements IMetaverseServi
         File metaverseRenamedDirectory = new File(METAVERSES_PATH + getUrlName(metaverse.getName()));
 
         return metaverseDirectory.renameTo(metaverseRenamedDirectory);
+    }
+
+    @Override
+    public void deleteDirectory(Metaverse metaverse) {
+        File metaverseDirectory = new File(METAVERSES_PATH + metaverse.getUrlName());
+        try {
+            FileUtils.deleteDirectory(metaverseDirectory);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

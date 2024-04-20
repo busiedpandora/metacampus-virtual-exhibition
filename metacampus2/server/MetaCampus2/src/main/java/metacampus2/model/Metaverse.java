@@ -3,6 +3,7 @@ package metacampus2.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode(of = {"id"})
 public class Metaverse {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,7 +44,7 @@ public class Metaverse {
     @Column(nullable = false)
     private int maxZDimension;
 
-    @OneToMany(mappedBy = "metaverse")
+    @OneToMany(mappedBy = "metaverse", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     private List<Space> spaces;
 }

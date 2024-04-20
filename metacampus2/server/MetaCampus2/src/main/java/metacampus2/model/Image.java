@@ -19,7 +19,7 @@ public class Image extends Resource {
     @JsonBackReference
     private List<DisplayPanel> displayPanels;
 
-    @OneToOne(mappedBy = "image")
+    @OneToOne(mappedBy = "image", cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private Audio audio;
 

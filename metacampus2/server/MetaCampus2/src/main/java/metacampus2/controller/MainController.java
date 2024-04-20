@@ -19,6 +19,7 @@ public class MainController {
 
     protected static final String CTRL_NEW = "/new";
     protected static final String CTRL_EDIT = "/edit";
+    protected static final String CTRL_DELETE = "/delete";
     protected static final String MODEL_MENU_CATEGORY = "menuCategory";
     protected static final String MODEL_MENU_ENTITY = "menuEntity";
     protected static final String MODEL_PROJECT_NAME = "projectName";

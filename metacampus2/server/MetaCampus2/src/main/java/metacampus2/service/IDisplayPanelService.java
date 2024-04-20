@@ -6,8 +6,10 @@ import java.util.List;
 
 public interface IDisplayPanelService {
     void addNewDisplayPanel(DisplayPanel displayPanel);
+    void deleteDisplayPanel(DisplayPanel displayPanel);
     boolean createDirectory(DisplayPanel displayPanel);
     boolean renameDirectory(String oldName, DisplayPanel displayPanel);
+    void deleteDirectory(DisplayPanel displayPanel);
     List<DisplayPanel> getAllDisplayPanels();
     List<DisplayPanel> getAllDisplayPanelsFromMetaverse(String metaverseName);
     List<DisplayPanel> getAllDisplayPanelsFromMetaverseByUrlName(String metaverseUrlName);

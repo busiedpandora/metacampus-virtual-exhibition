@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class DisplayPanel extends Space {
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "displayPanels_images",
                 joinColumns = @JoinColumn(name = "displayPanel_id"),
                 inverseJoinColumns = @JoinColumn(name = "image_id"))
@@ -22,4 +22,17 @@ public class DisplayPanel extends Space {
 
     @Enumerated(EnumType.STRING)
     private DisplayPanelType type;
+
+
+    @PreRemove
+    private void preRemove() {
+        if(images != null) {
+            for(Image image : images) {
+                if(image.getDisplayPanels().size() > 1) {
+                    image.getDisplayPanels().remove(this);
+                    images = null;
+                }
+            }
+        }
+    }
 }

@@ -131,5 +131,17 @@ public class MetaverseController extends MainController {
                                                    String metaverseUrlName) {
         return new ResponseEntity<>(metaverseService.getMetaverseByUrlName(metaverseUrlName), HttpStatus.OK);
     }
+
+    @GetMapping("/{id}" + CTRL_DELETE)
+    public String deleteMetaverse(@PathVariable("id") Long id) {
+        Metaverse metaverse = metaverseService.getMetaverseById(id);
+
+        if(metaverse != null) {
+            metaverseService.deleteDirectory(metaverse);
+            metaverseService.deleteMetaverse(metaverse);
+        }
+
+        return "redirect:" + CTRL_METAVERSES;
+    }
 }
 
