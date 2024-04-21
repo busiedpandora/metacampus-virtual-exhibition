@@ -11,7 +11,15 @@ public class ColliderManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        audioButtons.SetActive(false);
+        if(audioButtons != null)
+        {
+            audioButtons.SetActive(false);
+        }
+
+        if(titleBar != null)
+        {
+            titleBar.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -24,14 +32,20 @@ public class ColliderManager : MonoBehaviour
     {
         if (other.CompareTag("MainCamera"))
         {
-            titleBar.SetActive(true);
-
-            if(audioManager.GetAudioClipDuration() > 0f)
+            if (titleBar != null)
             {
-                audioButtons.SetActive(true);
+                titleBar.SetActive(true);
             }
 
-            audioManager.IsCameraClose = true;
+            if (audioManager != null)
+            {
+                audioManager.IsCameraClose = true;
+
+                if (audioManager.GetAudioClipDuration() > 0f && audioButtons != null)
+                {
+                    audioButtons.SetActive(true);
+                }
+            }
         }
     }
 
@@ -39,13 +53,22 @@ public class ColliderManager : MonoBehaviour
     {
         if (other.CompareTag("MainCamera"))
         {
-            titleBar.SetActive(false);
+            if (titleBar != null)
+            {
+                titleBar.SetActive(false);
+            }
 
-            audioButtons.SetActive(false);
-
-            audioManager.IsCameraClose = false;
-            //audioManager.StopAudio();
-            audioManager.OnCameraExit();
+            if(audioButtons != null)
+            {
+                audioButtons.SetActive(false);
+            }
+            
+            if(audioManager != null)
+            {
+                audioManager.IsCameraClose = false;
+                //audioManager.StopAudio();
+                audioManager.OnCameraExit();
+            }
         }
     }
 }
