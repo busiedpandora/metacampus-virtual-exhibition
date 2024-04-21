@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class Image extends Resource {
-    @ManyToMany(mappedBy = "images")
+    @ManyToMany(mappedBy = "images", fetch = FetchType.EAGER)
     @JsonBackReference
     private List<DisplayPanel> displayPanels;
 

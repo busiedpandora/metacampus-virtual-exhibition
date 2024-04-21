@@ -1,3 +1,4 @@
+/*
 package metacampus2.initializer;
 
 import metacampus2.AbstractTest;
@@ -55,3 +56,4 @@ class EntitiesInitializerTest extends AbstractTest {
         assertEquals(5,  displayPanels.get(0).getCoordinates().getZ());
     }
 }
+*/

@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class DisplayPanel extends Space {
-    @ManyToMany(cascade = CascadeType.REMOVE)
+    @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JoinTable(name = "displayPanels_images",
                 joinColumns = @JoinColumn(name = "displayPanel_id"),
                 inverseJoinColumns = @JoinColumn(name = "image_id"))

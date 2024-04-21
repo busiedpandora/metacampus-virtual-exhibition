@@ -5,29 +5,51 @@ import metacampus2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.yaml.snakeyaml.Yaml;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Component
 public class EntitiesInitializer implements CommandLineRunner {
+    protected static final String SEPARATOR = FileSystems.getDefault().getSeparator();
+    protected static final String BASE_PATH = "." + SEPARATOR + "resourcesToLoadAtStart" + SEPARATOR;
+    protected static final String TEXTS_PATH = BASE_PATH + "texts";
+    protected static final String IMAGES_PATH = BASE_PATH + "images";
+    protected static final String AUDIOS_PATH = BASE_PATH + "audios";
+
     private IMetaverseService metaverseService;
     private ITextPanelService textPanelService;
     private IDisplayPanelService displayPanelService;
     private ISpaceService spaceService;
+    private ITextService textService;
+    private IImageService imageService;
+    private IAudioService audioService;
 
 
     @Autowired
     public EntitiesInitializer(IMetaverseService metaverseService,
                                ITextPanelService textPanelService,
                                IDisplayPanelService displayPanelService,
-                               ISpaceService spaceService) {
+                               ISpaceService spaceService,
+                               ITextService textService,
+                               IImageService imageService,
+                               IAudioService audioService) {
         this.metaverseService = metaverseService;
         this.textPanelService = textPanelService;
         this.displayPanelService = displayPanelService;
         this.spaceService = spaceService;
+        this.textService = textService;
+        this.imageService = imageService;
+        this.audioService = audioService;
     }
 
     @Override
@@ -56,6 +78,15 @@ public class EntitiesInitializer implements CommandLineRunner {
                             break;
                         case "displayPanel":
                             createDisplayPanel(entity);
+                            break;
+                        case "text":
+                            createText(entity);
+                            break;
+                        case "image":
+                            createImage(entity);
+                            break;
+                        case "audio":
+                            createAudio(entity);
                             break;
                     }
                 }
@@ -142,6 +173,138 @@ public class EntitiesInitializer implements CommandLineRunner {
             if(displayPanelService.createDirectory(displayPanel)) {
                 displayPanelService.addNewDisplayPanel(displayPanel);
             }
+        }
+    }
+
+    //The text is associated to a single text panel only
+    @Transactional
+    public void createText(Map<String, Object> t) {
+        String title = (String) t.get("title");
+        String fileName = (String) t.get("fileName");
+        String textPanelName = (String) t.get("textPanel");
+        String panelMetaverseName = (String) t.get("panelMetaverse");
+
+        Space panel = spaceService.getSpaceByNameAndMetaverse(textPanelName, panelMetaverseName);
+
+        if(textService.getTextByTitle(title) == null && panel instanceof TextPanel) {
+            TextPanel textPanel = (TextPanel) panel;
+            if(textPanel.getText() != null) {
+                return;
+            }
+
+            File file = new File(TEXTS_PATH + SEPARATOR + fileName);
+            byte[] fileContent = new byte[0];
+            String originalFilename = null;
+            String contentType = null;
+            try {
+                fileContent = Files.readAllBytes(file.toPath());
+                originalFilename  = file.getName();
+                contentType = Files.probeContentType(file.toPath());
+            } catch (IOException e) {
+                throw new RuntimeException("Error in text creation: " + fileName);
+            }
+
+            MultipartFile multipartFile = new CustomMultipartFile(fileContent, originalFilename, contentType);
+
+            Text text = new Text();
+            text.setTitle(title);
+            text.setFileName(originalFilename);
+            text.setTextPanels(List.of(textPanel));
+            //textPanel.setText(text);
+
+            if(textService.createFile(text, multipartFile, textPanel)) {
+                textService.addNewText(text);
+                textPanelService.addNewTextPanel(textPanel);
+            }
+        }
+    }
+
+    //The image is associated to a single display panel only
+    @Transactional
+    public void createImage(Map<String, Object> i) {
+        String title = (String) i.get("title");
+        String fileName = (String) i.get("fileName");
+        String displayPanelName = (String) i.get("displayPanel");
+        String panelMetaverseName = (String) i.get("panelMetaverse");
+
+        Space panel = spaceService.getSpaceByNameAndMetaverse(displayPanelName, panelMetaverseName);
+
+        if(imageService.getImageByTitle(title) == null && panel instanceof DisplayPanel) {
+            DisplayPanel displayPanel = (DisplayPanel) panel;
+            if(displayPanel.getImages() == null) {
+                displayPanel.setImages(new ArrayList<>());
+            }
+            else if(displayPanel.getImages().size() >= displayPanel.getType().getCapacity()) {
+                return;
+            }
+
+            File file = new File(IMAGES_PATH + SEPARATOR + fileName);
+            byte[] fileContent = new byte[0];
+            String originalFilename = null;
+            String contentType = null;
+            try {
+                fileContent = Files.readAllBytes(file.toPath());
+                originalFilename  = file.getName();
+                contentType = Files.probeContentType(file.toPath());
+            } catch (IOException e) {
+                throw new RuntimeException("Error in image creation: " + fileName);
+            }
+
+            MultipartFile multipartFile = new CustomMultipartFile(fileContent, originalFilename, contentType);
+
+            Image image = new Image();
+            image.setTitle(title);
+            image.setFileName(originalFilename);
+            image.setDisplayPanels(List.of(displayPanel));
+            displayPanel.getImages().add(image);
+
+            if(imageService.createFile(image, multipartFile, displayPanel)) {
+                imageService.addNewImage(image);
+                displayPanelService.addNewDisplayPanel(displayPanel);
+            }
+        }
+    }
+
+    @Transactional
+    public void createAudio(Map<String, Object> a) {
+        String title = (String) a.get("title");
+        String fileName = (String) a.get("fileName");
+        String imageTitle = (String) a.get("image");
+
+        Image image = imageService.getImageByTitle(imageTitle);
+        if(audioService.getAudioByTitle(title) == null && image != null) {
+            if(image.getAudio() != null) {
+                return;
+            }
+
+            File file = new File(AUDIOS_PATH + SEPARATOR + fileName);
+            byte[] fileContent = new byte[0];
+            String originalFilename = null;
+            String contentType = null;
+            try {
+                fileContent = Files.readAllBytes(file.toPath());
+                originalFilename  = file.getName();
+                contentType = Files.probeContentType(file.toPath());
+            } catch (IOException e) {
+                throw new RuntimeException("Error in audio creation: " + fileName);
+            }
+
+            MultipartFile multipartFile = new CustomMultipartFile(fileContent, originalFilename, contentType);
+
+            Audio audio = new Audio();
+            audio.setTitle(title);
+            audio.setFileName(originalFilename);
+            audio.setImage(image);
+            image.setAudio(audio);
+
+            for(DisplayPanel displayPanel : image.getDisplayPanels()) {
+                if(!audioService.createFile(audio, multipartFile, image, displayPanel)) {
+                    return;
+                }
+            }
+
+            audioService.addNewAudio(audio);
+            imageService.addNewImage(image);
         }
     }
 }
