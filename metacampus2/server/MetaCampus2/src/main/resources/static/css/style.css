@@ -93,3 +93,8 @@ th {
 .invalid-input {
     border-color: red;
 }
+
+.table-container {
+    height: 70vh;
+    overflow-y:auto;
+}
