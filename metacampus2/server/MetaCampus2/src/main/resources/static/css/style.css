@@ -85,3 +85,11 @@ th {
     word-wrap: break-word;
     white-space: normal;
 }
+
+.valid-input {
+    border-color: green;
+}
+
+.invalid-input {
+    border-color: red;
+}

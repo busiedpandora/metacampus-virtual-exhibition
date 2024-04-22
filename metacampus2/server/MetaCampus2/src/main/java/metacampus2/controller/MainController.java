@@ -15,8 +15,9 @@ public class MainController {
     protected static final String CTRL_TEXTS = "/texts";
     protected static final String CTRL_IMAGES = "/images";
     protected static final String CTRL_AUDIOS = "/audios";
-
-
+    protected static final String CTRL_LOGIN = "/login";
+    protected static final String CTRL_LOGOUT = "/logout";
+    protected static final String CTRL_REGISTER = "/register";
     protected static final String CTRL_NEW = "/new";
     protected static final String CTRL_EDIT = "/edit";
     protected static final String CTRL_DELETE = "/delete";
@@ -37,5 +38,9 @@ public class MainController {
     @ModelAttribute
     public void addDefaultAttributes(Model model) {
         model.addAttribute(MODEL_PROJECT_NAME, projectName);
+
+        model.addAttribute("loginUrl", UserController.CTRL_LOGIN);
+        model.addAttribute("registerUrl", UserController.CTRL_REGISTER);
+        model.addAttribute("logoutUrl", UserController.CTRL_LOGOUT);
     }
 }

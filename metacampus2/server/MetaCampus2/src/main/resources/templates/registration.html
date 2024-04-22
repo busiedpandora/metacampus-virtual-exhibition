@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Page</title>
+    <link th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <header>
+        <div th:insert="project-title.html"></div>
+    </header>
+
+    <main>
+        <div class="text-center col-3 position-absolute top-50 start-50 translate-middle">
+            <span class="fs-1 fw-bold text-primary">Register</span>
+
+            <form method="post" autocomplete="off" th:action="@{/register}">
+                <div class="my-2">
+                    <label for="firstName" class="visually-hidden">First Name</label>
+                    <input id="firstName" type="text" class="form-control fs-5" name="firstName"
+                           placeholder="First Name" required/>
+                    <span class="error-message"></span>
+                </div>
+
+                <div class="my-2">
+                    <label for="lastName" class="visually-hidden">Last Name</label>
+                    <input id="lastName" type="text" class="form-control fs-5" name="lastName"
+                           placeholder="Last Name" required/>
+                    <span class="error-message"></span>
+                </div>
+
+                <div class="my-2">
+                    <label for="username" class="visually-hidden">Username</label>
+                    <input id="username" type="text" class="form-control fs-5" name="username"
+                           placeholder="Username" required/>
+                    <span class="error-message"></span>
+                </div>
+
+                <div class="my-2">
+                    <label for="password" class="visually-hidden">Password</label>
+                    <input id="password" type="password" class="form-control fs-5" name="password"
+                           placeholder="Password" required>
+                    <span class="error-message"></span>
+                </div>
+
+                <div class="my-2">
+                    <label for="passwordConfirm" class="visually-hidden">Confirm Password</label>
+                    <input id="passwordConfirm" type="password" class="form-control fs-5"
+                           placeholder="Confirm Password" required>
+                    <span class="error-message"></span>
+                </div>
+
+                <div class="my-2">
+                    <label for="role" class="visually-hidden">Role</label>
+                    <select id="role" class="form-select fs-5" name="role" required>
+                        <option value="" disabled selected class="text-secondary">Select your role</option>
+                        <option th:each="role : ${roles}"
+                                th:value="${role}"
+                                th:text="${role.name}">
+                        </option>
+                    </select>
+                    <span class="error-message"></span>
+                </div>
+
+                <div id="registerButtonContainer" class="my-2">
+
+                </div>
+
+                <div class="my-2">
+                    <a class="btn btn-outline-primary fs-5 col-12" th:href="@{/home}" role="button">Cancel</a>
+                </div>
+
+                <hr>
+
+                <span class="fs-6">
+                        Already registered? <a th:href="@{/login}">Log in</a> instead.
+                </span>
+                <br>
+                <span class="fs-6">
+                    Back to <a th:href="@{/}">Home</a>.
+                </span>
+            </form>
+        </div>
+
+        <script th:src="@{/scripts/registration-validation.js}"></script>
+    </main>
+</body>
+</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       th:replace="~{master :: layout(~{::title},~{::main})}">
 <head>
     <meta charset="UTF-8">
@@ -16,7 +16,8 @@
                 <div th:insert="resources-navigation-menu"></div>
 
                 <div class="table-container">
-                    <a class="btn btn-outline-primary" role="button" th:href="@{/resources/texts/new}">
+                    <a sec:authorize="hasRole('CREATOR')"
+                       class="btn btn-outline-primary" role="button" th:href="@{/resources/texts/new}">
                         Create text
                     </a>
 
@@ -28,7 +29,7 @@
                             <th scope="col" class="col">Title</th>
                             <th scope="col" class="col">File</th>
                             <th scope="col" class="col">Last edit</th>
-                            <th scope="col">Actions</th>
+                            <th scope="col" sec:authorize="hasRole('CREATOR')">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -37,7 +38,7 @@
                             <th th:text="${text.title}"></th>
                             <th th:text="${text.fileName}"></th>
                             <th th:text="${#temporals.format(text.lastEditDate, 'HH:mm dd-MM-yyyy')}"></th>
-                            <th>
+                            <th sec:authorize="hasRole('CREATOR')">
                                 <a role="button" class="btn btn-link"
                                    th:href="@{'/resources/texts/' + ${text.id} + '/edit'}">
                                     <img th:src="@{/icons/gear.svg}" alt="edit icon" class="me-1">Edit

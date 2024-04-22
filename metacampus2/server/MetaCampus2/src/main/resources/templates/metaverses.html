@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       th:replace="~{master :: layout(~{::title},~{::main})}">
 <head>
     <meta charset="UTF-8">
@@ -24,7 +24,8 @@
                 </div>
 
                 <div class="table-container">
-                    <a class="btn btn-outline-primary" role="button" th:href="@{/metaverses/new}">
+                    <a sec:authorize="hasRole('CREATOR')"
+                       class="btn btn-outline-primary" role="button" th:href="@{/metaverses/new}">
                         Create metaverse
                     </a>
 
@@ -36,7 +37,7 @@
                             <th scope="col">Name</th>
                             <th scope="col">Dimensions (meters)</th>
                             <th scope="col">Borders (meters)</th>
-                            <th scope="col">Actions</th>
+                            <th scope="col" sec:authorize="hasRole('CREATOR')">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -62,7 +63,7 @@
                                     + ' to ' + ${metaverse.maxZDimension}">
                                 </span>
                             </th>
-                            <th>
+                            <th sec:authorize="hasRole('CREATOR')">
                                 <a role="button" class="btn btn-link"
                                    th:href="@{'/metaverses/' + ${metaverse.id} + '/edit'}">
                                     <img th:src="@{/icons/gear.svg}" alt="edit icon" class="me-1">Edit
