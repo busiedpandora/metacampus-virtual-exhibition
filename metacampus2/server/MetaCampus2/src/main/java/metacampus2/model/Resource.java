@@ -26,6 +26,8 @@ public abstract class Resource {
     private String fileName;
 
     @Column(nullable = false)
+    private LocalDateTime creationDate;
+
     private LocalDateTime lastEditDate;
 
     @ManyToOne

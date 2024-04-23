@@ -28,6 +28,7 @@
                             <th scope="col" class="col-1">#</th>
                             <th scope="col" class="col">Title</th>
                             <th scope="col" class="col">File</th>
+                            <th scope="col" class="col">Created</th>
                             <th scope="col" class="col">Last edit</th>
                             <th scope="col" sec:authorize="hasRole('CREATOR')">Actions</th>
                         </tr>
@@ -37,7 +38,8 @@
                             <th scope="row" th:text="${iterStat.count}"></th>
                             <th th:text="${text.title}"></th>
                             <th th:text="${text.fileName}"></th>
-                            <th th:text="${#temporals.format(text.lastEditDate, 'HH:mm dd-MM-yyyy')}"></th>
+                            <th th:text="${#temporals.format(text.creationDate, 'HH:mm dd-MM-yyyy')}"></th>
+                            <th th:text="${text.lastEditDate != null ? #temporals.format(text.lastEditDate, 'HH:mm dd-MM-yyyy') : '-'}"></th>
                             <th sec:authorize="hasRole('CREATOR')">
                                 <span th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')
                                     || #authorization.expression('hasRole(''ROLE_CREATOR'')') && #authentication.name.equals(text.creator.username)}">

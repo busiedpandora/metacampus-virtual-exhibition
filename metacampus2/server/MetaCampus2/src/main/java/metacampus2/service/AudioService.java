@@ -29,6 +29,13 @@ public class AudioService extends AbstractService implements IAudioService {
 
     @Override
     public void addNewAudio(Audio audio) {
+        audio.setCreationDate(LocalDateTime.now());
+
+        audioRepository.save(audio);
+    }
+
+    @Override
+    public void editAudio(Audio audio) {
         audio.setLastEditDate(LocalDateTime.now());
 
         audioRepository.save(audio);

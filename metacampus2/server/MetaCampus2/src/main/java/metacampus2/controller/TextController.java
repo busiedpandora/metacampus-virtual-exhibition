@@ -124,7 +124,7 @@ public class TextController extends MainController {
                 }
             }
 
-            textService.addNewText(text);
+            textService.editText(text);
 
             return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS;
         }

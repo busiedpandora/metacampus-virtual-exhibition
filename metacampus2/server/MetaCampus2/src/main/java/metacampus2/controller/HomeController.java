@@ -9,6 +9,6 @@ public class HomeController extends MainController {
 
     @GetMapping
     public String home() {
-        return "redirect:" + CTRL_RESOURCES + CTRL_TEXTS;
+        return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES;
     }
 }

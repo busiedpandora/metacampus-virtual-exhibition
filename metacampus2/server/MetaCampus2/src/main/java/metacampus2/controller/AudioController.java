@@ -131,7 +131,7 @@ public class AudioController extends MainController {
                 }
             }
 
-            audioService.addNewAudio(audio);
+            audioService.editAudio(audio);
 
             return "redirect:" + CTRL_RESOURCES + CTRL_AUDIOS;
         }

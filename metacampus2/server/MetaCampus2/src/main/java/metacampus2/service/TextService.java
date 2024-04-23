@@ -27,6 +27,13 @@ public class TextService extends AbstractService implements ITextService {
 
     @Override
     public void addNewText(Text text) {
+        text.setCreationDate(LocalDateTime.now());
+
+        textRepository.save(text);
+    }
+
+    @Override
+    public void editText(Text text) {
         text.setLastEditDate(LocalDateTime.now());
 
         textRepository.save(text);

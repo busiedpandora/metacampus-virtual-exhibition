@@ -27,6 +27,13 @@ public class ImageService extends AbstractService implements IImageService {
 
     @Override
     public void addNewImage(Image image) {
+        image.setCreationDate(LocalDateTime.now());
+
+        imageRepository.save(image);
+    }
+
+    @Override
+    public void editImage(Image image) {
         image.setLastEditDate(LocalDateTime.now());
 
         imageRepository.save(image);

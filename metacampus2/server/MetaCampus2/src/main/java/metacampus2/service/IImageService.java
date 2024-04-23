@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface IImageService {
     void addNewImage(Image image);
+    void editImage(Image image);
     boolean createFile(Image image, MultipartFile imageFile, DisplayPanel displayPanel);
     boolean renameFile(String oldName, Image image, DisplayPanel displayPanel);
     List<Image> getAllImages();

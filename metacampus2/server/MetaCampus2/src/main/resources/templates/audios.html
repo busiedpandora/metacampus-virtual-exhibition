@@ -29,6 +29,7 @@
                             <th scope="col" class="col">Title</th>
                             <th scope="col" class="col">File</th>
                             <th scope="col" class="col">Image</th>
+                            <th scope="col" class="col">Created</th>
                             <th scope="col" class="col">Last edit</th>
                             <th sec:authorize="hasRole('CREATOR')" scope="col">Actions</th>
                         </tr>
@@ -39,7 +40,8 @@
                             <th th:text="${audio.title}"></th>
                             <th th:text="${audio.fileName}"></th>
                             <th th:text="${audio.image.title}"></th>
-                            <th th:text="${#temporals.format(audio.lastEditDate, 'HH:mm dd-MM-yyyy')}"></th>
+                            <th th:text="${#temporals.format(audio.creationDate, 'HH:mm dd-MM-yyyy')}"></th>
+                            <th th:text="${audio.lastEditDate != null ? #temporals.format(audio.lastEditDate, 'HH:mm dd-MM-yyyy') : '-'}"></th>
                             <th sec:authorize="hasRole('CREATOR')">
                                 <span th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')
                                     || #authorization.expression('hasRole(''ROLE_CREATOR'')') && #authentication.name.equals(audio.creator.username)}">

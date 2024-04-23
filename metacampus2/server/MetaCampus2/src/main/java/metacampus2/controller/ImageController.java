@@ -129,7 +129,7 @@ public class ImageController extends MainController {
                 }
             }
 
-            imageService.addNewImage(image);
+            imageService.editImage(image);
 
             return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES;
         }
