@@ -3,7 +3,10 @@ package metacampus2.controller;
 import metacampus2.model.*;
 import metacampus2.service.ITextPanelService;
 import metacampus2.service.ITextService;
+import metacampus2.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +24,14 @@ public class TextController extends MainController {
 
     private ITextService textService;
     private ITextPanelService textPanelService;
+    private IUserService userService;
 
 
     @Autowired
-    public TextController(ITextService textService, ITextPanelService textPanelService) {
+    public TextController(ITextService textService, ITextPanelService textPanelService, IUserService userService) {
         this.textService = textService;
         this.textPanelService = textPanelService;
+        this.userService = userService;
     }
 
     @GetMapping(CTRL_TEXTS)
@@ -40,6 +45,7 @@ public class TextController extends MainController {
     }
 
     @GetMapping(CTRL_TEXTS + CTRL_NEW)
+    @PreAuthorize("hasRole('CREATOR')")
     public String newTextForm(Model model,
                                 @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.RESOURCES);
@@ -60,6 +66,7 @@ public class TextController extends MainController {
     }
 
     @GetMapping(CTRL_TEXTS + "/{id}" + CTRL_EDIT)
+    @PreAuthorize("hasRole('CREATOR')")
     public String editTextForm(Model model, @PathVariable("id") Long id,
                                @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.RESOURCES);
@@ -78,6 +85,7 @@ public class TextController extends MainController {
     }
 
     @PostMapping(CTRL_TEXTS + CTRL_NEW)
+    @PreAuthorize("hasRole('CREATOR')")
     public String newText(Text text, @RequestParam(value = "textFile") MultipartFile textFile) {
         if(textFile != null && !textFile.isEmpty()) {
             if(textService.getTextByTitle(text.getTitle()) != null) {
@@ -93,6 +101,7 @@ public class TextController extends MainController {
                 }
             }
 
+            text.setCreator(userService.getUserLogged());
             text.setFileName(textFileName);
             textService.addNewText(text);
 
@@ -103,7 +112,8 @@ public class TextController extends MainController {
     }
 
     @PostMapping(CTRL_TEXTS + "/{id}" + CTRL_EDIT)
-    public String editText(@PathVariable("id") Long id, Text text) {
+    @PreAuthorize("hasRole('ADMIN') || hasRole('CREATOR') && #text.creator.username == authentication.name")
+    public String editText(@PathVariable("id") Long id, @P("text") Text text) {
         Text textByTitle = textService.getTextByTitle(text.getTitle());
         if(textByTitle == null || Objects.equals(textByTitle.getId(), id)) {
             Text textById = textService.getTextById(id);

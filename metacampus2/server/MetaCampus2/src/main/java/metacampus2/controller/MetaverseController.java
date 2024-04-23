@@ -3,14 +3,19 @@ package metacampus2.controller;
 
 import metacampus2.model.MenuCategory;
 import metacampus2.model.Metaverse;
+import metacampus2.model.UserRole;
 import metacampus2.service.IMetaverseService;
+import metacampus2.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,11 +28,14 @@ public class MetaverseController extends MainController {
     private static final String VIEW_METAVERSE_FORM = "metaverse-form";
 
     private IMetaverseService metaverseService;
+    private IUserService userService;
 
 
     @Autowired
-    public MetaverseController(IMetaverseService metaverseService) {
+    public MetaverseController(IMetaverseService metaverseService,
+                               IUserService userService) {
         this.metaverseService = metaverseService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -40,6 +48,7 @@ public class MetaverseController extends MainController {
     }
 
     @GetMapping( CTRL_NEW)
+    @PreAuthorize("hasRole('CREATOR')")
     public String newMetaverseForm(Model model,
                                 @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.METAVERSES);
@@ -56,6 +65,7 @@ public class MetaverseController extends MainController {
     }
 
     @GetMapping("/{id}" + CTRL_EDIT)
+    @PreAuthorize("hasRole('CREATOR')")
     public String editMetaverseForm(Model model, @PathVariable("id") Long id,
                                     @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.METAVERSES);
@@ -72,6 +82,7 @@ public class MetaverseController extends MainController {
     }
 
     @PostMapping(CTRL_NEW)
+    @PreAuthorize("hasRole('CREATOR')")
     public String newMetaverse(Metaverse metaverse) {
         if(metaverse.getMinXDimension() > metaverse.getMaxXDimension()
             || metaverse.getMinYDimension() > metaverse.getMaxYDimension()
@@ -83,6 +94,8 @@ public class MetaverseController extends MainController {
 
         if(metaverseService.getMetaverseByName(metaverse.getName()) == null) {
             if(metaverseService.createDirectory(metaverse)) {
+                metaverse.setCreator(userService.getUserLogged());
+
                 metaverseService.addNewMetaverse(metaverse);
 
                 return "redirect:" + CTRL_METAVERSES;
@@ -93,7 +106,8 @@ public class MetaverseController extends MainController {
     }
 
     @PostMapping("/{id}" + CTRL_EDIT)
-    public String editMetaverse(@PathVariable("id") Long id, Metaverse metaverse) {
+    @PreAuthorize("hasRole('ADMIN') || hasRole('CREATOR') && #metaverse.creator.username == authentication.name")
+    public String editMetaverse(@PathVariable("id") Long id, @P("metaverse") Metaverse metaverse) {
         if(metaverse.getMinXDimension() > metaverse.getMaxXDimension()
                 || metaverse.getMinYDimension() > metaverse.getMaxYDimension()
                 || metaverse.getMinZDimension() > metaverse.getMaxZDimension()) {
@@ -133,12 +147,16 @@ public class MetaverseController extends MainController {
     }
 
     @GetMapping("/{id}" + CTRL_DELETE)
+    @PreAuthorize("hasRole('CREATOR')")
     public String deleteMetaverse(@PathVariable("id") Long id) {
         Metaverse metaverse = metaverseService.getMetaverseById(id);
 
         if(metaverse != null) {
-            metaverseService.deleteDirectory(metaverse);
-            metaverseService.deleteMetaverse(metaverse);
+            if(userService.getUserLogged().getRole() == UserRole.ROLE_ADMIN
+                    || userService.getUserLogged().equals(metaverse.getCreator())) {
+                metaverseService.deleteDirectory(metaverse);
+                metaverseService.deleteMetaverse(metaverse);
+            }
         }
 
         return "redirect:" + CTRL_METAVERSES;

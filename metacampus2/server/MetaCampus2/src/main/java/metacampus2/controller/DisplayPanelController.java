@@ -4,9 +4,12 @@ import metacampus2.model.*;
 import metacampus2.service.IDisplayPanelService;
 import metacampus2.service.IMetaverseService;
 import metacampus2.service.ISpaceService;
+import metacampus2.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,14 +29,16 @@ public class DisplayPanelController extends MainController {
     private IDisplayPanelService displayPanelService;
     private IMetaverseService metaverseService;
     private ISpaceService spaceService;
+    private IUserService userService;
 
 
     @Autowired
     public DisplayPanelController(IDisplayPanelService displayPanelService, IMetaverseService metaverseService,
-                                  ISpaceService spaceService) {
+                                  ISpaceService spaceService, IUserService userService) {
         this.displayPanelService = displayPanelService;
         this.metaverseService = metaverseService;
         this.spaceService = spaceService;
+        this.userService = userService;
     }
 
     @GetMapping(CTRL_DISPLAY_PANELS)
@@ -47,6 +52,7 @@ public class DisplayPanelController extends MainController {
     }
 
     @GetMapping(CTRL_DISPLAY_PANELS + CTRL_NEW)
+    @PreAuthorize("hasRole('CREATOR')")
     public String newDisplayPanelForm(Model model,
                                    @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.SPACES);
@@ -68,6 +74,7 @@ public class DisplayPanelController extends MainController {
     }
 
     @GetMapping(CTRL_DISPLAY_PANELS + "/{id}" + CTRL_EDIT)
+    @PreAuthorize("hasRole('CREATOR')")
     public String editDisplayPanelForm(Model model, @PathVariable("id") Long id,
                                       @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.SPACES);
@@ -96,6 +103,7 @@ public class DisplayPanelController extends MainController {
     }
 
     @PostMapping(CTRL_DISPLAY_PANELS + CTRL_NEW)
+    @PreAuthorize("hasRole('CREATOR')")
     public String newDisplayPanel(DisplayPanel displayPanel) {
         Coordinate coordinates = displayPanel.getCoordinates();
 
@@ -110,6 +118,8 @@ public class DisplayPanelController extends MainController {
                 displayPanel.getMetaverse().getName()) == null) {
 
             if(displayPanelService.createDirectory(displayPanel)) {
+                displayPanel.setCreator(userService.getUserLogged());
+
                 displayPanelService.addNewDisplayPanel(displayPanel);
 
                 return "redirect:" + CTRL_SPACES + CTRL_DISPLAY_PANELS;
@@ -121,7 +131,8 @@ public class DisplayPanelController extends MainController {
     }
 
     @PostMapping(CTRL_DISPLAY_PANELS + "/{id}" + CTRL_EDIT)
-    public String editDisplayPanel(@PathVariable("id") Long id, DisplayPanel displayPanel) {
+    @PreAuthorize("hasRole('ADMIN') || hasRole('CREATOR') && #displayPanel.creator.username == authentication.name")
+    public String editDisplayPanel(@PathVariable("id") Long id, @P("displayPanel") DisplayPanel displayPanel) {
         Coordinate coordinates = displayPanel.getCoordinates();
 
         Space spaceByCoords = spaceService.getSpaceByCoordinatesAndMetaverse(coordinates.getX(), coordinates.getY(),
@@ -154,12 +165,16 @@ public class DisplayPanelController extends MainController {
     }
 
     @GetMapping(CTRL_DISPLAY_PANELS + "/{id}" + CTRL_DELETE)
+    @PreAuthorize("hasRole('CREATOR')")
     public String deleteDisplayPanel(@PathVariable("id") Long id) {
         DisplayPanel displayPanel = displayPanelService.getDisplayPanelById(id);
 
         if(displayPanel != null) {
-            displayPanelService.deleteDirectory(displayPanel);
-            displayPanelService.deleteDisplayPanel(displayPanel);
+            if(userService.getUserLogged().getRole() == UserRole.ROLE_ADMIN
+                    || userService.getUserLogged().equals(displayPanel.getCreator())) {
+                displayPanelService.deleteDirectory(displayPanel);
+                displayPanelService.deleteDisplayPanel(displayPanel);
+            }
         }
 
         return "redirect:" + CTRL_SPACES + CTRL_DISPLAY_PANELS;

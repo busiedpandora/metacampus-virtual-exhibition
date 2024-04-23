@@ -29,6 +29,8 @@
                             <span class="fs-4 text-body-secondary" th:text="${title}"></span>
                         </div>
 
+                        <input type="hidden" th:field="*{creator}">
+
                         <div class="row mb-3">
                             <label for="name" class="col-form-label col-2">Name</label>
                             <div class="col-6">
@@ -102,7 +104,7 @@
                         </div>
 
                         <div class="col-2 mt-5">
-                            <button type="submit" class="btn btn-primary">Create</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
                 </div>

@@ -27,4 +27,8 @@ public abstract class Resource {
 
     @Column(nullable = false)
     private LocalDateTime lastEditDate;
+
+    @ManyToOne
+    @JoinColumn(name = "creator_id", nullable = false)
+    private User creator;
 }

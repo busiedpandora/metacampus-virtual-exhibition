@@ -3,7 +3,10 @@ package metacampus2.controller;
 import metacampus2.model.*;
 import metacampus2.service.IAudioService;
 import metacampus2.service.IImageService;
+import metacampus2.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
@@ -22,11 +25,13 @@ public class AudioController extends MainController {
 
     private IAudioService audioService;
     private IImageService imageService;
+    private IUserService userService;
 
     @Autowired
-    public AudioController(IAudioService audioService, IImageService imageService) {
+    public AudioController(IAudioService audioService, IImageService imageService, IUserService userService) {
         this.audioService = audioService;
         this.imageService = imageService;
+        this.userService = userService;
     }
 
     @GetMapping(CTRL_AUDIOS)
@@ -40,6 +45,7 @@ public class AudioController extends MainController {
     }
 
     @GetMapping(CTRL_AUDIOS + CTRL_NEW)
+    @PreAuthorize("hasRole('CREATOR')")
     public String newAudioForm(Model model, @RequestParam(value = "error", required = false) String error){
 
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.RESOURCES);
@@ -60,6 +66,7 @@ public class AudioController extends MainController {
     }
 
     @GetMapping(CTRL_AUDIOS + "/{id}" + CTRL_EDIT)
+    @PreAuthorize("hasRole('CREATOR')")
     public String editAudioForm(Model model, @PathVariable("id") Long id,
                                 @RequestParam(value = "error", required = false) String error){
 
@@ -79,6 +86,7 @@ public class AudioController extends MainController {
     }
 
     @PostMapping(CTRL_AUDIOS + CTRL_NEW)
+    @PreAuthorize("hasRole('CREATOR')")
     public String newAudio(Audio audio, @RequestParam("audioFile") MultipartFile audioFile,
                            @RequestParam(value = "imageToAdd") Image image) {
         if(audioFile != null && !audioFile.isEmpty()) {
@@ -98,6 +106,7 @@ public class AudioController extends MainController {
                 audioService.removeAudio(image.getAudio());
             }
 
+            audio.setCreator(userService.getUserLogged());
             audio.setFileName(audioFileName);
             audio.setImage(image);
             audioService.addNewAudio(audio);
@@ -109,7 +118,8 @@ public class AudioController extends MainController {
     }
 
     @PostMapping(CTRL_AUDIOS + "/{id}" + CTRL_EDIT)
-    public String editAudio(@PathVariable("id") Long id, Audio audio) {
+    @PreAuthorize("hasRole('ADMIN') || hasRole('CREATOR') && #audio.creator.username == authentication.name")
+    public String editAudio(@PathVariable("id") Long id, @P("audio") Audio audio) {
         Audio audioByTitle = audioService.getAudioByTitle(audio.getTitle());
         if(audioByTitle == null || Objects.equals(audioByTitle.getId(), id)) {
             Image image = audio.getImage();

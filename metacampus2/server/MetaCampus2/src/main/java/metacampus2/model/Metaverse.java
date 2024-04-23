@@ -44,7 +44,11 @@ public class Metaverse {
     @Column(nullable = false)
     private int maxZDimension;
 
-    @OneToMany(mappedBy = "metaverse", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "metaverse", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Space> spaces;
+
+    @ManyToOne
+    @JoinColumn(name = "creator_id", nullable = false)
+    private User creator;
 }

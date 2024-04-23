@@ -1,13 +1,12 @@
 package metacampus2.controller;
 
 import metacampus2.model.*;
-import metacampus2.service.IMetaverseService;
-import metacampus2.service.ISpaceService;
-import metacampus2.service.ITextPanelService;
-import metacampus2.service.TextPanelService;
+import metacampus2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,14 +25,16 @@ public class TextPanelController extends MainController {
     private ITextPanelService textPanelService;
     private IMetaverseService metaverseService;
     private ISpaceService spaceService;
+    private IUserService userService;
 
 
     @Autowired
     public TextPanelController(TextPanelService textPanelService, IMetaverseService metaverseService,
-                               ISpaceService spaceService) {
+                               ISpaceService spaceService, IUserService userService) {
         this.textPanelService = textPanelService;
         this.metaverseService = metaverseService;
         this.spaceService = spaceService;
+        this.userService = userService;
     }
 
 
@@ -48,6 +49,7 @@ public class TextPanelController extends MainController {
     }
 
     @GetMapping(CTRL_TEXT_PANELS + CTRL_NEW)
+    @PreAuthorize("hasRole('CREATOR')")
     public String newTextPanelForm(Model model,
                                 @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.SPACES);
@@ -68,6 +70,7 @@ public class TextPanelController extends MainController {
     }
 
     @GetMapping(CTRL_TEXT_PANELS + "/{id}" + CTRL_EDIT)
+    @PreAuthorize("hasRole('CREATOR')")
     public String editTextPanelForm(Model model, @PathVariable("id") Long id,
                                     @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.SPACES);
@@ -95,6 +98,7 @@ public class TextPanelController extends MainController {
     }
 
     @PostMapping(CTRL_TEXT_PANELS + CTRL_NEW)
+    @PreAuthorize("hasRole('CREATOR')")
     public String newTextPanel(TextPanel textPanel) {
         Coordinate coordinates = textPanel.getCoordinates();
 
@@ -107,6 +111,8 @@ public class TextPanelController extends MainController {
         if(spaceService.getSpaceByNameAndMetaverse(textPanel.getName(),
                 textPanel.getMetaverse().getName()) == null) {
             if(textPanelService.createDirectory(textPanel)) {
+                textPanel.setCreator(userService.getUserLogged());
+
                 textPanelService.addNewTextPanel(textPanel);
 
                 return "redirect:" + CTRL_SPACES + CTRL_TEXT_PANELS;
@@ -118,7 +124,8 @@ public class TextPanelController extends MainController {
     }
 
     @PostMapping(CTRL_TEXT_PANELS + "/{id}" + CTRL_EDIT)
-    public String editTextPanel(@PathVariable("id") Long id, TextPanel textPanel) {
+    @PreAuthorize("hasRole('ADMIN') || hasRole('CREATOR') && #textPanel.creator.username == authentication.name")
+    public String editTextPanel(@PathVariable("id") Long id, @P("textPanel") TextPanel textPanel) {
         Coordinate coordinates = textPanel.getCoordinates();
 
         Space spaceByCoords = spaceService.getSpaceByCoordinatesAndMetaverse(coordinates.getX(), coordinates.getY(),
@@ -150,12 +157,16 @@ public class TextPanelController extends MainController {
     }
 
     @GetMapping(CTRL_TEXT_PANELS + "/{id}" + CTRL_DELETE)
+    @PreAuthorize("hasRole('CREATOR')")
     public String deleteTextPanel(@PathVariable("id") Long id) {
         TextPanel textPanel = textPanelService.getTextPanelById(id);
 
         if(textPanel != null) {
-            textPanelService.deleteDirectory(textPanel);
-            textPanelService.deleteTextPanel(textPanel);
+            if(userService.getUserLogged().getRole() == UserRole.ROLE_ADMIN
+                    || userService.getUserLogged().equals(textPanel.getCreator())) {
+                textPanelService.deleteDirectory(textPanel);
+                textPanelService.deleteTextPanel(textPanel);
+            }
         }
 
         return "redirect:" + CTRL_SPACES + CTRL_TEXT_PANELS;

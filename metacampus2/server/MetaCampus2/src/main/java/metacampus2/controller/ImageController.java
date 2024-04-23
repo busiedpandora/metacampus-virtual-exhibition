@@ -6,7 +6,10 @@ import metacampus2.model.MenuCategory;
 import metacampus2.model.MenuEntity;
 import metacampus2.service.IDisplayPanelService;
 import metacampus2.service.IImageService;
+import metacampus2.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,12 +28,14 @@ public class ImageController extends MainController {
 
     private IImageService imageService;
     private IDisplayPanelService displayPanelService;
+    private IUserService userService;
 
 
     @Autowired
-    public ImageController(IImageService imageService, IDisplayPanelService displayPanelService) {
+    public ImageController(IImageService imageService, IDisplayPanelService displayPanelService, IUserService userService) {
         this.imageService = imageService;
         this.displayPanelService = displayPanelService;
+        this.userService = userService;
     }
 
     @GetMapping(CTRL_IMAGES)
@@ -44,6 +49,7 @@ public class ImageController extends MainController {
     }
 
     @GetMapping(CTRL_IMAGES + CTRL_NEW)
+    @PreAuthorize("hasRole('CREATOR')")
     public String newImageForm(Model model,
                            @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.RESOURCES);
@@ -64,6 +70,7 @@ public class ImageController extends MainController {
     }
 
     @GetMapping(CTRL_IMAGES + "/{id}" + CTRL_EDIT)
+    @PreAuthorize("hasRole('CREATOR')")
     public String editImageForm(Model model, @PathVariable("id") Long id,
                             @RequestParam(value = "error", required = false) String error) {
         model.addAttribute(MODEL_MENU_CATEGORY, MenuCategory.RESOURCES);
@@ -82,6 +89,7 @@ public class ImageController extends MainController {
     }
 
     @PostMapping(CTRL_IMAGES + CTRL_NEW)
+    @PreAuthorize("hasRole('CREATOR')")
     public String newImage(Image image, @RequestParam(value = "imageFile") MultipartFile imageFile,
                            @RequestParam(value = "imageIndexes") List<Integer> imageIndexes) {
         if(imageFile != null && !imageFile.isEmpty()) {
@@ -97,6 +105,7 @@ public class ImageController extends MainController {
                 }
             }
 
+            image.setCreator(userService.getUserLogged());
             image.setFileName(imageFileName);
             image.setImageIndexes(imageIndexes);
             imageService.addNewImage(image);
@@ -108,7 +117,8 @@ public class ImageController extends MainController {
     }
 
     @PostMapping(CTRL_IMAGES + "/{id}" + CTRL_EDIT)
-    public String editImage(@PathVariable("id") Long id, Image image) {
+    @PreAuthorize("hasRole('ADMIN') || hasRole('CREATOR') && #image.creator.username == authentication.name")
+    public String editImage(@PathVariable("id") Long id, @P("image") Image image) {
         Image imageByTitle = imageService.getImageByTitle(image.getTitle());
         if(imageByTitle == null || Objects.equals(imageByTitle.getId(), id)) {
             Image imageById = imageService.getImageById(id);

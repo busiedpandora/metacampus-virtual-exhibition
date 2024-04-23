@@ -4,6 +4,7 @@ import metacampus2.model.*;
 import metacampus2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class EntitiesInitializer implements CommandLineRunner {
+public class EntitiesInitializer implements CommandLineRunner, Ordered {
     protected static final String SEPARATOR = FileSystems.getDefault().getSeparator();
     protected static final String BASE_PATH = "." + SEPARATOR + "resourcesToLoadAtStart" + SEPARATOR;
     protected static final String TEXTS_PATH = BASE_PATH + "texts";
@@ -33,6 +34,7 @@ public class EntitiesInitializer implements CommandLineRunner {
     private ITextService textService;
     private IImageService imageService;
     private IAudioService audioService;
+    private IUserService userService;
 
 
     @Autowired
@@ -42,7 +44,8 @@ public class EntitiesInitializer implements CommandLineRunner {
                                ISpaceService spaceService,
                                ITextService textService,
                                IImageService imageService,
-                               IAudioService audioService) {
+                               IAudioService audioService,
+                               IUserService userService) {
         this.metaverseService = metaverseService;
         this.textPanelService = textPanelService;
         this.displayPanelService = displayPanelService;
@@ -50,6 +53,7 @@ public class EntitiesInitializer implements CommandLineRunner {
         this.textService = textService;
         this.imageService = imageService;
         this.audioService = audioService;
+        this.userService = userService;
     }
 
     @Override
@@ -112,6 +116,7 @@ public class EntitiesInitializer implements CommandLineRunner {
             metaverse.setMaxYDimension(maxYDimension);
             metaverse.setMinZDimension(minZDimension);
             metaverse.setMaxZDimension(maxZDimension);
+            metaverse.setCreator(userService.getUser(UserService.ADMIN1));
 
             if(metaverseService.createDirectory(metaverse)) {
                 metaverseService.addNewMetaverse(metaverse);
@@ -139,6 +144,8 @@ public class EntitiesInitializer implements CommandLineRunner {
             coordinates.setY(y);
             coordinates.setZ(z);
             textPanel.setCoordinates(coordinates);
+
+            textPanel.setCreator(userService.getUser(UserService.ADMIN1));
 
             if(textPanelService.createDirectory(textPanel)) {
                 textPanelService.addNewTextPanel(textPanel);
@@ -169,6 +176,8 @@ public class EntitiesInitializer implements CommandLineRunner {
             coordinates.setY(y);
             coordinates.setZ(z);
             displayPanel.setCoordinates(coordinates);
+
+            displayPanel.setCreator(userService.getUser(UserService.ADMIN1));
 
             if(displayPanelService.createDirectory(displayPanel)) {
                 displayPanelService.addNewDisplayPanel(displayPanel);
@@ -210,7 +219,8 @@ public class EntitiesInitializer implements CommandLineRunner {
             text.setTitle(title);
             text.setFileName(originalFilename);
             text.setTextPanels(List.of(textPanel));
-            //textPanel.setText(text);
+
+            text.setCreator(userService.getUser(UserService.ADMIN1));
 
             if(textService.createFile(text, multipartFile, textPanel)) {
                 textService.addNewText(text);
@@ -258,6 +268,8 @@ public class EntitiesInitializer implements CommandLineRunner {
             image.setDisplayPanels(List.of(displayPanel));
             displayPanel.getImages().add(image);
 
+            image.setCreator(userService.getUser(UserService.ADMIN1));
+
             if(imageService.createFile(image, multipartFile, displayPanel)) {
                 imageService.addNewImage(image);
                 displayPanelService.addNewDisplayPanel(displayPanel);
@@ -297,6 +309,8 @@ public class EntitiesInitializer implements CommandLineRunner {
             audio.setImage(image);
             image.setAudio(audio);
 
+            audio.setCreator(userService.getUser(UserService.ADMIN1));
+
             for(DisplayPanel displayPanel : image.getDisplayPanels()) {
                 if(!audioService.createFile(audio, multipartFile, image, displayPanel)) {
                     return;
@@ -306,6 +320,11 @@ public class EntitiesInitializer implements CommandLineRunner {
             audioService.addNewAudio(audio);
             imageService.addNewImage(image);
         }
+    }
+
+    @Override
+    public int getOrder() {
+        return 1;
     }
 }
 

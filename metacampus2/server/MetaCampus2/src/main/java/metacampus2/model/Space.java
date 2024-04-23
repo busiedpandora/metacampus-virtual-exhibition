@@ -34,4 +34,8 @@ public abstract class Space {
     @JoinColumn(name = "metaverse_id", nullable = false)
     @JsonManagedReference
     private Metaverse metaverse;
+
+    @ManyToOne
+    @JoinColumn(name = "creator_id", nullable = false)
+    private User creator;
 }
