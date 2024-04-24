@@ -42,5 +42,6 @@ public class MainController {
         model.addAttribute("loginUrl", UserController.CTRL_LOGIN);
         model.addAttribute("registerUrl", UserController.CTRL_REGISTER);
         model.addAttribute("logoutUrl", UserController.CTRL_LOGOUT);
+        model.addAttribute("manageUsersUrl", UserController.CTRL_USERS);
     }
 }

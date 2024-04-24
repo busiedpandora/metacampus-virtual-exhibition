@@ -3,14 +3,14 @@ const lastNameInput = document.getElementById("lastName");
 const usernameInput = document.getElementById("username");
 const passwordInput = document.getElementById("password");
 const passwordConfirmInput = document.getElementById("passwordConfirm");
-const userRoleSelect = document.getElementById("role");
+//const userRoleSelect = document.getElementById("role");
 
 firstNameInput.addEventListener("change", validateFirstNameAndLastName);
 lastNameInput.addEventListener("change", validateFirstNameAndLastName);
 usernameInput.addEventListener("change", validateUsername);
 passwordInput.addEventListener("change", validatePassword);
 passwordConfirmInput.addEventListener("change", validatePasswordConfirm);
-userRoleSelect.addEventListener("change", validateRole);
+//userRoleSelect.addEventListener("change", validateRole);
 
 const registerButton = document.createElement("button");
 registerButton.className = "btn btn-primary fs-5 col-12";
@@ -115,7 +115,7 @@ function validatePasswordConfirm(event) {
     checkInputFields();
 }
 
-function validateRole(event) {
+/*function validateRole(event) {
     let select = event.target;
     let selectedOptionIndex = select.selectedIndex;
     let selectedOption = select.options[selectedOptionIndex];
@@ -133,15 +133,14 @@ function validateRole(event) {
     }
 
     checkInputFields();
-}
+}*/
 
 function allInputFieldsValid() {
     return firstNameInput.classList.contains("valid-input")
         && lastNameInput.classList.contains("valid-input")
         && usernameInput.classList.contains("valid-input")
         && passwordInput.classList.contains("valid-input")
-        && passwordConfirmInput.classList.contains("valid-input")
-        && userRoleSelect.classList.contains("valid-input");
+        && passwordConfirmInput.classList.contains("valid-input");
 }
 
 function checkInputFields() {

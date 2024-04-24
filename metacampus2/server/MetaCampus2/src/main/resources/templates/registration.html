@@ -52,18 +52,6 @@
                     <span class="error-message"></span>
                 </div>
 
-                <div class="my-2">
-                    <label for="role" class="visually-hidden">Role</label>
-                    <select id="role" class="form-select fs-5" name="role" required>
-                        <option value="" disabled selected class="text-secondary">Select your role</option>
-                        <option th:each="role : ${roles}"
-                                th:value="${role}"
-                                th:text="${role.name}">
-                        </option>
-                    </select>
-                    <span class="error-message"></span>
-                </div>
-
                 <div id="registerButtonContainer" class="my-2">
 
                 </div>
@@ -76,10 +64,6 @@
 
                 <span class="fs-6">
                         Already registered? <a th:href="@{/login}">Log in</a> instead.
-                </span>
-                <br>
-                <span class="fs-6">
-                    Back to <a th:href="@{/}">Home</a>.
                 </span>
             </form>
         </div>
