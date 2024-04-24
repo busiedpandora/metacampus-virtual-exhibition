@@ -3,6 +3,7 @@ package metacampus2.initializer;
 import metacampus2.model.*;
 import metacampus2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
@@ -23,9 +24,13 @@ import java.util.Map;
 public class EntitiesInitializer implements CommandLineRunner, Ordered {
     protected static final String SEPARATOR = FileSystems.getDefault().getSeparator();
     protected static final String BASE_PATH = "." + SEPARATOR + "resourcesToLoadAtStart" + SEPARATOR;
-    protected static final String TEXTS_PATH = BASE_PATH + "texts";
-    protected static final String IMAGES_PATH = BASE_PATH + "images";
-    protected static final String AUDIOS_PATH = BASE_PATH + "audios";
+    protected static final String TEXTS_PATH = SEPARATOR + "texts" + SEPARATOR;
+    protected static final String IMAGES_PATH = SEPARATOR + "images" + SEPARATOR;
+    protected static final String AUDIOS_PATH = SEPARATOR + "audios" + SEPARATOR;
+
+
+    @Value("${loadMetaverse}")
+    private String loadMetaverseName;
 
     private IMetaverseService metaverseService;
     private ITextPanelService textPanelService;
@@ -58,6 +63,12 @@ public class EntitiesInitializer implements CommandLineRunner, Ordered {
 
     @Override
     public void run(String... args) throws Exception {
+        if(loadMetaverseName != null && !loadMetaverseName.isEmpty()) {
+            initEntities();
+        }
+    }
+
+    private void initEntities() {
         Yaml yaml = new Yaml();
 
         InputStream inputStream = this.getClass()
@@ -201,7 +212,11 @@ public class EntitiesInitializer implements CommandLineRunner, Ordered {
                 return;
             }
 
-            File file = new File(TEXTS_PATH + SEPARATOR + fileName);
+            File file = new File(BASE_PATH + loadMetaverseName + TEXTS_PATH + fileName);
+            if(!file.exists()) {
+                return;
+            }
+
             byte[] fileContent = new byte[0];
             String originalFilename = null;
             String contentType = null;
@@ -248,7 +263,11 @@ public class EntitiesInitializer implements CommandLineRunner, Ordered {
                 return;
             }
 
-            File file = new File(IMAGES_PATH + SEPARATOR + fileName);
+            File file = new File(BASE_PATH + loadMetaverseName + IMAGES_PATH + fileName);
+            if(!file.exists()) {
+                return;
+            }
+
             byte[] fileContent = new byte[0];
             String originalFilename = null;
             String contentType = null;
@@ -289,7 +308,11 @@ public class EntitiesInitializer implements CommandLineRunner, Ordered {
                 return;
             }
 
-            File file = new File(AUDIOS_PATH + SEPARATOR + fileName);
+            File file = new File(BASE_PATH + loadMetaverseName + AUDIOS_PATH + fileName);
+            if(!file.exists()) {
+                return;
+            }
+
             byte[] fileContent = new byte[0];
             String originalFilename = null;
             String contentType = null;

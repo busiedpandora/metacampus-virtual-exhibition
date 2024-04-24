@@ -1,6 +1,8 @@
 project:
   name: "MetaCampus"
 
+loadMetaverse: ""
+
 startupEntities:
   - type: "metaverse"
     name: "Campus Est SUPSI"
@@ -230,7 +232,7 @@ startupEntities:
     panelMetaverse: "Campus Est SUPSI"
   - type: "audio"
     title: "Tuffo nel lago"
-    fileName: "onde.wav"
+    fileName: "tuffo.wav"
     image: "Tuffo nel lago"
 
   - type: "image"
