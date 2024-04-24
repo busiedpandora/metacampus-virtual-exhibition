@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{master :: layout(~{::title},~{::main})}">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage users</title>
+</head>
+<body>
+<main>
+  <div id="mainContainer" class="container-fluid">
+    <form method="POST" th:action="@{/users}" th:object="${users}">
+      <div class="table-container">
+        <div>
+          Back to <a th:href="@{/}">Home</a>.
+        </div>
+        <table class="table table-striped caption-top entities-table">
+          <caption class="fs-5">Manage users:</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="col-1">#</th>
+              <th scope="col" class="col">Username</th>
+              <th scope="col" class="col">Firstname</th>
+              <th scope="col" class="col">Lastname</th>
+              <th scope="col" class="col">Role</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr th:each="user, iterStat : ${users}">
+                <th scope="row" th:text="${iterStat.count}"></th>
+                <th th:text="${user.username}"></th>
+                <th th:text="${user.firstName}"></th>
+                <th th:text="${user.lastName}"></th>x
+                <th>
+                  <input type="hidden" th:name="usernames" th:value="${user.username}">
+                  <select class="form-select"
+                          th:name="roles" th:value="${user.role}">
+                    <option th:each="role : ${roles}"
+                            th:value="${role}"
+                            th:text="${role.name}"
+                            th:selected="${role == user.role}">
+                    </option>
+                  </select>
+                </th>
+              </tr>
+          </tbody>
+        </table>
+        <div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>
+</body>
+</html>
