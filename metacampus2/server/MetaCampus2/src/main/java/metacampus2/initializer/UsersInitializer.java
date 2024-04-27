@@ -45,6 +45,6 @@ public class UsersInitializer implements CommandLineRunner, Ordered {
 
     @Override
     public int getOrder() {
-        return 0;
+        return 1;
     }
 }

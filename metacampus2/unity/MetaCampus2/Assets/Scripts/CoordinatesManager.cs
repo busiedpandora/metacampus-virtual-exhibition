@@ -62,7 +62,7 @@ public class CoordinatesManager : MonoBehaviour
 
     private IEnumerator SetUpMetaverse()
     {
-        string url = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.metaversesPath}/{MetaverseSelectionManager.metaverseUrlNameSelected}";
+        string url = $"http://{HTTPInfo.hostAddress}:{HTTPInfo.port}/{HTTPInfo.metaversesPath}/{MetaverseSelectionManager.metaverseUrlNameSelected}";
 
         string responseData = null;
         yield return StartCoroutine(httpRequest.GetDataFromServer(url, ""));

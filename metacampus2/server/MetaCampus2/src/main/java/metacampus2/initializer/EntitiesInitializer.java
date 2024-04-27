@@ -349,7 +349,7 @@ public class EntitiesInitializer implements CommandLineRunner, Ordered {
 
     @Override
     public int getOrder() {
-        return 1;
+        return 2;
     }
 }
 

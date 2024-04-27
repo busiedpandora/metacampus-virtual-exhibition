@@ -46,7 +46,7 @@ public class MetaverseSelectionManager : MonoBehaviour
 
     private IEnumerator SetUpMetaverseButtons()
     {
-        string url = $"http://{HTTPInfo.hostName}:{HTTPInfo.port}/{HTTPInfo.metaversesPath}/{HTTPInfo.metaversesListPath}";
+        string url = $"http://{HTTPInfo.hostAddress}:{HTTPInfo.port}/{HTTPInfo.metaversesPath}/{HTTPInfo.metaversesListPath}";
 
         string responseData = null;
         yield return StartCoroutine(httpRequest.GetDataFromServer(url, ""));
