@@ -15,7 +15,7 @@ startupEntities:
   - type: "textPanel"
     name: "text panel 1"
     coordinates:
-      x: -2
+      x: 0
       y: 0
       z: 2
     metaverse: "Campus Est SUPSI"
@@ -23,31 +23,31 @@ startupEntities:
     name: "one display panel exhibition"
     displayPanelType: "one-display-panel-exhibition"
     coordinates:
-      x: 2
+      x: 0
       y: 0
-      z: 2
+      z: 5
     metaverse: "Campus Est SUPSI"
   - type: "displayPanel"
     name: "four display panel straight exhibition 1"
     displayPanelType: "four-display-panel-straight-exhibition"
     coordinates:
-      x: -6
+      x: 4
       y: 0
-      z: 6
+      z: 10
     metaverse: "Campus Est SUPSI"
   - type: "displayPanel"
     name: "four display panel rectangular exhibition 1"
     displayPanelType: "four-display-panel-rectangular-exhibition"
     coordinates:
-      x: 8
+      x: -4
       y: 0
-      z: 6
+      z: 10
     metaverse: "Campus Est SUPSI"
   - type: "displayPanel"
     name: "six display panel diagonal exhibition 1"
     displayPanelType: "six-display-panel-diagonal-exhibition"
     coordinates:
-      x: 8
+      x: -8
       y: 0
       z: -10
     metaverse: "Campus Est SUPSI"
@@ -55,9 +55,9 @@ startupEntities:
     name: "six display panel circular exhibition 1"
     displayPanelType: "six-display-panel-circular-exhibition"
     coordinates:
-      x: -5
+      x: -2
       y: 0
-      z: -10
+      z: 17
     metaverse: "Campus Est SUPSI"
   - type: "text"
     title: "Welcome!"
@@ -244,3 +244,123 @@ startupEntities:
     title: "Espressioni"
     fileName: "espressioni.wav"
     image: "Espressioni"
+
+  - type: "image"
+    title: "Movimento"
+    fileName: "movimento.jpg"
+    displayPanel: "six display panel circular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Movimento"
+    fileName: "movimento.wav"
+    image: "Movimento"
+
+  - type: "image"
+    title: "Al buio"
+    fileName: "al_buio.jpg"
+    displayPanel: "six display panel circular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Al buio"
+    fileName: "al_buio.wav"
+    image: "Al buio"
+
+  - type: "image"
+    title: "Gru su una montagna rocciosa"
+    fileName: "gru.jpg"
+    displayPanel: "six display panel circular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Gru su una montagna rocciosa"
+    fileName: "gru.wav"
+    image: "Gru su una montagna rocciosa"
+
+  - type: "image"
+    title: "Campo petrolifero"
+    fileName: "campo_petrolifero.jpg"
+    displayPanel: "six display panel circular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Campo petrolifero"
+    fileName: "campo_petrolifero.wav"
+    image: "Campo petrolifero"
+
+  - type: "image"
+    title: "Lampadina con scintille"
+    fileName: "lampadina_scintille.jpg"
+    displayPanel: "six display panel circular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Lampadina con scintille"
+    fileName: "lampadina_scintille.wav"
+    image: "Lampadina con scintille"
+
+  - type: "image"
+    title: "Luci sfocate"
+    fileName: "luci_sfocate.jpg"
+    displayPanel: "six display panel circular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Luci sfocate"
+    fileName: "luci_sfocate.wav"
+    image: "Luci sfocate"
+
+  - type: "image"
+    title: "Navi cargo e silos"
+    fileName: "navi_cargo_e_silos.jpg"
+    displayPanel: "six display panel circular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Navi cargo e silos"
+    fileName: "navi_cargo_e_silos.wav"
+    image: "Navi cargo e silos"
+
+  - type: "image"
+    title: "Pala eolica nel bosco"
+    fileName: "pala_eolica_bosco.jpg"
+    displayPanel: "six display panel circular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Pala eolica nel bosco"
+    fileName: "pala_eolica_bosco.wav"
+    image: "Pala eolica nel bosco"
+
+  - type: "image"
+    title: "Palazzo notturno"
+    fileName: "palazzo_con_luci.jpg"
+    displayPanel: "six display panel circular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Palazzo notturno"
+    fileName: "palazzo_con_luci.wav"
+    image: "Palazzo notturno"
+
+  - type: "image"
+    title: "Palo elettrico nella nebbia"
+    fileName: "palo_elettrico_nebbia.jpg"
+    displayPanel: "six display panel circular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Palo elettrico nella nebbia"
+    fileName: "palo_elettrico_nebbia.wav"
+    image: "Palo elettrico nella nebbia"
+
+  - type: "image"
+    title: "Tre forme"
+    fileName: "tre_forme.jpg"
+    displayPanel: "six display panel circular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Tre forme"
+    fileName: "tre_forme.wav"
+    image: "Tre forme"
+
+  - type: "image"
+    title: "Persone su Scooter in una Città"
+    fileName: "scooter.jpg"
+    displayPanel: "six display panel circular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Persone su Scooter in una Città"
+    fileName: "scooter.wav"
+    image: "Persone su Scooter in una Città"
