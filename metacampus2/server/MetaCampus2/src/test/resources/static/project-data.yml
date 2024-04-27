@@ -1,21 +1,246 @@
 project:
   name: "MetaCampus"
 
+loadMetaverse: ""
+
 startupEntities:
   - type: "metaverse"
     name: "Campus Est SUPSI"
+    minXDimension: -30
+    maxXDimension: 30
+    minYDimension: 0
+    maxYDimension: 5
+    minZDimension: -30
+    maxZDimension: 30
   - type: "textPanel"
-    name: "Text Panel 1"
+    name: "text panel 1"
+    coordinates:
+      x: -2
+      y: 0
+      z: 2
+    metaverse: "Campus Est SUPSI"
+  - type: "displayPanel"
+    name: "one display panel exhibition"
+    displayPanelType: "one-display-panel-exhibition"
+    coordinates:
+      x: 2
+      y: 0
+      z: 2
+    metaverse: "Campus Est SUPSI"
+  - type: "displayPanel"
+    name: "four display panel straight exhibition 1"
+    displayPanelType: "four-display-panel-straight-exhibition"
+    coordinates:
+      x: -6
+      y: 0
+      z: 6
+    metaverse: "Campus Est SUPSI"
+  - type: "displayPanel"
+    name: "four display panel rectangular exhibition 1"
+    displayPanelType: "four-display-panel-rectangular-exhibition"
+    coordinates:
+      x: 8
+      y: 0
+      z: 6
+    metaverse: "Campus Est SUPSI"
+  - type: "displayPanel"
+    name: "six display panel diagonal exhibition 1"
+    displayPanelType: "six-display-panel-diagonal-exhibition"
+    coordinates:
+      x: 8
+      y: 0
+      z: -10
+    metaverse: "Campus Est SUPSI"
+  - type: "displayPanel"
+    name: "six display panel circular exhibition 1"
+    displayPanelType: "six-display-panel-circular-exhibition"
     coordinates:
       x: -5
       y: 0
-      z: 5
+      z: -10
     metaverse: "Campus Est SUPSI"
-  - type: "displayPanel"
-    name: "Display Panel 1"
-    displayPanelType: "single"
-    coordinates:
-      x: 5
-      y: 0
-      z: 5
-    metaverse: "Campus Est SUPSI"
+  - type: "text"
+    title: "Welcome!"
+    fileName: "Welcome.txt"
+    textPanel: "text panel 1"
+    panelMetaverse: "Campus Est SUPSI"
+
+  - type: "image"
+    title: "Pugno sul vetro"
+    fileName: "pugno_sul_vetro.jpg"
+    displayPanel: "one display panel exhibition"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Pugno sul vetro"
+    fileName: "pugno_sul_vetro.wav"
+    image: "Pugno sul vetro"
+
+  - type: "image"
+    title: "Manifesto Energia"
+    fileName: "manifesto_energia.jpg"
+    displayPanel: "one display panel exhibition"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Manifesto Energia"
+    fileName: "manifesto_energia.wav"
+    image: "Manifesto Energia"
+
+  - type: "image"
+    title: "Alternatore antico"
+    fileName: "alternatore_antico.jpg"
+    displayPanel: "four display panel rectangular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Alternatore antico"
+    fileName: "alternatore_antico.wav"
+    image: "Alternatore antico"
+
+  - type: "image"
+    title: "Casa con pala eolica"
+    fileName: "casa_con_pala_eolica.jpg"
+    displayPanel: "four display panel rectangular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Casa con pala eolica"
+    fileName: "casa_con_pala_eolica.wav"
+    image: "Casa con pala eolica"
+
+  - type: "image"
+    title: "Centrale nucleare"
+    fileName: "centrale_nucleare.jpg"
+    displayPanel: "four display panel rectangular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Centrale nucleare"
+    fileName: "centrale_nucleare.wav"
+    image: "Centrale nucleare"
+
+  - type: "image"
+    title: "Diga"
+    fileName: "diga.jpg"
+    displayPanel: "four display panel rectangular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Diga"
+    fileName: "diga.wav"
+    image: "Diga"
+
+  - type: "image"
+    title: "Donna gigante"
+    fileName: "donna_gigante.jpg"
+    displayPanel: "four display panel rectangular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Donna gigante"
+    fileName: "donna_gigante.wav"
+    image: "Donna gigante"
+
+  - type: "image"
+    title: "Lampadina nel buio"
+    fileName: "lampadina_nel_buio.jpg"
+    displayPanel: "four display panel rectangular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Lampadina nel buio"
+    fileName: "lampadina_nel_buio.wav"
+    image: "Lampadina nel buio"
+
+  - type: "image"
+    title: "Paesaggio naturale nel tramonto"
+    fileName: "paesaggio_naturale_tramonto.jpg"
+    displayPanel: "four display panel rectangular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Paesaggio naturale nel tramonto"
+    fileName: "paesaggio_naturale_tramonto.wav"
+    image: "Paesaggio naturale nel tramonto"
+
+  - type: "image"
+    title: "Pali ad alta tensione"
+    fileName: "pali_alta_tensione.jpg"
+    displayPanel: "four display panel rectangular exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Pali ad alta tensione"
+    fileName: "pali_alta_tensione.wav"
+    image: "Pali ad alta tensione"
+
+  - type: "image"
+    title: "Pompe di benzina"
+    fileName: "pompe_benzina.jpg"
+    displayPanel: "four display panel straight exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Pompe di benzina"
+    fileName: "pompe_benzina.wav"
+    image: "Pompe di benzina"
+
+  - type: "image"
+    title: "Il Sole"
+    fileName: "sole.jpg"
+    displayPanel: "four display panel straight exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Il Sole"
+    fileName: "sole.wav"
+    image: "Il Sole"
+
+  - type: "image"
+    title: "Tunnel multicolore"
+    fileName: "tunnel_multicolore.jpg"
+    displayPanel: "four display panel straight exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Tunnel multicolore"
+    fileName: "tunnel_multicolore.wav"
+    image: "Tunnel multicolore"
+
+  - type: "image"
+    title: "Pannelli solari"
+    fileName: "pannelli_solari.jpg"
+    displayPanel: "four display panel straight exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Pannelli solari"
+    fileName: "pannelli_solari.wav"
+    image: "Pannelli solari"
+
+  - type: "image"
+    title: "Acrobazie con la bici"
+    fileName: "acrobazie_bici.jpg"
+    displayPanel: "four display panel straight exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Acrobazie con la bici"
+    fileName: "acrobazie_bici.wav"
+    image: "Acrobazie con la bici"
+
+  - type: "image"
+    title: "Onde in riva al mare"
+    fileName: "onde.jpg"
+    displayPanel: "four display panel straight exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Onde in riva al mare"
+    fileName: "onde.wav"
+    image: "Onde in riva al mare"
+
+  - type: "image"
+    title: "Tuffo nel lago"
+    fileName: "tuffo.jpg"
+    displayPanel: "four display panel straight exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Tuffo nel lago"
+    fileName: "tuffo.wav"
+    image: "Tuffo nel lago"
+
+  - type: "image"
+    title: "Espressioni"
+    fileName: "espressioni.jpg"
+    displayPanel: "four display panel straight exhibition 1"
+    panelMetaverse: "Campus Est SUPSI"
+  - type: "audio"
+    title: "Espressioni"
+    fileName: "espressioni.wav"
+    image: "Espressioni"

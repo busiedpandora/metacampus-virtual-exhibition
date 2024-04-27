@@ -4,24 +4,25 @@ import metacampus2.AbstractTest;
 import metacampus2.model.TextPanel;
 import metacampus2.repository.ITextPanelRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class TextPanelServiceTest extends AbstractTest {
-
     @Mock
     private ITextPanelRepository textPanelRepository;
     private TextPanelService textPanelService;
+
 
     @BeforeEach
     public void setUp(){
@@ -29,38 +30,60 @@ class TextPanelServiceTest extends AbstractTest {
     }
 
     @Test
+    void addNewTextPanel() {
+        textPanelService.addNewTextPanel(textPanel);
+
+        verify(textPanelRepository, times(1)).save(textPanel);
+    }
+
+    @Test
+    void deleteTextPanel() {
+        textPanelService.deleteTextPanel(textPanel);
+
+        verify(textPanelRepository, times(1)).delete(textPanel);
+    }
+
+    @Test
     void getAllTextPanels() {
+        when(textPanelRepository.findAll()).thenReturn(List.of(textPanel));
 
-        List<TextPanel> textPanelList = new ArrayList<>();
+        List<TextPanel> textPanels = textPanelService.getAllTextPanels();
 
-        TextPanel textPanel = new TextPanel();
+        verify(textPanelRepository, times(1)).findAll();
 
-        textPanel.setName("Leopardi - passero solitario");
-
-        textPanelList.add(textPanel);
-        textPanelList.add(new TextPanel());
-
-        when(textPanelRepository.findAll()).thenReturn(textPanelList);
-
-        assertEquals(textPanelList.size(), textPanelService.getAllTextPanels().size());
-
+        assertEquals(textPanel, textPanels.get(0));
     }
 
     @Test
     void getAllTextPanelsFromMetaverse() {
+        when(textPanelRepository.findAllByMetaverseName(metaverse.getName())).thenReturn(List.of(textPanel));
 
-        List<TextPanel> textPanelList = new ArrayList<>();
+        List<TextPanel> textPanels = textPanelService.getAllTextPanelsFromMetaverse(metaverse.getName());
 
-        TextPanel textPanel = new TextPanel();
+        verify(textPanelRepository, times(1)).findAllByMetaverseName(metaverse.getName());
 
-        textPanel.setName("Leopardi - passero solitario");
+        assertEquals(textPanel, textPanels.get(0));
+    }
 
-        textPanelList.add(textPanel);
-        textPanelList.add(new TextPanel());
+    @Test
+    void getAllTextPanelsFromMetaverseByUrlName() {
+        when(textPanelRepository.findAllByMetaverseUrlName(metaverse.getUrlName())).thenReturn(List.of(textPanel));
 
-        when(textPanelRepository.findAllByMetaverseName(Mockito.anyString())).thenReturn(textPanelList);
+        List<TextPanel> textPanels = textPanelService.getAllTextPanelsFromMetaverseByUrlName(metaverse.getUrlName());
 
-        assertEquals(textPanel.getName(), textPanelService.getAllTextPanelsFromMetaverse("USI").get(0).getName());
+        verify(textPanelRepository, times(1)).findAllByMetaverseUrlName(metaverse.getUrlName());
 
+        assertEquals(textPanel, textPanels.get(0));
+    }
+
+    @Test
+    void getTextPanelById() {
+        when(textPanelRepository.findById(textPanel.getId())).thenReturn(Optional.of(textPanel));
+
+        TextPanel tp = textPanelService.getTextPanelById(textPanel.getId());
+
+        verify(textPanelRepository, times(1)).findById(textPanel.getId());
+
+        assertEquals(textPanel, tp);
     }
 }

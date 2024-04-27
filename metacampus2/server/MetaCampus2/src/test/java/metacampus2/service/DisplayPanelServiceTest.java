@@ -2,67 +2,87 @@ package metacampus2.service;
 
 import metacampus2.AbstractTest;
 import metacampus2.model.DisplayPanel;
-import metacampus2.model.Image;
 import metacampus2.repository.IDisplayPanelRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class DisplayPanelServiceTest  extends AbstractTest {
-
     @Mock
     private IDisplayPanelRepository displayPanelRepository;
     private DisplayPanelService displayPanelService;
+
 
     @BeforeEach
     public void setUp(){
         displayPanelService = new DisplayPanelService(displayPanelRepository);
     }
+    @Test
+    void addNewDisplayPanel() {
+        displayPanelService.addNewDisplayPanel(displayPanel);
+
+        verify(displayPanelRepository, times(1)).save(displayPanel);
+    }
+
+    @Test
+    void deleteDisplayPanel() {
+        displayPanelService.deleteDisplayPanel(displayPanel);
+
+        verify(displayPanelRepository, times(1)).delete(displayPanel);
+    }
 
     @Test
     void getAllDisplayPanels() {
+        when(displayPanelRepository.findAll()).thenReturn(List.of(displayPanel));
 
-        List<DisplayPanel> displayPanelList = new ArrayList<>();
+        List<DisplayPanel> displayPanels = displayPanelService.getAllDisplayPanels();
 
-        DisplayPanel displayPanel = new DisplayPanel();
-        Image image = new Image();
-        image.setFileName("picasso - 1");
+        verify(displayPanelRepository, times(1)).findAll();
 
-        displayPanelList.add(displayPanel);
-        displayPanelList.add(new DisplayPanel());
-        displayPanelList.add(new DisplayPanel());
-
-        when(displayPanelRepository.findAll()).thenReturn(displayPanelList);
-
-        assertEquals(displayPanelList.size(), displayPanelService.getAllDisplayPanels().size());
-
+        assertEquals(displayPanel, displayPanels.get(0));
     }
 
     @Test
     void getAllDisplayPanelsFromMetaverse() {
+        when(displayPanelRepository.findAllByMetaverseName(metaverse.getName())).thenReturn(List.of(displayPanel));
 
-        List<DisplayPanel> displayPanelList = new ArrayList<>();
+        List<DisplayPanel> displayPanels = displayPanelService.getAllDisplayPanelsFromMetaverse(metaverse.getName());
 
-        DisplayPanel displayPanel = new DisplayPanel();
+        verify(displayPanelRepository, times(1)).findAllByMetaverseName(metaverse.getName());
 
-        displayPanel.setName("Picasso");
+        assertEquals(displayPanel, displayPanels.get(0));
+    }
 
-        displayPanelList.add(displayPanel);
-        displayPanelList.add(new DisplayPanel());
+    @Test
+    void getAllDisplayPanelsFromMetaverseByUrlName() {
+        when(displayPanelRepository.findAllByMetaverseUrlName(metaverse.getUrlName())).thenReturn(List.of(displayPanel));
 
-        when(displayPanelRepository.findAllByMetaverseName(Mockito.anyString())).thenReturn(displayPanelList);
+        List<DisplayPanel> displayPanels = displayPanelService.getAllDisplayPanelsFromMetaverseByUrlName(metaverse.getUrlName());
 
-        assertEquals(displayPanel.getName(), displayPanelService.getAllDisplayPanelsFromMetaverse("USI").get(0).getName());
+        verify(displayPanelRepository, times(1)).findAllByMetaverseUrlName(metaverse.getUrlName());
 
+        assertEquals(displayPanel, displayPanels.get(0));
+    }
+
+    @Test
+    void getDisplayPanelById() {
+        when(displayPanelRepository.findById(displayPanel.getId())).thenReturn(Optional.of(displayPanel));
+
+        DisplayPanel dp = displayPanelService.getDisplayPanelById(displayPanel.getId());
+
+        verify(displayPanelRepository, times(1)).findById(displayPanel.getId());
+
+        assertEquals(displayPanel, dp);
     }
 }

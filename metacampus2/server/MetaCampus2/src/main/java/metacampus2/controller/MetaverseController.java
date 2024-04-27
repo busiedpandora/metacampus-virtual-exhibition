@@ -24,8 +24,8 @@ import java.util.Objects;
 public class MetaverseController extends MainController {
     protected static final String CTRL_METAVERSES_LIST = "/metaversesList";
     protected static final String MODEL_METAVERSE = "metaverse";
-    private static final String VIEW_METAVERSES = "metaverses";
-    private static final String VIEW_METAVERSE_FORM = "metaverse-form";
+    protected static final String VIEW_METAVERSES = "metaverses";
+    protected static final String VIEW_METAVERSE_FORM = "metaverse-form";
 
     private IMetaverseService metaverseService;
     private IUserService userService;
@@ -132,7 +132,7 @@ public class MetaverseController extends MainController {
             return "redirect:" + CTRL_METAVERSES;
         }
 
-        return "redirect:" + CTRL_METAVERSES + CTRL_NEW + "?error=a metaverse with this name already exists";
+        return "redirect:" + CTRL_METAVERSES + "/" + id + CTRL_EDIT + "?error=a metaverse with this name already exists";
     }
 
     @GetMapping(CTRL_METAVERSES_LIST)

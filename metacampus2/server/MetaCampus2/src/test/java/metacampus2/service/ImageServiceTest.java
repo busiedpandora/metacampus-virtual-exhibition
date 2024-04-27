@@ -4,23 +4,24 @@ import metacampus2.AbstractTest;
 import metacampus2.model.Image;
 import metacampus2.repository.IImageRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ImageServiceTest extends AbstractTest {
-
     @Mock
     private IImageRepository imageRepository;
     private ImageService imageService;
+
 
     @BeforeEach
     public void setUp(){
@@ -28,18 +29,51 @@ class ImageServiceTest extends AbstractTest {
     }
 
     @Test
+    void addNewImage() {
+        imageService.addNewImage(image);
+
+        verify(imageRepository, times(1)).save(image);
+    }
+
+    @Test
+    void editImage() {
+        imageService.editImage(image);
+
+        verify(imageRepository, times(1)).save(image);
+
+        assertNotNull(image.getLastEditDate());
+    }
+
+    @Test
     void getAllImages() {
+        when(imageRepository.findAll()).thenReturn(List.of(image));
 
-        List<Image> imageList = new ArrayList<>();
+        List<Image> images = imageService.getAllImages();
 
-        Image image = new Image();
-        image.setFileName("I3A.png");
+        verify(imageRepository, times(1)).findAll();
 
-        imageList.add(image);
-        imageList.add(new Image());
+        assertEquals(image, images.get(0));
+    }
 
-        when(imageRepository.findAll()).thenReturn(imageList);
+    @Test
+    void getImageByTitle() {
+        when(imageRepository.findByTitle(image.getTitle())).thenReturn(image);
 
-        assertEquals(imageList.size(), imageService.getAllImages().size());
+        Image i = imageService.getImageByTitle(image.getTitle());
+
+        verify(imageRepository, times(1)).findByTitle(image.getTitle());
+
+        assertEquals(image, i);
+    }
+
+    @Test
+    void getImageById() {
+        when(imageRepository.findById(image.getId())).thenReturn(Optional.of(image));
+
+        Image i = imageService.getImageById(image.getId());
+
+        verify(imageRepository, times(1)).findById(image.getId());
+
+        assertEquals(image, i);
     }
 }

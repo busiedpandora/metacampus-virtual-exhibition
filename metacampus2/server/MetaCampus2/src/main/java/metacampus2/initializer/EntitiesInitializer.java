@@ -5,6 +5,7 @@ import metacampus2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
+@Profile("!test")
 public class EntitiesInitializer implements CommandLineRunner, Ordered {
     protected static final String SEPARATOR = FileSystems.getDefault().getSeparator();
     protected static final String BASE_PATH = "." + SEPARATOR + "resourcesToLoadAtStart" + SEPARATOR;

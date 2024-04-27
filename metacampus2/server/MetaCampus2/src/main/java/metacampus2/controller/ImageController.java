@@ -134,7 +134,7 @@ public class ImageController extends MainController {
             return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES;
         }
 
-        return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + "/{id}" + CTRL_EDIT
+        return "redirect:" + CTRL_RESOURCES + CTRL_IMAGES + "/" + id + CTRL_EDIT
                 + "?error=an image with this title already exists";
     }
 }
