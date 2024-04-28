@@ -36,15 +36,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1575804597640617691, guid: b18a8137ff3b1c441948d57f752d44a7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1575804597640617691, guid: b18a8137ff3b1c441948d57f752d44a7, type: 3}
       propertyPath: m_LocalScale.y
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1575804597640617691, guid: b18a8137ff3b1c441948d57f752d44a7, type: 3}
       propertyPath: m_LocalScale.z
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1575804597640617691, guid: b18a8137ff3b1c441948d57f752d44a7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -204,9 +204,9 @@ MonoBehaviour:
   faceUserDefinedTargetTransform: 0
   targetToFace: {fileID: 0}
   pivotAxis: 7
-  minDistance: 0.3
-  maxDistance: 0.7
-  defaultDistance: 0.5
+  minDistance: 0.5
+  maxDistance: 0.9
+  defaultDistance: 0.7
   maxViewHorizontalDegrees: 30
   maxViewVerticalDegrees: 20
   reorientWhenOutsideParameters: 1
