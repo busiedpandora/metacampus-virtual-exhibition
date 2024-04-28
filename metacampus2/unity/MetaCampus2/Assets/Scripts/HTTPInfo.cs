@@ -17,30 +17,36 @@ public class HTTPInfo
     {
         try
         {
-            string filePath = "Assets/Resources/host_address.txt";
+            TextAsset textAsset = Resources.Load<TextAsset>("host_address");
 
-            if (File.Exists(filePath))
+            if (textAsset != null)
             {
-                string[] lines = File.ReadAllLines(filePath);
+                string[] lines = textAsset.text.Split("\n");
 
                 foreach (string line in lines)
                 {
                     if (line.StartsWith("host-address="))
                     {
+                        //read host address file text file
                         hostAddress = line.Substring("host-address=".Length).Trim();
-                        Debug.Log($"Using host address: {hostAddress}");
+                        //Debug.Log($"found host address in resource file: set host address: {hostAddress}");
+                        //DebugLog.instance.Log("found host address in resource file: ", $"set host address: {hostAddress}");
                         return;
                     }
                 }
             }
 
-            hostAddress = "localhost";
-            Debug.Log("Using localhost as host address");
+            //set a default host address if the resource file cannot be found
+            hostAddress = "192.168.45.81";
+            Debug.Log($"Cannot load host address file from resources: using host address: {hostAddress}");
+            DebugLog.instance.Log("Cannot load host address file from resources: ", $"using host address: {hostAddress}");
         }
         catch (Exception ex)
         {
-            hostAddress = "localhost";
-            Debug.LogError($"Error reading hostname.txt: {ex.Message}");
+            //set a default host address if the resource file cannot be found
+            hostAddress = "192.168.45.81";
+            Debug.Log($"Cannot load host address file from resources: using host address: {hostAddress}");
+            DebugLog.instance.Log("Cannot load host address file from resources: ", $"using host address: {hostAddress}");
         }
     }
 }
