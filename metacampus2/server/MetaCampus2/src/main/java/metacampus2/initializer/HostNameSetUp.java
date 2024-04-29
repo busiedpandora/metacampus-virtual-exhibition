@@ -8,12 +8,14 @@ import org.springframework.stereotype.Component;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.file.FileSystems;
 
 @Component
 @Profile("!test")
 public class HostNameSetUp implements CommandLineRunner, Ordered {
-    public static final String FILE_PATH = "../../unity/MetaCampus2/Assets/Resources/host_address.txt";
-
+    private static final String SEPARATOR = FileSystems.getDefault().getSeparator();
+    public static final String FILE_PATH = ".." + SEPARATOR + ".." + SEPARATOR + "unity" + SEPARATOR + "MetaCampus2"
+            + SEPARATOR + "Assets" + SEPARATOR + "Resources" + SEPARATOR + "host_address.txt";
     @Override
     public void run(String... args) {
         createHostAddressFile();
