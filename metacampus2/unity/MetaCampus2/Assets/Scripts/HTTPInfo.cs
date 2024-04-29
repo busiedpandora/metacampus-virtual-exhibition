@@ -37,14 +37,14 @@ public class HTTPInfo
             }
 
             //set a default host address if the resource file cannot be found
-            hostAddress = "192.168.45.81";
+            hostAddress = "localhost";
             Debug.Log($"Cannot load host address file from resources: using host address: {hostAddress}");
             DebugLog.instance.Log("Cannot load host address file from resources: ", $"using host address: {hostAddress}");
         }
         catch (Exception ex)
         {
             //set a default host address if the resource file cannot be found
-            hostAddress = "192.168.45.81";
+            hostAddress = "localhost";
             Debug.Log($"Cannot load host address file from resources: using host address: {hostAddress}");
             DebugLog.instance.Log("Cannot load host address file from resources: ", $"using host address: {hostAddress}");
         }
