@@ -575,7 +575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8289479621751906184, guid: 5ce69d42060600042a5a00c1a7516e48, type: 3}
       propertyPath: additionalOffset.y
-      value: 0.1
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 8914416910775612817, guid: 5ce69d42060600042a5a00c1a7516e48, type: 3}
       propertyPath: m_LocalPosition.x
