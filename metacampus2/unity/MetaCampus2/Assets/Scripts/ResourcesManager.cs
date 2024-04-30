@@ -35,6 +35,8 @@ public class ResourcesManager : MonoBehaviour
     private GameObject coordinatesSystem;
     private CoordinatesManager coordinatesManager;
 
+    private float verticalMarginPosition = 0.1f;
+
 
     private void Awake()
     {
@@ -91,7 +93,7 @@ public class ResourcesManager : MonoBehaviour
 
                     if (coordObject != null)
                     {
-                        var position = new Vector3(coord.x, coord.y, coord.z);
+                        var position = new Vector3(coord.x, coord.y - verticalMarginPosition, coord.z);
 
                         var textPanelInstance = Instantiate(textPanelObject, position, Quaternion.identity);
                         textPanelInstance.transform.parent = coordObject.transform;
@@ -152,7 +154,7 @@ public class ResourcesManager : MonoBehaviour
 
                     if (coordObject != null)
                     {
-                        var position = new Vector3(coord.x, coord.y, coord.z);
+                        var position = new Vector3(coord.x, coord.y - verticalMarginPosition, coord.z);
                         int imagesCount = displayPanel.images.Count;
 
                         GameObject panelInstance = null;
