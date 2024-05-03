@@ -35,7 +35,7 @@ public class ResourcesManager : MonoBehaviour
     private GameObject coordinatesSystem;
     private CoordinatesManager coordinatesManager;
 
-    private float verticalMarginPosition = 0.1f;
+    private float verticalMarginPosition = 0.15f;
 
 
     private void Awake()
