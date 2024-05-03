@@ -68,11 +68,11 @@
                                     || #authorization.expression('hasRole(''ROLE_CREATOR'')') && #authentication.name.equals(metaverse.creator.username)}">
                                     <a role="button" class="btn btn-link"
                                        th:href="@{'/metaverses/' + ${metaverse.id} + '/edit'}">
-                                    <img th:src="@{/icons/gear.svg}" alt="edit icon" class="me-1">Edit
+                                    <img th:src="@{/icons/pen.svg}" alt="edit icon" class="me-1">edit
                                     </a>
                                     <a role="button" class="btn btn-link"
                                         th:href="@{'/metaverses/' + ${metaverse.id} + '/delete'}">
-                                    <img th:src="@{/icons/trash.svg}" alt="remove icon" class="me-1">Remove
+                                    <img th:src="@{/icons/trash.svg}" alt="remove icon" class="me-1">remove
                                     </a>
                                 </span>
                             </th>
