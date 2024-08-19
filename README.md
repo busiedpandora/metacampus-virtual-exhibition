@@ -1,25 +1,24 @@
-## MetaCampus2
+# MetaCampus Virtual Exhibition
 
-# Connessione al database
-La parte di server utilizza un database MySQL.
-Per la connessione:
-- username: root
-- password: root_metacampus2_2024
-Nel nostro caso abbiamo utilizzato cun ontainer di Docker per creare la connessione (docker run --name metacampus2-mysql -e MYSQL_ROOT_PASSWORD=root_metacampus2_2024 -p 3306:3306 -d mysql).
+![MetaCampus Virtual Exhibition](images/virtual_exhibition.jpg)
 
-# Esecuzione del server
-- Per runnare l'applicazione server eseguire: mvn spring-boot:run
-- Per avviare il .jar eseguire: java -jar target/metacampus2-0.0.1-SNAPSHOT.jar
-Il programma contiene una proprietà "loadMetaverse" che di default è una string vuota "". È possibile specificare il nome del metaverso da caricare quando viene avviata l'applicazione server la PRIMA volta. Per la nostra applicazione, è possibile caricare le risorse del metaverso "Campus Est SUPSI".
-- Dal -jar bisogna eseguire il seguente comando: java -jar target/metacampus2-0.0.1-SNAPSHOT.jar --loadMetaverse=campus_est_supsi
-- Alternativamente, con il run: mvn spring-boot:run "-Dspring-boot.run.arguments=--loadMetaverse=campus_est_supsi"
+**MetaCampus Virtual Exhibition** is an innovative project developed as part of the 'Semester Project' module. This application leverages mixed reality technologies to create a virtual exhibition space where users can explore images, texts, and interact with virtual resources using HoloLens 2 smart glasses.
 
-# Utenti Admin
-L'applicazione server presenta di default due utenti admin:
-- Utente 1: username: simon, password: metacampus_admin1_2024
-- Utente 2: username: daniel, password: metacampus_admin2_2024
-Quando vengono creati altri utenti attraverso la registrazione, il ruolo a loro assegnato è Visitor.
+##Overview
+MetaCampus Virtual Exhibition allows users to immerse themselves in a virtual gallery, walking through an exhibition that showcases various images and texts. The application offers an interactive experience, where approaching an image triggers the playback of contextual audio narration, providing users with deeper insights and stories related to the displayed content.
 
-# Scene di Unity
-La parte di Unity è costituita da due scene: MetaverseSelection e Metaverse.
-Quando viene avviata l'applicazione Unity, viene caricata la scena MetaverseSelection in cui è possibile selezionare il metaverso da caricare, che verrà caricato nella scena Metaverse.
+##Key Features
+- **Virtual Exhibition Experience**: Users can explore curated exhibitions in a fully immersive mixed reality environment using HoloLens 2 smart glasses.
+
+- **Interactive Content with Audio Narration**: As users approach images, the application plays audio narrations that provide contextual information, enhancing the user's understanding and connection with the exhibited works.
+
+- **Customizable Exhibitions**: Through a dedicated web interface, users can create and manage their own virtual exhibitions, customizing the displayed content, including images, texts, and associated audio, to suit their preferences or thematic needs.
+
+##Technologies Used
+
+- HoloLens 2
+- Unity
+- Mixed Reality Toolkit 3
+- Spring Boot
+- MySQL
+- Docker
